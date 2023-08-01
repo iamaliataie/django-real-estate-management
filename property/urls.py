@@ -1,6 +1,8 @@
 from django.urls import path
 from . import views
 
+app_name = 'property'
+
 urlpatterns = [
     path(
         '',
@@ -15,6 +17,6 @@ urlpatterns = [
     path(
         'update/<int:pk>/',
         views.PropertyUpdate.as_view(),
-        name='create'
+        name='update'
     ),
 ]

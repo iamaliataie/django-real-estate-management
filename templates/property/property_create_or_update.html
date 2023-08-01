@@ -1,9 +1,28 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 
+
+
+{% block extra_cssjs %}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin="">
+    </script>
+
+    <style>
+    #map { height: 400px; width: 800px; margin: 0 auto; }
+    </style>
+{% endblock extra_cssjs %}
+    
 {% block content %}
+
+
 <form enctype="multipart/form-data" class="container" method="post" id="product_form">
     {% csrf_token %}
-    <!-- main form start --- in our case product form -->
     <div class="card">
         <div class="card-header card-header-secondary">
             <h4 class="card-title">Add Products</h4>
@@ -25,23 +44,23 @@
             </div>
         {% endfor %}
     </div>
-    <!-- main form end --- in our case product form -->
-
-    <!-- inline form for Images start -->
-
-    <!-- EXPLAINING with named_formsets.images as formset -->
-    <!-- Note: named_formsets is used in get_context_data function in views.py -->
-    <!-- Note: here images is our ImageFormSet name, used in get_named_formsets function in views.py -->
     {% with named_formsets.images as formset %}  
         {{ formset.management_form }}
         <script type="text/html" id="images-template">   // id="inlineformsetname-template"
-            <tr id="images-__prefix__" class= hide_all>  // id="inlineformsetname-__prefix__"
+            <tr id="images-__prefix__" class=hide_all>  // id="inlineformsetname-__prefix__"
                 {% for fields in formset.empty_form.hidden_fields %}
                     {{ fields }}
                 {% endfor %}
             
-                {% for fields in formset.empty_form.visible_fields %}
-                    <td>{{fields}}</td>
+                {% for field in formset.empty_form.visible_fields %}
+                        
+                    <td>
+                        
+                        {% if field.name != 'DELETE' %}
+                            {{ field|as_crispy_field }}
+                        {% endif %}
+                            
+                    </td>
                 {% endfor %}
             </tr>
         </script>
@@ -53,8 +72,6 @@
             <table class="table card-body">
                 <thead class="text-secondary">
                     <th>Image <span style="color: red;" class="required">*</span></th>
-                    <th>Delete?</th>
-                    <th>Custom Delete btn</th>
                 </thead>
                 <tbody id="item-images">  <!-- id="item-inlineformsetname" -->
                     <!-- formset non forms errors -->
@@ -63,41 +80,18 @@
                     {% endfor %}
                     {% for forms in formset %}
                         {{ forms.management_form }}
-                        <tr id="images-{{ forloop.counter0 }}" class= hide_all>  <!-- id="inlineformsetname-counter" -->
+                        <tr id="images-{{ forloop.counter0 }}" class=hide_all>  <!-- id="inlineformsetname-counter" -->
                             {{ forms.id }}
                             {% for field in forms.visible_fields %}
-                                <td>
-                                    {{field}}
-                                    {% for error in field.errors %}
-                                        <span style="color: red">{{ error }}</span>
-                                    {% endfor %}
-                                </td>
+                                {% if field.name != 'DELETE' %}
+                                    <td>
+                                        {{ field|as_crispy_field }}
+                                        {% for error in field.errors %}
+                                            <span style="color: red">{{ error }}</span>
+                                        {% endfor %}
+                                    </td>
+                                {% endif %}
                             {% endfor %}
-                            <!-- delete code -->
-                            {% if forms.instance.pk %}
-                                <td>
-                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal{{formss.instance.pk}}">
-                                        Delete
-                                    </button>
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="exampleModal{{formss.instance.pk}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel{{formss.instance.pk}}" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel{{formss.instance.pk}}">Are Your Sure You Want To Delete This?</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <a href="{% url 'products:delete_image' formss.instance.pk %}" type="button" class="btn btn-primary">Yes, Delete</a>
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
-                                        </div>
-                                    </div>
-                                </td>            
-                            {% endif %}
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -105,12 +99,13 @@
             <a href="#" id="add-image-button" class="btn btn-secondary add-images">Add More</a> <!-- id="add-inlineformsetname-button" -->
         </div>
     {% endwith %}
-    <!-- inline form for Images end --> 
+    <!-- inline form for Images end -->
 
         <div class="form-group">
             <button type="submit" class="btn btn-secondary btn-block">Submit</button>
         </div>
 </form>
+<div id="map"></div>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 
@@ -120,17 +115,39 @@
       $('.add-images').click(function(ev) {
           ev.preventDefault();
           var count = $('#item-images').children().length;
-          console.log(count);
-          if (count < 5){
-            var tmplMarkup = $('#images-template').html();
-            var compiledTmpl = tmplMarkup.replace(/__prefix__/g, count);
-            $('#item-images').append(compiledTmpl);
-    
-            // update form count
-            $('#id_images-TOTAL_FORMS').attr('value', count+1);
-          }
-        });
+          var tmplMarkup = $('#images-template').html();
+          var compiledTmpl = tmplMarkup.replace(/__prefix__/g, count);
+          $('#item-images').append(compiledTmpl);
+  
+          // update form count
+          $('#id_images-TOTAL_FORMS').attr('value', count+1);
+      });
   });
+
+  var latitude = $('#id_latitude')
+  var longitude = $('#id_longitude')
+
+  var map = L.map('map').setView([34.54062271336702, 69.17108384905345], 18);
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 22,
+        attribution: '© OpenStreetMap'
+      }).addTo(map);
+      var marker = null;
+      map.on('click', function (e){
+        console.log(marker);
+        var coord = e.latlng;
+        var lat = coord.lat;
+        var lng = coord.lng;
+        if (marker != null){
+          marker.remove();
+          marker = null
+        }
+        marker = L.marker(e.latlng);
+        marker.addTo(map);
+        console.log("You clicked the map at latitude: " + lat + " and longitude: " + lng);
+        latitude.val(lat);
+        longitude.val(lng);
+      })
+
 </script>
-        
 {% endblock content %}

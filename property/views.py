@@ -9,6 +9,13 @@ class Home(ListView):
     model = Property
     template_name = 'home.html'
 
+    
+    def get_context_data(self, **kwargs):
+        context = super(Home, self).get_context_data(**kwargs)
+        locations = list(Property.objects.values())
+        context['locations'] = locations
+        return context
+    
 
 class PropertyInline():
     form_class = PropertyForm
@@ -63,11 +70,12 @@ class PropertyCreate(PropertyInline, CreateView):
                 'images': ImageFormSet(self.request.POST or None, self.request.FILES or None, prefix='images'),
             }
 
-
 class PropertyUpdate(PropertyInline, UpdateView):
     def get_context_data(self, **kwargs):
         ctx = super(PropertyUpdate, self).get_context_data(**kwargs)
         ctx['named_formsets'] = self.get_named_formsets()
+        
+        print(ctx['named_formsets'])
         return ctx
 
     def get_named_formsets(self):

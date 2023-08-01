@@ -18,11 +18,11 @@ class ImageForm(forms.ModelForm):
 
     class Meta:
         model = Image
-        fields = '__all__'
+        fields = ['image']
 
 
 
 ImageFormSet = inlineformset_factory(
     Property, Image, form=ImageForm,
-    extra=1, can_delete=True, can_delete_extra=True
+    extra=1,
 )

@@ -13,9 +13,11 @@ class Property(models.Model):
     owner = models.CharField(max_length=50)
     title = models.CharField(max_length=100)
     location = models.CharField(max_length=255)
-    price = models.DecimalField(max_digits=6, decimal_places=2)
+    latitude = models.FloatField(null=True, blank=True)
+    longitude = models.FloatField(null=True, blank=True)
+    price = models.DecimalField(max_digits=20, decimal_places=2)
     size = models.CharField(max_length=50)
-    description = models.CharField(max_length=255)
+    description = models.TextField(max_length=255)
     
     class Meta:
         verbose_name = 'Property'
