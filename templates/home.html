@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
     crossorigin=""/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
 {% endblock extra_css %}
 
 
@@ -27,8 +28,8 @@
             <div class="col-12 col-md-9">
                 <div id="map" class="h-100"></div>
             </div>
-            <div class="col-12 col-md-3 h-100">
-                <div class="mh-100 mw-100 overflow-auto">
+            <div class="col-12 col-md-3">
+                <div class="right-sidebar mw-100 overflow-auto">
                     <div class="row g-2 p-3">
                         {% for property in object_list|slice:":6" %}
                             <div class="card w-100 shadow p-0 overflow-hidden">
@@ -52,16 +53,14 @@
                                     <h4 class="card-title fw-bold">{{ property.title }}</h4>
                                     <p class="card-text">{{ property.description|truncatewords:"10" }}</p>
                                     <h5>{{ property.price|format_amount}}</h5>
-                                    <a href="{% url 'property:update' property.id %}" class="btn btn-primary">View Property</a>
+                                    <a href="{% url 'property:property_detail' property.id %}" class="btn btn-primary">View Property</a>
                                 </div>
                             </div>
                         {% endfor %}
-                        <div class="card w-100 d-flex justify-content-center align-items-center bg-light" style="height: 300px;">
-                            <a class="fw-bolder">View More</a>
-                        </div>
+                        
                         {% if locations|length > 6 %}
-                        <div class="card w-100">
-                            <h1>View More</h1>
+                        <div class="card w-100 d-flex justify-content-center align-items-center bg-light" style="height: 300px;">
+                            <a href="{% url 'property:property_list' %}" class="fw-bolder">View More</a>
                         </div>
                         {% endif %}
                             
@@ -79,6 +78,7 @@
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
     crossorigin="">
     </script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
     
     <script>
         var map = L.map('map').setView([34.54062271336702, 69.17108384905345], 18);
@@ -86,7 +86,7 @@
                 maxZoom: 22,
                 attribution: '© OpenStreetMap'
             }).addTo(map);
-
+            L.Control.geocoder().addTo(map);
 
         let locations = JSON.parse(document.getElementById('locations_json').textContent)
         locations.forEach(element => {
@@ -108,6 +108,8 @@
                 
             }
 
+            console.log(element.get_type_colors);
+
             var Icon = new L.Icon({
                 iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${color}.png`,
                 shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
@@ -117,11 +119,16 @@
                 shadowSize: [41, 41]
             });
 
-            let popup = ' <div> <span class="badge bg-'+ bg +'">' + type + '</span>' +
-                    '<p>' + element.title + '</p>' +
-                    '<a href="/update/'+ element.id +'/">Show detail</a></div>';
+            let popup = '<div class="row g-2">' + 
+                        '<div class="col-12"><span class="badge bg-'+ bg +' py-2">' + type + '</span></div>' +
+                        '<div class="col-12">' +
+                            '<h6 class="fw-bold m-0">' + element.title + '</h6>' +
+                            '<p class="my-2">' + element.location + '</p>' +
+                        '</div>' +
+                    '<a href="/properties/'+ element.id + '" class="col-12 d-block bg-primary text-white rounded p-2 text-center">Show Detail</a>' + 
+                    '</div>';
 
-            L.marker([element.latitude, element.longitude], {'icon': Icon}).addTo(map)
+            L.marker([element.latitude, element.longitude], {'icon': Icon}, {'draggable': true}).addTo(map)
             .bindPopup(popup).openPopup();
         });
     </script>

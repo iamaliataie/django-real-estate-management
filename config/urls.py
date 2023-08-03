@@ -26,6 +26,11 @@ urlpatterns = [
         include('property.urls'),
         name='property'
     ),
+    path(
+        'accounts/',
+        include('account.urls'),
+        name='account'
+    ),
     
     path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -15,7 +15,7 @@ class Property(models.Model):
     location = models.CharField(max_length=255)
     latitude = models.FloatField(null=True, blank=True)
     longitude = models.FloatField(null=True, blank=True)
-    price = models.DecimalField(max_digits=20, decimal_places=2)
+    price = models.DecimalField(max_digits=20, decimal_places=0)
     size = models.CharField(max_length=50)
     description = models.TextField(max_length=255)
     
@@ -24,7 +24,7 @@ class Property(models.Model):
         verbose_name_plural = 'Properties'
     
     def __str__(self) -> str:
-        return self.owner
+        return self.title
 
 
 class Image(models.Model):
@@ -34,7 +34,7 @@ class Image(models.Model):
     image = models.ImageField(blank=True, upload_to=path_generator)
 
     def __str__(self):
-        return self.property.owner
+        return self.property.title
 
 
 class PropertyType(models.Model):

@@ -1,0 +1,174 @@
+{% extends '../base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    
+    {% block nav_title %}
+        Property Detail
+    {% endblock nav_title %}
+        
+{% endblock title %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <link rel="stylesheet" href="{% static 'css/carousel.css' %}">
+    <style>
+        #map{
+            width: 100%;
+            height: 600px;
+        }
+    </style>
+{% endblock extra_css %}
+    
+{% block content %}
+<div class="bg-white p-4 rounded mb-3">
+    <h3 class="fw-bold">{{ property.title}}</h3>
+    <p class="badge bg-{% if property.type.title == 'Rental' %}
+            bg-warning
+        {% elif property.type.title == 'Commercial' %}
+            bg-danger
+        {% else %}
+            bg-success
+        {% endif %} fs-6">
+        {{ property.type.title }}
+    </p>
+</div>
+<div class="row g-4">
+    <div class="col-12 col-md-7">
+        <div class="bg-white p-4 rounded mb-3">
+            <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+  
+                <div class="carousel-inner">
+                  
+                  {% for image in property.images.all %}
+                  <div class="carousel-item 
+                  {% if property.images.all.0 == image %}
+                    active
+                  {% endif %}
+                    ">      
+                    <img src="{{ image.image.url }}" alt="" class="imge-fluid w-100 h-100">
+                  </div>
+                  {% endfor %}
+            
+                  
+                  <!--thumbnails-->
+              </div>
+                <div class="carousel-indicators">
+                    {% for image in property.images.all %}
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="{{ forloop.counter0 }}" class="{% if property.images.all.0 == image %} active {% endif %}" aria-current="true" aria-label="Slide {{forloop.counter0}}"><img class="d-block w-100" src="{{ image.image.url }}" class="img-fluid"></button>
+                    {% endfor %}
+                        
+                </div>
+            </div>
+        </div>
+        <div class="bg-white p-4 rounded mb-3">
+            <h5 class="fw-bolder">Description</h5>
+            <p>{{ property.description }}</p>
+        </div>
+        <div class="bg-white p-4 rounded mb-3">
+            <h5 class="fw-bolder">Features</h5>
+            <span class="badge bg-primary"><i class='bx bx-bookmark-minus'></i> {{ property.type.title }}</span>
+        </div>
+        <div class="bg-white p-4 rounded mb-3">
+            <h5 class="fw-bolder">Address</h5>
+            <p>{{ property.location }}</p>
+        </div>
+    </div>
+    <div class="col-12 col-md-5">
+        <div class="bg-white rounded p-4 mb-3">
+            <div id="map"></div>
+        </div>
+        <div class="bg-white rounded p-4 mb-3">
+            <div>
+                <h1>Inquiry</h1>
+                
+                {% if messages %}
+                    
+                    {% for message in messages %}
+                        <p class="alert alert-{{message.tags}}">{{ message }}</p>
+                    {% endfor %}
+                        
+                {% endif %}
+                    
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="row g-2">
+                        <div class="col-12">
+                            {{ form.title|as_crispy_field }}
+                        </div>
+                        <div class="col-12 col-md-6">
+                            {{ form.email|as_crispy_field }}
+                        </div>
+                        <div class="col-12 col-md-6">
+                            {{ form.phone|as_crispy_field }}
+                        </div>
+                        <div class="col-12">
+                            {{ form.content|as_crispy_field }}
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block extra_js %}
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin="">
+    </script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+    
+    <script>
+        var map = L.map('map').setView([{{property.latitude}}, {{property.longitude}}], 18);
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 22,
+                attribution: '© OpenStreetMap'
+            }).addTo(map);
+        
+            let type = 'Rental';
+            let bg = 'warning';
+            let color = 'yellow';
+
+            if ({{property.type_id}} == 2){
+                type = 'Commercial';
+                bg = 'danger';
+                color = 'red';
+                
+            }
+            else if ({{property.type_id}} == 3){
+                type = 'Residential';
+                bg = 'success';
+                color = 'green';
+                
+            }
+
+            var Icon = new L.Icon({
+                iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${color}.png`,
+                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                iconSize: [25, 41],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34],
+                shadowSize: [41, 41]
+            });
+
+            let popup = '<div class="row g-2">' + 
+                        '<div class="col-12"><span class="badge bg-'+ bg +' py-2">' + type + '</span></div>' +
+                        '<div class="col-12">' +
+                            '<h6 class="fw-bold m-0">' + '{{property.title}}' + '</h6>' +
+                            '<p class="my-2">' + '{{property.location}}' + '</p>' +
+                        '</div>' +
+                    '</div>';
+
+            L.marker([{{property.latitude}}, {{property.longitude}}], {'icon': Icon}).addTo(map)
+            .bindPopup(popup).openPopup();
+    </script>
+{% endblock extra_js %}

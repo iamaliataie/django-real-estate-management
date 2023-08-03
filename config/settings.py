@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     
     #installed applications
     'property.apps.PropertyConfig',
+    'inquiry.apps.InquiryConfig',
+    'account.apps.AccountConfig',
     
     # external packages
     'django_cleanup.apps.CleanupConfig',
@@ -140,3 +142,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+AUTH_USER_MODEL = 'account.User'
+
+LOGIN_URL = 'accounts:login'
+LOGIN_REDIRECT_URL = 'property:home'
+LOGOUT_REDIRECT_URL = 'accounts:login'

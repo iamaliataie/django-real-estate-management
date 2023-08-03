@@ -1,0 +1,70 @@
+{% extends '../base.html' %}
+{% load custom_tags %}
+
+{% block title %}
+    {% block nav_title %}
+        Properties
+    {% endblock nav_title %}
+{% endblock title %}
+    
+{% block content %}
+
+    <div class="row gx-4 mb-4 border-bottom">
+        <div class="col-12 col-md-6">
+            <form method="post" class="d-flex justify-content-between align-items-center">
+                {% csrf_token %}
+                <input type="hidden" name="type" value="filter">
+                <label for="" class="fw-bolder">Filter</label>
+                <select name="filter" id="" class="w-100 form-control m-2">
+                    
+                    {% for type in property_types %}
+                        <option value="{{type.title}}">{{ type.title }}</option>
+                    {% endfor %}
+                        
+                </select>
+                <button class="btn btn-primary rounded" >Filter</button>
+            </form>
+        </div>
+        <div class="col-12 col-md-6">
+            <form method="post" class="d-flex justify-content-between align-items-center">
+                {% csrf_token %}
+                <input type="hidden" name="type" value="sort">
+                <label for="" class="fw-bolder">Sort</label>
+                <select name="sort" id="" class="w-100 form-control m-2">
+                    <option value="id">Latest</option>
+                    <option value="title">Name</option>
+                    <option value="price">Price</option>
+                </select>
+                <button class="btn btn-primary rounded" >Sort</button>
+            </form>
+        </div>
+    </div>
+    <div class="row g-3">
+        {% for property in properties %}
+            <div class="col-12 col-md-3">
+                <div class="card w-100 shadow p-0 overflow-hidden">
+                        <img src="{{property.images.all.0.image.url}}" class="w-100" alt="{{ property.title }}">
+                    <div class="card-body">
+                        <small class="badge 
+                            {% if property.type.title == 'Rental' %}
+                                bg-warning
+                                {% elif property.type.title == 'Commercial' %}
+                                bg-danger
+                                {% else %}
+                                bg-success
+                            {% endif %}
+                            mb-2">
+                            {{ property.type.title}} 
+                        </small>
+                        <h4 class="card-title fw-bold">{{ property.title }}</h4>
+                        <p class="card-text">{{ property.description|truncatewords:"10" }}</p>
+                        <h5>{{ property.price|format_amount}}</h5>
+                        <a href="{% url 'property:property_detail' property.id %}" class="btn btn-primary">View Property</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+            
+    </div>
+{% endblock content %}
+    

@@ -1,7 +1,11 @@
 from django.shortcuts import render, redirect
-from django.views.generic import CreateView, ListView, UpdateView
-from .models import Property
+from django.contrib import messages
+from django.views.generic import CreateView, UpdateView, DetailView, ListView
+from django.views.generic.edit import FormMixin
+from .models import Property, PropertyType
 from .forms import PropertyForm, ImageFormSet
+
+from inquiry.forms import InquiryForm
 
 # Create your views here.
 
@@ -9,13 +13,59 @@ class Home(ListView):
     model = Property
     template_name = 'home.html'
 
-    
     def get_context_data(self, **kwargs):
         context = super(Home, self).get_context_data(**kwargs)
         locations = list(Property.objects.values())
         context['locations'] = locations
         return context
+
+
+class PropertyListView(ListView):
+    model = Property
+    template_name = 'property/property_list.html'
     
+    def get_context_data(self, **kwargs):
+        context = super(PropertyListView, self).get_context_data(**kwargs)
+        global properties, property_types
+        properties = Property.objects.all()
+        property_types = PropertyType.objects.all()
+        context['properties'] = properties
+        context['property_types'] = property_types
+        return context
+
+    def post(self, request, *args, **kwargs):
+        global properties
+        form = self.request.POST
+        if form['type'] == 'search':
+            properties = Property.objects.filter(title__icontains=form['title'])
+        elif form['type'] == 'filter':
+            properties = Property.objects.filter(type__title=form['filter'])
+        else:
+            properties = properties.order_by(form['sort'])
+            
+        context = {
+            'properties': properties,
+            'property_types': property_types
+        }
+        return render(request, 'property/property_list.html', context)
+    
+
+class PropertyDetailView(FormMixin, DetailView):
+    model = Property
+    template_name = 'property/property_detail.html'
+    context_object_name = 'property'
+    form_class = InquiryForm
+    
+    
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        if form.is_valid():
+            inquiry = form.save(commit=False)
+            inquiry.property = self.get_object()
+            inquiry.save()
+            messages.success(request, 'Your inquiry has been sent successfully')
+        else: messages.warning(request, 'Your inquiry has not been sent successfully')
+        return redirect('property:property_detail', pk=self.get_object().id)
 
 class PropertyInline():
     form_class = PropertyForm
@@ -69,6 +119,7 @@ class PropertyCreate(PropertyInline, CreateView):
             return {
                 'images': ImageFormSet(self.request.POST or None, self.request.FILES or None, prefix='images'),
             }
+
 
 class PropertyUpdate(PropertyInline, UpdateView):
     def get_context_data(self, **kwargs):

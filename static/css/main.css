@@ -37,9 +37,6 @@ a {
   position: fixed;
   top: 0;
   left: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   padding: 0 1rem;
   background-color: #3a3a3a;
   z-index: 20;
@@ -152,48 +149,30 @@ a {
   height: 100%;
 }
 
+#map {
+  z-index: 0;
+}
 
 .main-content{
-    height: calc(100vh - calc(var(--header-height) + 1rem));
+    min-height: calc(100vh - calc(var(--header-height) + 1rem));
     width: 100%;
+    background-color: #e7e7e7;
+    position: relative;
+}
+
+.right-sidebar, .login-container{
+  height: calc(100vh - calc(var(--header-height) + 3rem));
 }
 
 .bg-light {
   background-color: rgb(162, 87, 231)
 }
 
-@media screen and (min-width: 768px) {
-  body {
-    margin: calc(var(--header-height) + 1rem) 0 0 0;
-    padding-left: calc(var(--nav-width));
-  }
-
-  .header {
-    height: calc(var(--header-height) + 1rem);
-    padding: 0 2rem 0 calc(var(--nav-width) + 2rem);
-  }
-
-  .header_img {
-    width: 40px;
-    height: 40px;
-  }
-
-  .header_img img {
-    width: 45px;
-  }
-
-  .l-navbar {
-    left: 0;
-    padding: 1rem 1rem 0 0;
-  }
-
-  .show {
-    width: calc(var(--nav-width) + 156px);
-  }
-
-  .body-pd {
-    padding-left: calc(var(--nav-width) + 155px);
-  }
+.login-card {
+  background-color: var(--first-color);
+  padding: 30px;
+  border-radius: 10px;
+  color: white;
 }
 
 @media screen and (min-width: 768px) {
