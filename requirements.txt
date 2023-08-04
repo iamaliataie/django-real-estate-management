@@ -3,6 +3,7 @@ crispy-bootstrap5==0.7
 Django==4.2.3
 django-cleanup==8.0.0
 django-crispy-forms==2.0
+Pillow==10.0.0
 sqlparse==0.4.4
 typing_extensions==4.7.1
 tzdata==2023.3
