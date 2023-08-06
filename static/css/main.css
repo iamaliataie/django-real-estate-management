@@ -170,9 +170,6 @@ a {
 
 .login-card {
   background-color: var(--first-color);
-  padding: 30px;
-  border-radius: 10px;
-  color: white;
 }
 
 @media screen and (min-width: 768px) {

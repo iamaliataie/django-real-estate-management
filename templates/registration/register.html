@@ -5,14 +5,14 @@
 {% block title %}
     
     {% block nav_title %}
-        Login
+        Register
     {% endblock nav_title %}
         
 {% endblock title %}
     
 {% block content %}
     <div class="login-container d-flex justify-content-center align-items-center">
-        <div class="login-card p-4 rounded col-12 col-md-3 text-white">
+        <div class="login-card p-4 rounded col-12 col-md-6 text-white">
             <div class="text-center mb-3">
                 <img src="{% static 'images/logo.png' %}" alt="logo" width="50">
                 <h5 class="mt-2">Real Estate Management</h5>
@@ -28,9 +28,24 @@
                 
             <form method="post">
                 {% csrf_token %}
-                {{ form.username|as_crispy_field }}
-                {{ form.password|as_crispy_field }}
-                <button type="submit" class="btn btn-primary w-100">Login</button>
+                <div class="row ga-2">
+                    <div class="col-12 col-md-6">
+                        {{ form.first_name|as_crispy_field }}
+                    </div>
+                    <div class="col-12 col-md-6">
+                        {{ form.last_name|as_crispy_field }}
+                    </div>
+                    <div class="col-12">
+                        {{ form.email|as_crispy_field }}
+                    </div>
+                    <div class="col-12 col-md-6">
+                        {{ form.password1|as_crispy_field }}
+                    </div>
+                    <div class="col-12 col-md-6">
+                        {{ form.password2|as_crispy_field }}
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Register</button>
             </form>
         </div>
     </div>
