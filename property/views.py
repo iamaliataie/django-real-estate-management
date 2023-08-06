@@ -2,11 +2,12 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.views.generic import CreateView, UpdateView, DetailView, ListView
 from django.views.generic.edit import FormMixin
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from .models import Property, PropertyType
 from .forms import PropertyForm, ImageFormSet
 
 from inquiry.forms import InquiryForm
-
 # Create your views here.
 
 class Home(ListView):
@@ -67,6 +68,23 @@ class PropertyDetailView(FormMixin, DetailView):
         else: messages.warning(request, 'Your inquiry has not been sent successfully')
         return redirect('property:property_detail', pk=self.get_object().id)
 
+@login_required
+@csrf_exempt
+def add_to_favorites(request):
+    
+    form = request.POST
+    if not form.get('property_id'):
+        print('something is not a valid form')
+    else:
+        property = Property.objects.filter(id=form.get('property_id')).first()
+        if not property:
+            print('property not found')
+        else:
+            request.user.favorites.add(property)
+            request.user.save()
+    
+    return redirect('property:property_detail', pk=2)
+
 class PropertyInline():
     form_class = PropertyForm
     model = Property
@@ -102,7 +120,7 @@ class PropertyInline():
             image.property = self.object
             image.save()
             
-            
+                  
 class PropertyCreate(PropertyInline, CreateView):
 
     def get_context_data(self, **kwargs):

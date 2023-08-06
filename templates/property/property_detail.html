@@ -26,16 +26,34 @@
     
 {% block content %}
 <div class="bg-white p-4 rounded mb-3">
-    <h3 class="fw-bold">{{ property.title}}</h3>
-    <p class="badge bg-{% if property.type.title == 'Rental' %}
-            bg-warning
-        {% elif property.type.title == 'Commercial' %}
-            bg-danger
-        {% else %}
-            bg-success
-        {% endif %} fs-6">
-        {{ property.type.title }}
-    </p>
+    <div class="d-flex justify-content-between align-items-start">
+        <div class="">
+            <h3 class="fw-bold">{{ property.title}}</h3>
+            <p class="badge bg-{% if property.type.title == 'Rental' %}
+                    bg-warning
+                {% elif property.type.title == 'Commercial' %}
+                    bg-danger
+                {% else %}
+                    bg-success
+                {% endif %} fs-6">
+                {{ property.type.title }}
+            </p>
+        </div>
+        
+        <div>
+        {% if request.user.is_authenticated and property not in request.user.favorites.all %}
+            <form action="{% url 'property:add_to_favorites' %}" method="post">
+                <input type="hidden" name="property_id" value="{{ property.id }}">
+                <button type="submit" class="btn btn-primary">Save</button>
+            </form>
+            {% elif request.user.is_authenticated and property in request.user.favorites.all %}
+                <p class="d-flex justify-content-between align-items-center p-2 bg-success rounded text-white"><i class='bx bx-check-circle'></i> <span class="ms-1">Saved</span></p>
+            {% else %}
+            <p class="btn btn-primary cursor-none">Login to Save</p>
+            {% endif %}
+        </div>
+            
+    </div>
 </div>
 <div class="row g-4">
     <div class="col-12 col-md-7">

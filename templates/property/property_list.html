@@ -59,7 +59,18 @@
                         <h4 class="card-title fw-bold">{{ property.title }}</h4>
                         <p class="card-text">{{ property.description|truncatewords:"10" }}</p>
                         <h5>{{ property.price|format_amount}}</h5>
-                        <a href="{% url 'property:property_detail' property.id %}" class="btn btn-primary">View Property</a>
+                        <div class="row gap-2">
+                            <div class="col-12">
+                                <a href="{% url 'property:property_detail' property.id %}" class="btn btn-primary w-100">View Property</a>
+                            </div>
+                            
+                            {% if request.user.is_authenticated and request.user.is_superuser %}
+                                <div class="col-12">
+                                    <a href="{% url 'property:property_detail' property.id %}" class="btn btn-warning w-100">Update Property</a>
+                                </div>
+                            {% endif %}
+                                
+                        </div>
                     </div>
                 </div>
             </div>

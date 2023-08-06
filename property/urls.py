@@ -10,7 +10,7 @@ urlpatterns = [
         name='home'
     ),
     path(
-        'properties',
+        'properties/',
         views.PropertyListView.as_view(),
         name='property_list'
     ),
@@ -18,6 +18,11 @@ urlpatterns = [
         'properties/<int:pk>',
         views.PropertyDetailView.as_view(),
         name='property_detail'
+    ),
+    path(
+        'add_to_favorites/',
+        views.add_to_favorites,
+        name='add_to_favorites'
     ),
     path(
         'create/',
