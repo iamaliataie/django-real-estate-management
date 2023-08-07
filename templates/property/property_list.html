@@ -3,7 +3,7 @@
 
 {% block title %}
     {% block nav_title %}
-        Properties
+        {{ page_title}}
     {% endblock nav_title %}
 {% endblock title %}
     
@@ -39,6 +39,13 @@
             </form>
         </div>
     </div>
+
+    {% if request.user.is_authenticated and request.user.is_superuser or request.user.is_staff %}
+    <div class="mb-3 text-end">
+        <a href="{% url 'accounts:property_create' %}" class="btn btn-success">Add Property</a>
+    </div>
+    {% endif %}
+        
     <div class="row g-3">
         {% for property in properties %}
             <div class="col-12 col-md-3">
@@ -64,9 +71,15 @@
                                 <a href="{% url 'property:property_detail' property.id %}" class="btn btn-primary w-100">View Property</a>
                             </div>
                             
-                            {% if request.user.is_authenticated and request.user.is_superuser %}
+                            {% if request.user.is_authenticated and request.user.is_superuser or property.agent == request.user %}
                                 <div class="col-12">
-                                    <a href="{% url 'property:property_detail' property.id %}" class="btn btn-warning w-100">Update Property</a>
+                                    <a href="{% url 'accounts:property_update' property.id %}" class="btn btn-warning w-100">Update Property</a>
+                                </div>
+                            {% endif %}
+
+                            {% if request.resolver_match.url_name == 'bookmarks' %}
+                                <div class="col-12">
+                                    <a href="{% url 'accounts:remove_from_bookmarks' property.id %}" class="btn btn-danger w-100">Remove from bookmarks</a>
                                 </div>
                             {% endif %}
                                 

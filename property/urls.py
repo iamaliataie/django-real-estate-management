@@ -23,15 +23,5 @@ urlpatterns = [
         'add_to_favorites/',
         views.add_to_favorites,
         name='add_to_favorites'
-    ),
-    path(
-        'create/',
-        views.PropertyCreate.as_view(),
-        name='create'
-    ),
-    path(
-        'update/<int:pk>/',
-        views.PropertyUpdate.as_view(),
-        name='update'
-    ),
+    )
 ]

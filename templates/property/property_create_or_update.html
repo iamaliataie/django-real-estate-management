@@ -7,98 +7,124 @@
     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
     crossorigin=""/>
     <style>
-    #map { height: 400px; width: 400px; margin: 0 auto;}
+    #map { height: 100%; width: 100%;}
     </style>
 
 {% endblock extra_css %}
     
 {% block content %}
 
-<div id="map"></div>
-<form enctype="multipart/form-data" class="container" method="post" id="product_form">
-    {% csrf_token %}
-    <div class="card">
-        <div class="card-header card-header-secondary">
-            <h4 class="card-title">Add Products</h4>
-        </div>
-        {% for field in form %}
-            <div class="form-group card-body">
-                <label>{{field.label}}</label>
-                {% if field.field.required %}
-                    <span style="color: red;" class="required">*</span>
-                {% endif %}
-            
-                {{field}}
-                {% if field.help_text %}
-                    <small style="color: grey">{{ field.help_text }}</small>
-                {% endif %}
-                {% for error in field.errors %}
-                    <p style="color: red">{{ error }}</p>
-                {% endfor %}
-            </div>
-        {% endfor %}
-    </div>
-    {% with named_formsets.images as formset %}  
-        {{ formset.management_form }}
-        <script type="text/html" id="images-template">   // id="inlineformsetname-template"
-            <tr id="images-__prefix__" class=hide_all>  // id="inlineformsetname-__prefix__"
-                {% for fields in formset.empty_form.hidden_fields %}
-                    {{ fields }}
-                {% endfor %}
-            
-                {% for field in formset.empty_form.visible_fields %}
-                        
-                    <td>
-                        
-                        {% if field.name != 'DELETE' %}
-                            {{ field|as_crispy_field }}
-                        {% endif %}
-                            
-                    </td>
-                {% endfor %}
-            </tr>
-        </script>
 
-        <div class="table-responsive card mt-4">
-            <div class="card-header card-header-secondary">
-                <h4 class="card-title">Add Images</h4>
+<div class="row g-2">
+    <div class="col-12 col-md-6">
+        <form enctype="multipart/form-data" class="container" method="post" id="product_form">
+            {% csrf_token %}
+            <div class="card">
+                <div class="card-header card-header-secondary">
+                    <h4 class="card-title">Add Property</h4>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            {{form.title|as_crispy_field}}
+                        </div>
+                        <div class="col-12 col-md-6">
+                            {{form.location|as_crispy_field}}
+                        </div>
+                        <div class="col-12 col-md-6">
+                            {{form.price|as_crispy_field}}
+                        </div>
+                        <div class="col-12 col-md-6">
+                            {{form.size|as_crispy_field}}
+                        </div>
+                        <div class="col-12 col-md-6">
+                            {{form.owner|as_crispy_field}}
+                        </div>
+                        <div class="col-12 col-md-6">
+                            {{form.type|as_crispy_field}}
+                        </div>
+                    </div>
+                    <hr>
+                    <h3>Location on map</h3>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            {{form.latitude|as_crispy_field}}
+                        </div>
+                        <div class="col-12 col-md-6">
+                            {{form.longitude|as_crispy_field}}
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        {{form.description|as_crispy_field}}
+                    </div>
+                </div>
             </div>
-            <table class="table card-body">
-                <thead class="text-secondary">
-                    <th>Image <span style="color: red;" class="required">*</span></th>
-                </thead>
-                <tbody id="item-images">  <!-- id="item-inlineformsetname" -->
-                    <!-- formset non forms errors -->
-                    {% for error in formset.non_form_errors %}
-                        <span style="color: red">{{ error }}</span>
-                    {% endfor %}
-                    {% for forms in formset %}
-                        {{ forms.management_form }}
-                        <tr id="images-{{ forloop.counter0 }}" class=hide_all>  <!-- id="inlineformsetname-counter" -->
-                            {{ forms.id }}
-                            {% for field in forms.visible_fields %}
+            {% with named_formsets.images as formset %}  
+                {{ formset.management_form }}
+                <script type="text/html" id="images-template">   // id="inlineformsetname-template"
+                    <tr id="images-__prefix__" class=hide_all>  // id="inlineformsetname-__prefix__"
+                        {% for fields in formset.empty_form.hidden_fields %}
+                            {{ fields }}
+                        {% endfor %}
+                    
+                        {% for field in formset.empty_form.visible_fields %}
+                                
+                            <td>
+                                
                                 {% if field.name != 'DELETE' %}
-                                    <td>
-                                        {{ field|as_crispy_field }}
-                                        {% for error in field.errors %}
-                                            <span style="color: red">{{ error }}</span>
-                                        {% endfor %}
-                                    </td>
+                                    {{ field|as_crispy_field }}
                                 {% endif %}
+                                    
+                            </td>
+                        {% endfor %}
+                    </tr>
+                </script>
+        
+                <div class="table-responsive card mt-4">
+                    <div class="card-header card-header-secondary">
+                        <h4 class="card-title">Add Images</h4>
+                    </div>
+                    <table class="table card-body">
+                        <thead class="text-secondary">
+                            <th>Image <span style="color: red;" class="required">*</span></th>
+                        </thead>
+                        <tbody id="item-images">  <!-- id="item-inlineformsetname" -->
+                            <!-- formset non forms errors -->
+                            {% for error in formset.non_form_errors %}
+                                <span style="color: red">{{ error }}</span>
                             {% endfor %}
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            <a href="#" id="add-image-button" class="btn btn-secondary add-images">Add More</a> <!-- id="add-inlineformsetname-button" -->
-        </div>
-    {% endwith %}
-    <!-- inline form for Images end -->
-
-        <div class="form-group">
-            <button type="submit" class="btn btn-secondary btn-block">Submit</button>
-        </div>
-</form>
+                            {% for forms in formset %}
+                                {{ forms.management_form }}
+                                <tr id="images-{{ forloop.counter0 }}" class=hide_all>  <!-- id="inlineformsetname-counter" -->
+                                    {{ forms.id }}
+                                    {% for field in forms.visible_fields %}
+                                        {% if field.name != 'DELETE' %}
+                                            <td>
+                                                {{ field|as_crispy_field }}
+                                                {% for error in field.errors %}
+                                                    <span style="color: red">{{ error }}</span>
+                                                {% endfor %}
+                                            </td>
+                                        {% endif %}
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <a href="#" id="add-image-button" class="btn btn-secondary add-images">Add More</a> <!-- id="add-inlineformsetname-button" -->
+                </div>
+            {% endwith %}
+            <!-- inline form for Images end -->
+        
+                <div class="form-group">
+                    <button type="submit" class="btn btn-secondary btn-block">Submit</button>
+                </div>
+        </form>
+    </div>
+    <div class="col-12 col-md-6">
+        <div id="map"></div>
+    </div>
+</div>
 
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -122,31 +148,40 @@ crossorigin="">
       });
   });
 
-  var latitude = $('#id_latitude')
-  var longitude = $('#id_longitude')
+    let latitude = 34.54052689723983;
+    let longitude = 69.17092502117158;
+    var marker = null;
 
-  var map = L.map('map').setView([34.54062271336702, 69.17108384905345], 18);
-      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    var formLatitude = $('#id_latitude')
+    var formLongitude = $('#id_longitude')
+
+    if (formLatitude.val() && formLongitude.val()) {
+        latitude = formLatitude.val();
+        longitude = formLongitude.val();
+    }
+    
+    var map = L.map('map').setView([latitude, longitude], 18);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 22,
         attribution: '© OpenStreetMap'
-      }).addTo(map);
+    }).addTo(map);
+    
+    marker = L.marker([latitude, longitude]);
+    marker.addTo(map);
 
-      var marker = null;
-      map.on('click', function (e){
-        console.log(marker);
+    map.on('click', function (e){
         var coord = e.latlng;
         var lat = coord.lat;
         var lng = coord.lng;
         if (marker != null){
-          marker.remove();
-          marker = null
+            marker.remove();
+            marker = null
         }
         marker = L.marker(e.latlng);
         marker.addTo(map);
-        console.log("You clicked the map at latitude: " + lat + " and longitude: " + lng);
-        latitude.val(lat);
-        longitude.val(lng);
-      })
+        formLatitude.val(lat);
+        formLongitude.val(lng);
+        })
 
 </script>
 {% endblock content %}

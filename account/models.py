@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.base_user import BaseUserManager
 
-from property.models import Property
 # Create your models here.
 
 
@@ -37,7 +36,7 @@ class UserManager(BaseUserManager):
 class User(AbstractUser):
     username = None
     email = models.EmailField("Email address", unique=True)
-    favorites = models.ManyToManyField(Property, blank=True, related_name="users")
+    favorites = models.ManyToManyField('property.Property', blank=True, related_name="users")
     
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []

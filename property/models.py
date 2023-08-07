@@ -11,13 +11,14 @@ def path_generator(instance, filename):
 class Property(models.Model):
     type = models.ForeignKey('PropertyType', on_delete=models.DO_NOTHING, related_name='properties')
     owner = models.CharField(max_length=50)
+    agent = models.ForeignKey('account.User', on_delete=models.DO_NOTHING, null=True, related_name='agent_properties')
     title = models.CharField(max_length=100)
     location = models.CharField(max_length=255)
     latitude = models.FloatField(null=True, blank=True)
     longitude = models.FloatField(null=True, blank=True)
     price = models.DecimalField(max_digits=20, decimal_places=0)
     size = models.CharField(max_length=50)
-    description = models.TextField(max_length=255)
+    description = models.TextField()
     
     class Meta:
         verbose_name = 'Property'
