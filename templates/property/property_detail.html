@@ -49,7 +49,7 @@
             {% elif request.user.is_authenticated and property in request.user.favorites.all %}
                 <p class="d-flex justify-content-between align-items-center p-2 bg-success rounded text-white"><i class='bx bx-bookmark'></i> <span class="ms-1">Bookmarked</span></p>
             {% else %}
-            <p class="btn btn-primary cursor-none">Login to bookmark</p>
+            <a href="{% url 'accounts:login' %}" class="btn btn-primary">Login to bookmark</a>
             {% endif %}
         </div>
             
@@ -115,8 +115,11 @@
                 <form method="post">
                     {% csrf_token %}
                     <div class="row g-2">
-                        <div class="col-12">
+                        <div class="col-12 col-md-6">
                             {{ form.title|as_crispy_field }}
+                        </div>
+                        <div class="col-12 col-md-6">
+                            {{ form.name|as_crispy_field }}
                         </div>
                         <div class="col-12 col-md-6">
                             {{ form.email|as_crispy_field }}
@@ -126,6 +129,9 @@
                         </div>
                         <div class="col-12">
                             {{ form.content|as_crispy_field }}
+                        </div>
+                        <div class="col-12">
+                            {{ form.type|as_crispy_field }}
                         </div>
                     </div>
                     <button type="submit" class="btn btn-success">Submit</button>
@@ -146,7 +152,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
     
     <script>
-        var map = L.map('map').setView([{{property.latitude}}, {{property.longitude}}], 18);
+        var map = L.map('map').setView(['{{property.latitude}}', '{{property.longitude}}'], 18);
             L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 22,
                 attribution: '© OpenStreetMap'
@@ -156,13 +162,13 @@
             let bg = 'warning';
             let color = 'yellow';
 
-            if ({{property.type_id}} == 2){
+            if ('{{property.type_id}}' == 2){
                 type = 'Commercial';
                 bg = 'danger';
                 color = 'red';
                 
             }
-            else if ({{property.type_id}} == 3){
+            else if ('{{property.type_id}}' == 3){
                 type = 'Residential';
                 bg = 'success';
                 color = 'green';
@@ -186,7 +192,7 @@
                         '</div>' +
                     '</div>';
 
-            L.marker([{{property.latitude}}, {{property.longitude}}], {'icon': Icon}).addTo(map)
+            L.marker(['{{property.latitude}}', '{{property.longitude}}'], {'icon': Icon}).addTo(map)
             .bindPopup(popup).openPopup();
     </script>
 {% endblock extra_js %}

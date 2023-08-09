@@ -40,4 +40,9 @@ urlpatterns = [
         views.Register.as_view(),
         name='register'
     ),
+    path(
+        'activate/<uidb64>/<token>/',
+        views.activate,
+        name='activate'
+    ),
 ]

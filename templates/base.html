@@ -1,5 +1,6 @@
 {% load static %}
 {% load custom_tags %}
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -38,9 +39,20 @@
         </h3>
       <div class="row gap-2">
         
-        <div class="header_img col-2">
-          <img src="https://i.imgur.com/hczKIze.jpg" alt="" />
-        </div>
+        
+        {% if request.user.is_authenticated %}
+          <div class="text-white d-flex flex-column gy-1 align-items-end">
+            <span>{{ request.user.get_full_name }}</span>
+            
+            {% if request.user.is_superuser %}
+              <small>Amin</small>
+              {% elif request.user.is_staff and not request.user.is_superuser %}
+              <small>Agent</small>
+            {% endif %}
+              
+          </div>
+        {% endif %}
+          
       </div>
     </header>
     <div class="l-navbar" id="nav-bar">
@@ -60,17 +72,9 @@
               <i class="bx bx-home nav_icon"></i>
               <span class="nav_name">Properties</span>
             </a>
-            <a href="#" class="nav_link">
-              <i class="bx bx-message-square-detail nav_icon"></i>
-              <span class="nav_name">Messages</span>
-            </a>
-            <a href="#" class="nav_link">
-              <i class="bx bx-folder nav_icon"></i>
-              <span class="nav_name">Files</span>
-            </a>
-            <a href="#" class="nav_link">
-              <i class="bx bx-bar-chart-alt-2 nav_icon"></i>
-              <span class="nav_name">Stats</span>
+            <a href="{% url 'inquiry:inquiry_list' %}" class="nav_link {% if url_name == 'inquiry_list' %}active{% endif %}">
+              <i class='bx bx-conversation' ></i>
+              <span class="nav_name">Inquiries</span>
             </a>
             {% endwith %}
           </div>

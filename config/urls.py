@@ -27,6 +27,11 @@ urlpatterns = [
         name='property'
     ),
     path(
+        '',
+        include('inquiry.urls'),
+        name='inquiry'
+    ),
+    path(
         'accounts/',
         include('account.urls'),
         name='account'

@@ -1,0 +1,69 @@
+{% extends '../base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    
+    {% block nav-title %}
+        Inquiry Detail
+    {% endblock nav-title %}
+        
+{% endblock title %}
+
+
+{% block content %}
+
+    <div class="row gy-4">
+        <div class="col-12 col-md-7 d-flex flex-column gap-3">
+            <div class="p-3 bg-white rounded">
+                <h3>{{ object.property }}</h3>
+                <span class="badge bg-{{ object.type_color }}">{{ object.type }}</span>
+            </div>
+            <div class="p-3 bg-white rounded d-flex flex-column gap-3">
+                <div >
+                    <h3>{{ object.title }}</h3>
+                    <p>{{ inquiry.created_at|date:"M d, Y"  }}</p>
+                </div>
+                <p>{{ object.content }}</p>
+                <small>{{ object.name }} - &lt;{{ object.email }}&gt;</small>
+            </div>
+            <div class="p-3 bg-white rounded d-flex flex-column gap-3">
+                <h3>Replies</h3>
+                
+                {% for reply in object.replies.all %}
+
+                <div class="p-3 border rounded d-flex flex-column gap-3">
+                    <div >
+                        <h3>{{ reply.subject }}</h3>
+                        <p>{{ reply.created_at|date:"M d, Y"  }}</p>
+                    </div>
+                    <p>{{ reply.content }}</p>
+                </div>
+
+                {% endfor %}
+                    
+            </div>
+        </div>
+        <div class="col-12 col-md-5">
+            <div class="p-3 bg-white rounded d-flex flex-column gap-3">
+                <div>
+                    <h3>Reply</h3>
+                    <span class="">to: {{ object.name }} - &lt;{{ object.email }}&gt;</span>   
+                </div>
+                {% if messages %}
+                    
+                    {% for message in messages %}
+                        <p class="alert alert-{{message.tags}}">{{ message }}</p>
+                    {% endfor %}
+                        
+                {% endif %}
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <button class="btn btn-primary">Send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+    

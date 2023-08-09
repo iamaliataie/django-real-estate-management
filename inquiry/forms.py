@@ -1,7 +1,7 @@
 from django import forms
 from django.core.validators import RegexValidator
 
-from .models import Inquiry
+from .models import Inquiry, InquiryReply
 
 class Capitalize(forms.CharField):
     def to_python(self, value):
@@ -19,6 +19,14 @@ class InquiryForm(forms.ModelForm):
         widget=forms.TextInput(attrs={'placeholder': 'Title'})
     )
     
+    name = Capitalize(
+        max_length=100,
+        validators=[
+                RegexValidator(r'^[a-zA-ZÀ-ÿ\s]*$', message='Only letters are allowed'),
+                ],
+        widget=forms.TextInput(attrs={'placeholder': 'Full Name'})
+    )
+    
     email = Lowercase(
         label="Email Address",
         max_length=100,
@@ -33,7 +41,6 @@ class InquiryForm(forms.ModelForm):
     
     content = forms.CharField(
         label="Message",
-        max_length=255,
         widget=forms.Textarea(attrs={'placeholder': 'Your message','rows': 3, 'style': 'resize:none'})
     )
     
@@ -49,3 +56,15 @@ class InquiryForm(forms.ModelForm):
                 }
             ),
         }
+        
+        
+class InquiryReplyForm(forms.ModelForm):
+    
+    content = forms.CharField(
+        label="Message",
+        widget=forms.Textarea(attrs={'placeholder': 'Your message','rows': 3, 'style': 'resize:none'})
+    )
+    
+    class Meta:
+        model = InquiryReply
+        fields = ('subject', 'content')

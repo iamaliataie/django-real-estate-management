@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'property.apps.PropertyConfig',
     'inquiry.apps.InquiryConfig',
     'account.apps.AccountConfig',
-    'agent.apps.AgentConfig',
     
     # external packages
     'django_cleanup.apps.CleanupConfig',
@@ -149,3 +148,11 @@ AUTH_USER_MODEL = 'account.User'
 LOGIN_URL = 'accounts:login'
 LOGIN_REDIRECT_URL = 'property:home'
 LOGOUT_REDIRECT_URL = 'accounts:login'
+
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'netlinks.realestate@gmail.com'
+EMAIL_HOST_PASSWORD = 'kizetrkmltwkfydg'
+EMAIL_PORT = 587
