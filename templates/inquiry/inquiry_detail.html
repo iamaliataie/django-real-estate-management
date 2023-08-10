@@ -23,7 +23,7 @@
                     <h3>{{ object.title }}</h3>
                     <p>{{ inquiry.created_at|date:"M d, Y"  }}</p>
                 </div>
-                <p>{{ object.content }}</p>
+                <p>{{ object.content|linebreaks }}</p>
                 <small>{{ object.name }} - &lt;{{ object.email }}&gt;</small>
             </div>
             <div class="p-3 bg-white rounded d-flex flex-column gap-3">
@@ -36,7 +36,7 @@
                         <h3>{{ reply.subject }}</h3>
                         <p>{{ reply.created_at|date:"M d, Y"  }}</p>
                     </div>
-                    <p>{{ reply.content }}</p>
+                    <p>{{ reply.content|linebreaks }}</p>
                 </div>
 
                 {% endfor %}

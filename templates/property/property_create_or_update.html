@@ -148,18 +148,27 @@ crossorigin="">
       });
   });
 
+    let formLatitude = $('#id_latitude')
+    let formLongitude = $('#id_longitude')
+
     let latitude = 34.54052689723983;
     let longitude = 69.17092502117158;
     var marker = null;
-
-    var formLatitude = $('#id_latitude')
-    var formLongitude = $('#id_longitude')
 
     if (formLatitude.val() && formLongitude.val()) {
         latitude = formLatitude.val();
         longitude = formLongitude.val();
     }
     
+    formLatitude[0].addEventListener('focus', () => {
+        formLatitude.attr('readonly', true);
+    })
+
+    formLongitude[0].addEventListener('focus', () => {
+        formLatitude.attr('readonly', true);
+    })
+
+
     var map = L.map('map').setView([latitude, longitude], 18);
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 22,

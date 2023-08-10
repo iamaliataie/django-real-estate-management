@@ -36,12 +36,12 @@ class InquiryForm(forms.ModelForm):
                     message='Enter a valid email address'
                     )
                 ],
-        widget=forms.TextInput(attrs={'placeholder': 'Email Address'})
+        widget=forms.TextInput(attrs={'placeholder': 'We reply to your email address'})
     )
     
     content = forms.CharField(
         label="Message",
-        widget=forms.Textarea(attrs={'placeholder': 'Your message','rows': 3, 'style': 'resize:none'})
+        widget=forms.Textarea(attrs={'placeholder': 'Your message','rows': 3, 'style': 'resize:none; white-space: pre-line'}),
     )
     
     class Meta:

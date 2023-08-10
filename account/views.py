@@ -13,7 +13,7 @@ from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from .tokens import account_activation_token
-from django.core.mail import EmailMessage
+from django.core.mail import EmailMultiAlternatives
 
 
 from .mixins import AdminAccessMixin, AdminStaffAccessMixin, AdminAgentMixin
@@ -67,8 +67,6 @@ class PropertyInline():
                             
 class PropertyCreate(AdminStaffAccessMixin, PropertyInline, CreateView):
     
-    success_url = reverse_lazy('property:property_list')
-    
     def get_context_data(self, **kwargs):
         ctx = super(PropertyCreate, self).get_context_data(**kwargs)
         ctx['named_formsets'] = self.get_named_formsets()
@@ -83,6 +81,7 @@ class PropertyCreate(AdminStaffAccessMixin, PropertyInline, CreateView):
             return {
                 'images': ImageFormSet(self.request.POST or None, self.request.FILES or None, prefix='images'),
             }
+    
             
 class PropertyUpdate(AdminAgentMixin, PropertyInline, UpdateView):
     
@@ -152,18 +151,33 @@ class Register(CreateView):
         user.is_active = False
         user.save()
         
+        data = {
+            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            'token': account_activation_token.make_token(user),
+        }
+        
         current_site = get_current_site(self.request)
         mail_subject = 'Activate your account.'
-        message = render_to_string('registration/acc_active_email.html', {
+        html_message = render_to_string('registration/verify_email.html', {
             'user': user,
             'domain': current_site.domain,
-            'uid':urlsafe_base64_encode(force_bytes(user.pk)),
-            'token':account_activation_token.make_token(user),
+            'uid':data.get('uid'),
+            'token':data.get('token'),
         })
         to_email = form.cleaned_data.get('email')
-        email = EmailMessage(
-            mail_subject, message, to=[to_email]
+
+        from_email = settings.EMAIL_HOST_USER
+        recipient_list = [to_email]
+
+        text_message = f"Please verify your email address by going to this link http://127.0.0.1:8000/accounts/activate/{data['uid']}/{data['token']}"
+
+
+        # Create the EmailMultiAlternatives object
+        email = EmailMultiAlternatives(
+            mail_subject, text_message, from_email, recipient_list
         )
+        email.attach_alternative(html_message, "text/html")
+
         email.send()
 
         messages.success(self.request, 'Please confirm your email address to complete the registration')
@@ -180,6 +194,6 @@ def activate(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+        return render(request, 'registration/email_confirmed.html',)
     else:
         return HttpResponse('Activation link is invalid!')
