@@ -1,6 +1,14 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 
+{% block title %}
+    
+    {% block nav_title %}
+        {{ page_title }}
+    {% endblock nav_title %}
+        
+{% endblock title %}
+
 {% block extra_css %}
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -59,6 +67,31 @@
                     </div>
                 </div>
             </div>
+
+            
+            {% if object %}
+            
+            <div class="p-3 bg-white rounded mt-3">
+                
+                {% if object.images.all|length > 0 %}
+                    <div class="row">
+                        
+                        {% for image in object.images.all %}
+                            <div class="col-6 col-md-3 position-relative p-1" >
+                                <img src="{{ image.image.url }}" alt="" class="img-fluid">
+                                <a href="{% url 'accounts:remove_property_image' pk=image.id %}" class="badge bg-danger position-absolute top-0 end-0">X</i></a>
+                            </div>
+                        {% endfor %}
+                            
+                    </div>
+                {% else %}
+                    <h6 class="fw-bolder">No images</h6>
+                {% endif %}
+                    
+            </div>
+
+            {% endif %}
+
             {% with named_formsets.images as formset %}  
                 {{ formset.management_form }}
                 <script type="text/html" id="images-template">   // id="inlineformsetname-template"

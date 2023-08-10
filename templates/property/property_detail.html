@@ -26,7 +26,7 @@
     
 {% block content %}
 <div class="bg-white p-4 rounded mb-3">
-    <div class="d-flex justify-content-between align-items-start">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start">
         <div class="">
             <h3 class="fw-bold">{{ property.title}}</h3>
             <p class="badge bg-{% if property.type.title == 'Rental' %}
@@ -44,12 +44,12 @@
         {% if request.user.is_authenticated and property not in request.user.favorites.all %}
             <form action="{% url 'property:add_to_favorites' %}" method="post">
                 <input type="hidden" name="property_id" value="{{ property.id }}">
-                <button type="submit" class="btn btn-primary">Add to Bookmarks</button>
+                <button type="submit" class="btn btn-primary btn-sm">Add to Bookmarks</button>
             </form>
             {% elif request.user.is_authenticated and property in request.user.favorites.all %}
                 <p class="d-flex justify-content-between align-items-center p-2 bg-success rounded text-white"><i class='bx bx-bookmark'></i> <span class="ms-1">Bookmarked</span></p>
             {% else %}
-            <a href="{% url 'accounts:login' %}" class="btn btn-primary">Login to bookmark</a>
+            <a href="{% url 'accounts:login' %}" class="btn btn-primary btn-sm">Login to bookmark</a>
             {% endif %}
         </div>
             

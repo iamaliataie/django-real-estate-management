@@ -2,9 +2,9 @@ from django.conf import settings
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.http import HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, PasswordResetView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView, UpdateView, ListView
 
@@ -16,11 +16,11 @@ from .tokens import account_activation_token
 from django.core.mail import EmailMultiAlternatives
 
 
-from .mixins import AdminAccessMixin, AdminStaffAccessMixin, AdminAgentMixin
+from .mixins import AdminStaffAccessMixin, AdminAgentMixin
 from .forms import SignUpForm
 from .models import User
 
-from property.models import Property, PropertyType
+from property.models import Property, PropertyType, Image
 from property.forms import PropertyForm, ImageFormSet
 
 # Create your views here.
@@ -70,6 +70,7 @@ class PropertyCreate(AdminStaffAccessMixin, PropertyInline, CreateView):
     def get_context_data(self, **kwargs):
         ctx = super(PropertyCreate, self).get_context_data(**kwargs)
         ctx['named_formsets'] = self.get_named_formsets()
+        ctx['page_title'] = 'Create Property'
         return ctx
 
     def get_named_formsets(self):
@@ -88,13 +89,32 @@ class PropertyUpdate(AdminAgentMixin, PropertyInline, UpdateView):
     def get_context_data(self, **kwargs):
         ctx = super(PropertyUpdate, self).get_context_data(**kwargs)
         ctx['named_formsets'] = self.get_named_formsets()
-
+        ctx['page_title'] = 'Update Property'
         return ctx
 
     def get_named_formsets(self):
         return {
             'images': ImageFormSet(self.request.POST or None, self.request.FILES or None, prefix='images'),
         }
+
+
+@login_required
+def remove_property_image(request, pk):
+    image = get_object_or_404(Image, pk=pk)
+    property = image.property
+    image.delete()
+    return redirect('accounts:property_update', pk=property.id)
+
+
+class AgentPropertyListView(AdminStaffAccessMixin, ListView):
+    model = Property
+    template_name = 'property/property_list.html'
+    context_object_name = 'properties'
+    
+    def get_queryset(self):
+        queryset = super(AgentPropertyListView, self).get_queryset()
+        queryset = Property.objects.filter(agent=self.request.user)
+        return queryset
 
 
 class BookmarkView(LoginRequiredMixin, ListView):
@@ -197,3 +217,5 @@ def activate(request, uidb64, token):
         return render(request, 'registration/email_confirmed.html',)
     else:
         return HttpResponse('Activation link is invalid!')
+    
+    

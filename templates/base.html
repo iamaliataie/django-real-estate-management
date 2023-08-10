@@ -32,11 +32,11 @@
         <i class="bx bx-menu" id="header-toggle"></i>
       </div>
 
-      <h3 class="text-white">
+      <h5 class="text-white">
       {% block nav_title %}
         
       {% endblock nav_title %}
-        </h3>
+        </h5>
       <div class="row gap-2">
         
         
@@ -57,13 +57,13 @@
     </header>
     <div class="l-navbar" id="nav-bar">
       <nav class="nav">
+        {% with request.resolver_match.url_name as url_name %}
         <div>
           <a href="{% url 'property:home' %}" class="nav_logo">
             <img src="{% static 'images/logo.png' %}" alt="logo" width="20">
             <span class="nav_logo-name">Real Estate</span>
           </a>
           <div class="nav_list">
-            {% with request.resolver_match.url_name as url_name %}
             <a href="{% url 'property:home' %}" class="nav_link {% if url_name == 'home' %}active{% endif %}">
               <i class="bx bx-grid-alt nav_icon"></i>
               <span class="nav_name">Dashboard</span>
@@ -72,15 +72,22 @@
               <i class="bx bx-home nav_icon"></i>
               <span class="nav_name">Properties</span>
             </a>
-            <a href="{% url 'inquiry:inquiry_list' %}" class="nav_link {% if url_name == 'inquiry_list' %}active{% endif %}">
-              <i class='bx bx-conversation' ></i>
-              <span class="nav_name">Inquiries</span>
-            </a>
-            {% endwith %}
           </div>
         </div>
         <div>
         {% if request.user.is_authenticated %}
+          
+          {% if request.user.is_staff %}
+            <a href="{% url 'accounts:agent_property_list' %}" class="nav_link {% if url_name == 'agent_property_list' %}active{% endif %}">
+              <i class='bx bxl-product-hunt'></i>
+              <span class="nav_name">My Properties</span>
+            </a>
+            <a href="{% url 'inquiry:inquiry_list' %}" class="nav_link {% if url_name == 'inquiry_list' %}active{% endif %}">
+              <i class='bx bx-conversation' ></i>
+              <span class="nav_name">Inquiries</span>
+            </a>
+          {% endif %}
+            
           <a href="{% url 'accounts:bookmarks' %}" class="nav_link {% if url_name == 'bookmarks' %}active{% endif %}">
             <i class="bx bx-bookmark nav_icon"></i>
             <span class="nav_name">Bookmarks</span>
@@ -90,16 +97,17 @@
             <span class="nav_name">Logout</span>
           </a>
         {% else %}
-          <a href="{% url 'accounts:register' %}" class="nav_link">
+          <a href="{% url 'accounts:register' %}" class="nav_link {% if url_name == 'register' %}active{% endif %}">
             <i class='bx bx-user-plus nav_icon'></i>
             <span class="nav_name">Register</span>
           </a>
-          <a href="{% url 'accounts:login' %}" class="nav_link">
+          <a href="{% url 'accounts:login' %}" class="nav_link {% if url_name == 'login' %}active{% endif %}">
             <i class="bx bx-log-in nav_icon"></i>
             <span class="nav_name">Login</span>
           </a>
         {% endif %}
       </div>
+      {% endwith %}
       </nav>
     </div>
 
