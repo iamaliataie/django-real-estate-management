@@ -240,6 +240,7 @@ class ProfileView(LoginRequiredMixin, UpdateView):
         messages.success(self.request, 'Your data has been updated successfully.')
         return super().form_valid(form)
 
+
 class DashboardView(AdminAccessMixin, TemplateView):
     template_name = 'account/dashboard.html'
 

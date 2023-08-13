@@ -19,6 +19,8 @@ class Property(models.Model):
     size = models.CharField(max_length=50)
     # colors = ArrayField(models.CharField(max_length=10, blank=True), size=2, default=list)
     description = models.TextField()
+    phone = models.CharField(max_length=20, default='+93783767956')
+    email = models.EmailField(max_length=100, default='netlinks.realestate@gmail.com')
     active = models.BooleanField(default=False)
     
     class Meta:
@@ -35,7 +37,6 @@ class Property(models.Model):
         return 'yellow', 'warning'
     
     
-
 class Image(models.Model):
     property= models.ForeignKey(
         Property, on_delete=models.CASCADE, null=True
@@ -57,4 +58,4 @@ class PropertyType(models.Model):
     def __str__(self) -> str:
         return self.title
     
-    
+
