@@ -1,6 +1,5 @@
-import os
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
-
 # Create your models here.
 
 
@@ -18,7 +17,9 @@ class Property(models.Model):
     longitude = models.FloatField(null=True, blank=True)
     price = models.DecimalField(max_digits=20, decimal_places=0)
     size = models.CharField(max_length=50)
+    # colors = ArrayField(models.CharField(max_length=10, blank=True), size=2, default=list)
     description = models.TextField()
+    active = models.BooleanField(default=False)
     
     class Meta:
         verbose_name = 'Property'
@@ -27,6 +28,13 @@ class Property(models.Model):
     def __str__(self) -> str:
         return self.title
 
+    
+    def get_type_colors(self):
+        if self.type == 'Commercial':
+            return 'red', 'danger'
+        return 'yellow', 'warning'
+    
+    
 
 class Image(models.Model):
     property= models.ForeignKey(

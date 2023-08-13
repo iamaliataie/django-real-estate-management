@@ -12,12 +12,13 @@ from inquiry.forms import InquiryForm
 # Create your views here.
 
 class Home(ListView):
+    queryset = Property.objects.filter(active=True)
     model = Property
     template_name = 'home.html'
 
     def get_context_data(self, **kwargs):
         context = super(Home, self).get_context_data(**kwargs)
-        locations = list(Property.objects.values())
+        locations = list(Property.objects.filter(active=True).values())
         context['locations'] = locations
         return context
 

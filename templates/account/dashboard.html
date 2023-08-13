@@ -1,0 +1,58 @@
+{% extends '../base.html' %}
+
+{% block title %}
+    
+    {% block nav_title %}
+        Dashboard
+    {% endblock nav_title %}
+        
+{% endblock title %}
+
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row gy-2">
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="d-flex justify-content-between align-items-center bg-success p-4 rounded border">
+                    <div>
+                        <i class="bx bx-user dashboard-card-icon"></i>
+                    </div>
+                    <div class="d-flex flex-column align-items-center">
+                        <span class="dashboard-card-text">{{ users.count}}</spa>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="d-flex justify-content-between align-items-center bg-warning p-4 rounded border">
+                    <div>
+                        <i class="bx bxs-user-badge dashboard-card-icon"></i>
+                    </div>
+                    <div>
+                        <span class="dashboard-card-text">{{ agents.count}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="d-flex justify-content-between align-items-center bg-danger p-4 rounded border">
+                    <div>
+                        <i class="bx bx-home dashboard-card-icon"></i>
+                    </div>
+                    <div>
+                        <span class="dashboard-card-text">{{ properties.count}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="d-flex justify-content-between align-items-center bg-secondary p-4 rounded border">
+                    <div>
+                        <i class="bx bx-conversation dashboard-card-icon"></i>
+                    </div>
+                    <div>
+                        <span class="dashboard-card-text">{{ inquiries.count}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+    

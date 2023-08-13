@@ -172,6 +172,15 @@ a {
   background-color: var(--first-color);
 }
 
+
+.dashboard-card-icon{
+  font-size: 80px;
+}
+
+.dashboard-card-text{
+  font-size: 65px;
+}
+
 @media screen and (min-width: 768px) {
   body {
     margin: calc(var(--header-height) + 1rem) 0 0 0;

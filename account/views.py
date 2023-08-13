@@ -1,12 +1,14 @@
+from typing import Any, Optional
 from django.conf import settings
 from django.contrib import messages
+from django.db import models
 from django.urls import reverse_lazy
 from django.http import HttpResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import LoginView, PasswordResetView
+from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import CreateView, UpdateView, ListView
+from django.views.generic import CreateView, UpdateView, ListView, TemplateView
 
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_str
@@ -16,13 +18,14 @@ from .tokens import account_activation_token
 from django.core.mail import EmailMultiAlternatives
 
 
-from .mixins import AdminStaffAccessMixin, AdminAgentMixin
-from .forms import SignUpForm
+from .mixins import AdminStaffAccessMixin, AdminAgentMixin, AdminAccessMixin
+from .forms import SignUpForm, ProfileForm
 from .models import User
 
 from property.models import Property, PropertyType, Image
 from property.forms import PropertyForm, ImageFormSet
 
+from inquiry.models import Inquiry
 # Create your views here.
 
 
@@ -218,4 +221,31 @@ def activate(request, uidb64, token):
     else:
         return HttpResponse('Activation link is invalid!')
     
+    
+class ProfileView(LoginRequiredMixin, UpdateView):
+    model = User
+    form_class = ProfileForm
+    template_name = 'account/profile.html'
+    success_url = reverse_lazy('accounts:profile')
+    
+    def get_object(self):
+        return self.request.user
+    
+
+class DashboardView(AdminAccessMixin, TemplateView):
+    template_name = 'account/dashboard.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(DashboardView, self).get_context_data(**kwargs)
+        users = User.objects.all()
+        agents = users.filter(is_staff=True, is_superuser=False)
+        properties = Property.objects.all()
+        inquiries = Inquiry.objects.all()
+        context = {
+            'users': users,
+            'agents': agents,
+            'properties': properties,
+            'inquiries': inquiries,
+        }
+        return context
     

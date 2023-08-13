@@ -89,6 +89,7 @@
             L.Control.geocoder().addTo(map);
 
         let locations = JSON.parse(document.getElementById('locations_json').textContent)
+
         locations.forEach(element => {
 
             let type = 'Rental';
@@ -107,8 +108,6 @@
                 color = 'green';
                 
             }
-
-            console.log(element.get_type_colors);
 
             var Icon = new L.Icon({
                 iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${color}.png`,
