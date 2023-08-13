@@ -1,7 +1,6 @@
-from typing import Any, Optional
 from django.conf import settings
 from django.contrib import messages
-from django.db import models
+from django.forms.models import BaseModelForm
 from django.urls import reverse_lazy
 from django.http import HttpResponse
 from django.shortcuts import redirect, render, get_object_or_404
@@ -237,6 +236,9 @@ class ProfileView(LoginRequiredMixin, UpdateView):
     def get_object(self):
         return self.request.user
     
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        messages.success(self.request, 'Your data has been updated successfully.')
+        return super().form_valid(form)
 
 class DashboardView(AdminAccessMixin, TemplateView):
     template_name = 'account/dashboard.html'

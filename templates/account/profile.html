@@ -13,6 +13,15 @@
     <h1>Profile</h1>
     <div class="row">
         <div class="col-12 col-md-6">
+                    
+        {% if messages %}
+                
+            {% for message in messages %}
+                <p class="alert alert-{{message.tags}}">{{ message }}</p>
+            {% endfor %}
+                
+        {% endif %}
+        
             <form method="post">
                 {% csrf_token %}
                 {{ form|crispy }}
