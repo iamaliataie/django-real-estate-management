@@ -154,6 +154,11 @@
         
                 <div class="form-group">
                     <button type="submit" class="btn btn-secondary btn-block">Submit</button>
+                    
+                    {% if object.agent == request.user %}
+                    <a href="{% url 'accounts:property_delete' object.id %}" class="btn btn-danger">Delete</a>
+                    {% endif %}
+                        
                 </div>
         </form>
     </div>

@@ -1,0 +1,25 @@
+{% extends '../base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    
+    {% block nav_title %}
+        Delete Property
+    {% endblock nav_title %}
+        
+{% endblock title %}
+
+{% block content %}
+    <div class="d-flex h-75 justify-content-center align-items-center p-5">
+        <form method="post" class="p-5 bg-white bordered">
+            <fieldset>
+            <legend>Deletion:</legend>
+                <p>Are you sure to delete <strong>{{ object }}</strong> from your properties?</p>
+            <input type="submit" value="Submit" class="btn btn-primary">
+            <a href="{% url 'accounts:property_update' object.id %}" class="btn btn-secondary">Cancel</a>
+            </fieldset>
+        </form>
+    </div>
+{% endblock content %}
+    
+    

@@ -8,7 +8,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import CreateView, UpdateView, ListView, TemplateView
+from django.views.generic import CreateView, UpdateView, ListView, TemplateView, DeleteView
 
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_str
@@ -18,7 +18,7 @@ from .tokens import account_activation_token
 from django.core.mail import EmailMultiAlternatives
 
 
-from .mixins import AdminStaffAccessMixin, AdminAgentMixin, AdminAccessMixin
+from .mixins import AdminStaffAccessMixin, AdminAgentMixin, AdminAccessMixin, AgentMixin
 from .forms import SignUpForm, ProfileForm
 from .models import User
 
@@ -107,6 +107,12 @@ def remove_property_image(request, pk):
     property = image.property
     image.delete()
     return redirect('accounts:property_update', pk=property.id)
+
+
+class PropertyDeleteView(AgentMixin, DeleteView):
+    model = Property
+    template_name = 'property/delete.html'
+    success_url = reverse_lazy('accounts:agent_property_list')
 
 
 class AgentPropertyListView(AdminStaffAccessMixin, ListView):

@@ -21,6 +21,11 @@ urlpatterns = [
         name='remove_property_image'
     ),
     path(
+        'property/delete/<int:pk>/',
+        views.PropertyDeleteView.as_view(),
+        name='property_delete'
+    ),
+    path(
         'properties/agent/',
         views.AgentPropertyListView.as_view(),
         name='agent_property_list'
