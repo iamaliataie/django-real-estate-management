@@ -1,2 +1,2 @@
-# django-real-estate-management
+# Real Estate Management
 Real Estate Management using Django
