@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Property, Image, PropertyType
+from .models import Property, Image, PropertyType, Feature
 
 # Register your models here.
 
@@ -21,4 +21,9 @@ class ImageAdmin(admin.ModelAdmin):
 
 @admin.register(PropertyType)
 class PropertyTypeAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Feature)
+class FeatureAdmin(admin.ModelAdmin):
     pass

@@ -21,6 +21,7 @@ class Property(models.Model):
     description = models.TextField()
     phone = models.CharField(max_length=20, default='+93783767956')
     email = models.EmailField(max_length=100, default='netlinks.realestate@gmail.com')
+    features = models.ManyToManyField('Feature')
     active = models.BooleanField(default=False)
     
     class Meta:
@@ -59,3 +60,12 @@ class PropertyType(models.Model):
         return self.title
     
 
+class Feature(models.Model):
+    title = models.CharField(max_length=100)
+    
+    class Meta:
+        verbose_name = 'Feature'
+        verbose_name_plural = 'Features'
+    
+    def __str__(self) -> str:
+        return self.title
