@@ -45,7 +45,7 @@
             <span>{{ request.user.get_full_name }}</span>
             
             {% if request.user.is_superuser %}
-              <small>Amin</small>
+              <small>Admin</small>
               {% elif request.user.is_staff and not request.user.is_superuser %}
               <small>Agent</small>
             {% endif %}

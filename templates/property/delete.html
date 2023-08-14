@@ -12,6 +12,7 @@
 {% block content %}
     <div class="d-flex h-75 justify-content-center align-items-center p-5">
         <form method="post" class="p-5 bg-white bordered">
+            {% csrf_token %}
             <fieldset>
             <legend>Deletion:</legend>
                 <p>Are you sure to delete <strong>{{ object }}</strong> from your properties?</p>
