@@ -41,7 +41,35 @@ class PropertyInline():
         self.object = form.save()
         if not self.object.agent:
             self.object.agent = self.request.user
-            self.object.save()  
+            self.object.save()
+            
+            data = {
+                'user': self.request.user,
+                'property': self.object
+            }
+            
+            current_site = get_current_site(self.request)
+            mail_subject = 'New property added.'
+            html_message = render_to_string('property/new_property_email.html', {
+                'user': data['user'],
+                'property': data['property'],
+                'domain': current_site.domain,
+            })
+            to_email = settings.EMAIL_HOST_USER
+
+            from_email = self.request.user.email
+            recipient_list = [to_email]
+
+            text_message = f"New property add by {data['user'].get_full_name()}, review property by going to this link http://127.0.0.1:8000/properties/{self.object.id}"
+
+
+            # Create the EmailMultiAlternatives object
+            email = EmailMultiAlternatives(
+                mail_subject, text_message, from_email, recipient_list
+            )
+            email.attach_alternative(html_message, "text/html")
+
+            email.send()
 
         # for every formset, attempt to find a specific formset save function
         # otherwise, just save.

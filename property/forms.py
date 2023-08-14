@@ -11,6 +11,7 @@ class PropertyForm(forms.ModelForm):
     
     def __init__(self, *args, **kwargs):
         super(PropertyForm, self).__init__(*args, **kwargs)
+        self.fields['features'].help_text = 'Hold down “Control”, or “Command” on a Mac, to select more than one.'
         self.fields['latitude'].widget.attrs['readonly'] = True
         self.fields['longitude'].widget.attrs['readonly'] = True
 
