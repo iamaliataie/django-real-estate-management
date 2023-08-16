@@ -31,6 +31,11 @@ urlpatterns = [
         name='agent_property_list'
     ),
     path(
+        'deals/',
+        views.DealsListView.as_view(),
+        name='deal_list'
+    ),
+    path(
         'bookmarks/',
         views.BookmarkView.as_view(),
         name='bookmarks'

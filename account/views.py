@@ -26,6 +26,8 @@ from property.models import Property, PropertyType, Image
 from property.forms import PropertyForm, ImageFormSet
 
 from inquiry.models import Inquiry
+
+from deal.models import Deal
 # Create your views here.
 
 
@@ -152,6 +154,10 @@ class AgentPropertyListView(AdminStaffAccessMixin, ListView):
         queryset = super(AgentPropertyListView, self).get_queryset()
         queryset = Property.objects.filter(agent=self.request.user)
         return queryset
+
+
+class DealsListView(AdminStaffAccessMixin, ListView):
+    model = Deal
 
 
 class BookmarkView(LoginRequiredMixin, ListView):
