@@ -14,20 +14,21 @@
 <div class="row">
     
     {% for deal in object_list %}
-    <div class="col-sm-6 col-md-4">
-        <div class="card">
-          <div class="card-body">
-            <div class="d-flex justify-content-between align-items-center">
-                <h5 class="card-title">{{ deal.property }}</h5>
-                <span class="badge bg-info">{{ deal.deal_type }}</span>
-            </div>
+        <div class="col-sm-6 col-md-4">
+            <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="card-title">{{ deal.property }}</h5>
+                    <span class="badge bg-info">{{ deal.deal_type }}</span>
+                </div>
 
-            <p>{{ deal.created_at|date:"M d, Y" }}</p>
-            <hr>
-            <p class="m-0">{{ deal.owner }}</p>
-            <p class="m-0">{{ deal.phone1 }}</p>
-            <a href="#" class="btn btn-primary mt-2">View</a>
-          </div>
+                <p>{{ deal.created_at|date:"M d, Y" }}</p>
+                <hr>
+                <p class="m-0">{{ deal.owner }}</p>
+                <p class="m-0">{{ deal.phone1 }}</p>
+                <a href="{% url 'accounts:deal_detail' deal.id %}" class="btn btn-primary mt-2">View</a>
+            </div>
+            </div>
         </div>
     {% endfor %}
         

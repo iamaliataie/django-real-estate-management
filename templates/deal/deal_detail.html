@@ -1,0 +1,117 @@
+{% extends '../base.html' %}
+{% load custom_tags %}
+{% block title %}
+    
+    {% block nav_title %}
+        Deal Detail
+    {% endblock nav_title %}
+        
+{% endblock title %}
+
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="p-3 bg-white rounded mb-3">
+            <h3>{{ object.property }}</h3>
+            <p>{{ object.created_at|date:"M d, Y" }}</p>
+        </div>
+        <div class="p-3 bg-white rounded">
+            <div class="row gy-2">
+                <div class="col-md-6 ">
+                    <div class="col-12 bg-light rounded p-3">
+                        <div class="row">
+                            <div class="col-sm-3">Type</div>
+                            <div class="col-sm-9 fw-bold">{{ object.deal_type }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 ">
+                    <div class="col-12 bg-light rounded p-3">
+                        <div class="row">
+                            <div class="col-sm-3">Agent</div>
+                            <div class="col-sm-9 fw-bold">{{ object.agent }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 ">
+                    <div class="col-12 bg-light rounded p-3">
+                        <div class="row">
+                            <div class="col-sm-3">Owner</div>
+                            <div class="col-sm-9 fw-bold">{{ object.owner }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 ">
+                    <div class="col-12 bg-light rounded p-3">
+                        <div class="row">
+                            <div class="col-sm-3">Tazkira</div>
+                            <div class="col-sm-9 fw-bold">{{ object.tazkira }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 ">
+                    <div class="col-12 bg-light rounded p-3">
+                        <div class="row">
+                            <div class="col-sm-3">Phone</div>
+                            <div class="col-sm-9 fw-bold">{{ object.phone1 }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 ">
+                    <div class="col-12 bg-light rounded p-3">
+                        <div class="row">
+                            <div class="col-sm-3">Phone</div>
+                            <div class="col-sm-9 fw-bold">{{ object.phone2 }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 ">
+                    <div class="col-12 bg-light rounded p-3 ">
+                        <div class="row">
+                            <div class="col-sm-2">Address</div>
+                            <div class="col-sm-10 fw-bold">{{ object.address }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 ">
+                    <div class="col-12 bg-light rounded p-3">
+                        <div class="row">
+                            <div class="col-sm-3">Amount</div>
+                            <div class="col-sm-9 fw-bold">{{ object.get_amount }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 ">
+                    <div class="col-12 bg-light rounded p-3">
+                        <div class="row">
+                            <div class="col-sm-3">Total</div>
+                            <div class="col-sm-9 fw-bold">{{ object.get_total }}</div>
+                        </div>
+                    </div>
+                </div>
+                
+                {% if object.deal_type.title == "Rent" %}
+                <div class="col-md-6 ">
+                    <div class="col-12 bg-light rounded p-3">
+                        <div class="row">
+                            <div class="col-sm-3">Start Date</div>
+                            <div class="col-sm-9 fw-bold">{{ object.start_date }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 ">
+                    <div class="col-12 bg-light rounded p-3">
+                        <div class="row">
+                            <div class="col-sm-3">End Date</div>
+                            <div class="col-sm-9 fw-bold">{{ object.end_date }}</div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                    
+            </div>
+            <a href="" class="btn btn-primary mt-2">Update</a>
+        </div>
+    </div>
+{% endblock content %}
+    

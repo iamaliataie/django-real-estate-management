@@ -10,8 +10,9 @@ class Deal(models.Model):
     owner = models.CharField(max_length=50)
     tazkira = models.CharField(max_length=50)
     address = models.TextField()
+    amount = models.DecimalField(max_digits=20, decimal_places=0, default=0)
     phone1 = models.CharField(max_length=20)
-    phone2 = models.CharField(max_length=20, null=True, blank=True)
+    phone2 = models.CharField(max_length=20, null=True, blank=True, default='---')
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
     
@@ -24,6 +25,19 @@ class Deal(models.Model):
     
     def __str__(self):
         return self.property.title
+    
+    def get_amount(self):
+        return f'{self.amount:,}'
+    
+    def get_total(self):
+        if self.deal_type.title == 'Rent':
+            return f'{(self.end_date - self.start_date ).days * self.amount:,}'
+        return f'{self.amount:,}'
+    
+    def get_total_days(self):
+        if self.deal_type.title == 'Rent':
+            return (self.end_date - self.start_date).days
+        return
     
 
 class DealType(models.Model):

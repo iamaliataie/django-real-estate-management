@@ -1,3 +1,4 @@
+from datetime import date
 from typing import Any
 from django.conf import settings
 from django.contrib import messages
@@ -8,7 +9,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import CreateView, UpdateView, ListView, TemplateView, DeleteView
+from django.views.generic import CreateView, UpdateView, ListView, TemplateView, DeleteView, DetailView
 
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_str
@@ -28,6 +29,7 @@ from property.forms import PropertyForm, ImageFormSet
 from inquiry.models import Inquiry
 
 from deal.models import Deal
+from deal.forms import DealForm
 # Create your views here.
 
 
@@ -156,7 +158,29 @@ class AgentPropertyListView(AdminStaffAccessMixin, ListView):
         return queryset
 
 
-class DealsListView(AdminStaffAccessMixin, ListView):
+class DealCreateView(AdminStaffAccessMixin, CreateView):
+    model = Deal
+    form_class = DealForm
+    success_url = reverse_lazy('accounts:deal_list')
+    
+    def get_initial(self):
+        return { 'agent': self.request.user }
+    
+    
+    def form_valid(self, form):
+        deal = form.save()
+        property = deal.property
+        property.deal = True
+        property.deal_date = date.today()
+        property.save()
+        return super().form_valid(form)
+
+
+class DealListView(AdminStaffAccessMixin, ListView):
+    model = Deal
+
+
+class DealDetailView(AdminStaffAccessMixin, DetailView):
     model = Deal
 
 

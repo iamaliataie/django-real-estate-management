@@ -5,7 +5,7 @@ from .models import Deal, DealType
 
 @admin.register(Deal)
 class DealAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('property', 'deal_type', 'get_amount', 'get_total_days', 'get_total',)
 
 @admin.register(DealType)
 class DealTypeAdmin(admin.ModelAdmin):

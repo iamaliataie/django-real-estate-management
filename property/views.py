@@ -18,7 +18,7 @@ class Home(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(Home, self).get_context_data(**kwargs)
-        locations = list(Property.objects.filter(active=True).values())
+        locations = list(Property.objects.filter(active=True, deal=False).values())
         context['locations'] = locations
         return context
 
@@ -30,7 +30,7 @@ class PropertyListView(ListView):
     def get_context_data(self, **kwargs):
         context = super(PropertyListView, self).get_context_data(**kwargs)
         global properties, property_types
-        properties = Property.objects.all()
+        properties =  Property.objects.filter(active=True, deal=False)
         property_types = PropertyType.objects.all()
         context['properties'] = properties
         context['property_types'] = property_types
@@ -41,9 +41,9 @@ class PropertyListView(ListView):
         global properties
         form = self.request.POST
         if form['type'] == 'search':
-            properties = Property.objects.filter(title__icontains=form['title'])
+            properties = Property.objects.filter(active=True, deal=False).filter(title__icontains=form['title'])
         elif form['type'] == 'filter':
-            properties = Property.objects.filter(type__title=form['filter'])
+            properties = Property.objects.filter(active=True, deal=False).filter(type__title=form['filter'])
         else:
             properties = properties.order_by(form['sort'])
             
