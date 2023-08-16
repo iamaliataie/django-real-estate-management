@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'property.apps.PropertyConfig',
     'inquiry.apps.InquiryConfig',
     'account.apps.AccountConfig',
+    'deal.apps.DealConfig',
     
     # external packages
     'django_cleanup.apps.CleanupConfig',

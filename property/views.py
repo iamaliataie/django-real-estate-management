@@ -12,7 +12,7 @@ from inquiry.forms import InquiryForm
 # Create your views here.
 
 class Home(ListView):
-    queryset = Property.objects.filter(active=True)
+    queryset = Property.objects.filter(active=True, deal=False)
     model = Property
     template_name = 'home.html'
 

@@ -260,9 +260,6 @@ class ProfileView(LoginRequiredMixin, PasswordChangeView):
 
     template_name = 'account/profile.html'
     success_url = reverse_lazy('accounts:profile')
-    # def get_object(self):
-    #     return self.request.user
-    
     
     def get_context_data(self, **kwargs):
         context = super(ProfileView, self).get_context_data(**kwargs)

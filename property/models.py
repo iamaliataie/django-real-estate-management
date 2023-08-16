@@ -23,6 +23,9 @@ class Property(models.Model):
     email = models.EmailField(max_length=100, default='netlinks.realestate@gmail.com')
     features = models.ManyToManyField('Feature')
     active = models.BooleanField(default=False)
+    deal = models.BooleanField(default=False)
+    deal_date = models.DateField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     
     class Meta:
         verbose_name = 'Property'
