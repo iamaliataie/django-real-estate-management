@@ -1,5 +1,5 @@
 from django.urls import path, reverse_lazy
-from django.contrib.auth.views import LogoutView, PasswordResetView, PasswordResetDoneView, PasswordResetCompleteView, PasswordResetConfirmView
+from django.contrib.auth.views import LogoutView, PasswordResetView, PasswordResetDoneView, PasswordResetCompleteView, PasswordResetConfirmView, PasswordChangeView
 from . import views
 
 app_name = 'accounts'
@@ -79,6 +79,13 @@ urlpatterns = [
         'reset/complete/',
         PasswordResetCompleteView.as_view(),
         name='password_reset_complete'
+    ),
+    path(
+        'password/change/',
+        PasswordChangeView.as_view(
+            template_name='registration/password_change.html'
+            ),
+        name='password_change'
     ),
     path(
         'profile/',

@@ -11,24 +11,36 @@
 
 {% block content %}
     <h1>Profile</h1>
-    <div class="row">
-        <div class="col-12 col-md-6">
-                    
-        {% if messages %}
+    {% if messages %}
                 
-            {% for message in messages %}
-                <p class="alert alert-{{message.tags}}">{{ message }}</p>
-            {% endfor %}
-                
-        {% endif %}
+    {% for message in messages %}
+        <div class="alert alert-{{message.tags}} alert-dismissible fade show w-100" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+    {% endfor %}
         
-            <form method="post">
-                {% csrf_token %}
-                {{ form|crispy }}
-                <button type="submit" class="btn btn-primary">Save</button>
-            </form>
+{% endif %}
+    <div class="row gy-3">
+        <div class="col-12 col-md-6">
+            <div class="col-12 bg-white p-3 rounded">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    {{user_form|crispy}}
+                    <button type="submit" class="btn btn-primary" name="profile">Save</button>
+                </form>
+            </div>
         </div>
-        <div class="col-12 col-md-6"></div>
+
+        <div class="col-12 col-md-6 ">  
+            <div class="col-12 bg-white p-3 rounded">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <button type="submit" class="btn btn-primary">Change password</button>
+                </form>
+            </div>
+        </div>
     </div>
 {% endblock content %}
     

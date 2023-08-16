@@ -1,11 +1,12 @@
+from typing import Any
 from django.conf import settings
 from django.contrib import messages
 from django.forms.models import BaseModelForm
 from django.urls import reverse_lazy
-from django.http import HttpResponse
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView, UpdateView, ListView, TemplateView, DeleteView
 
@@ -18,7 +19,7 @@ from django.core.mail import EmailMultiAlternatives
 
 
 from .mixins import AdminStaffAccessMixin, AdminAgentMixin, AdminAccessMixin, AgentMixin
-from .forms import SignUpForm, ProfileForm
+from .forms import SignUpForm, CustomUserChangeForm
 from .models import User
 
 from property.models import Property, PropertyType, Image
@@ -255,18 +256,37 @@ def activate(request, uidb64, token):
         return HttpResponse('Activation link is invalid!')
     
     
-class ProfileView(LoginRequiredMixin, UpdateView):
-    model = User
-    form_class = ProfileForm
+class ProfileView(LoginRequiredMixin, PasswordChangeView):
+
     template_name = 'account/profile.html'
     success_url = reverse_lazy('accounts:profile')
+    # def get_object(self):
+    #     return self.request.user
     
-    def get_object(self):
-        return self.request.user
+    
+    def get_context_data(self, **kwargs):
+        context = super(ProfileView, self).get_context_data(**kwargs)
+        context['user_form'] = CustomUserChangeForm(instance=self.request.user)
+        return context
     
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
-        messages.success(self.request, 'Your data has been updated successfully.')
+        messages.success(self.request, 'Your password has been updated successfully.')
         return super().form_valid(form)
+    
+    def post(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
+        if 'profile' in request.POST:
+            form = CustomUserChangeForm(request.POST, instance=request.user)
+            for field in form.fields:
+                if form[field].value() == '':
+                    messages.warning(request, 'fields cannot be empty')
+                    return redirect('accounts:profile')
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Your profile has been updated successfully.')
+            else:
+                messages.warning(self.request, f"{''.join(form.errors.as_data()['email'][0])} - {form['email'].value()}" )
+            return redirect('accounts:profile')
+        return super().post(request, *args, **kwargs)
 
 
 class DashboardView(AdminAccessMixin, TemplateView):
@@ -285,4 +305,5 @@ class DashboardView(AdminAccessMixin, TemplateView):
             'inquiries': inquiries,
         }
         return context
+    
     
