@@ -190,11 +190,16 @@ class DealCreateView(AdminStaffAccessMixin, CreateView):
 
 class DealListView(AdminStaffAccessMixin, ListView):
     model = Deal
+    
+    def get_queryset(self):
+        queryset = super(DealListView, self).get_queryset()
+        queryset = Deal.objects.filter(agent=self.request.user)
+        return queryset
 
 
-class DealDetailView(AdminStaffAccessMixin, DetailView):
+class DealDetailView(AgentMixin, DetailView):
     model = Deal
-
+    
 
 class BookmarkView(LoginRequiredMixin, ListView):
     model = User

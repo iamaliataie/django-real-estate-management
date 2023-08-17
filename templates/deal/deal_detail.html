@@ -29,14 +29,14 @@
                     <div class="col-12 bg-light rounded p-3">
                         <div class="row">
                             <div class="col-sm-3">Agent</div>
-                            <div class="col-sm-9 fw-bold">{{ object.agent }}</div>
+                            <div class="col-sm-9 fw-bold">{{ object.agent.get_full_name }}</div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6 ">
                     <div class="col-12 bg-light rounded p-3">
                         <div class="row">
-                            <div class="col-sm-3">Owner</div>
+                            <div class="col-sm-3">Customer</div>
                             <div class="col-sm-9 fw-bold">{{ object.owner }}</div>
                         </div>
                     </div>

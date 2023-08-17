@@ -29,7 +29,7 @@ class AgentMixin:
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated and self.get_object().agent == request.user:
             return super().dispatch(request, *args, **kwargs)
-        return redirect('accounts:login')
+        return redirect('accounts:profile')
 
 
 class InquiryPropertyAgentMixin:

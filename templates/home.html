@@ -16,6 +16,7 @@
     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
     crossorigin=""/>
     <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.79.0/dist/L.Control.Locate.min.css">
 {% endblock extra_css %}
 
 
@@ -79,14 +80,17 @@
     crossorigin="">
     </script>
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.79.0/dist/L.Control.Locate.min.js" charset="utf-8"></script>
     
     <script>
         var map = L.map('map').setView([34.54062271336702, 69.17108384905345], 18);
-            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 22,
-                attribution: '© OpenStreetMap'
-            }).addTo(map);
-            L.Control.geocoder().addTo(map);
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 22,
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+        L.Control.geocoder().addTo(map);
+
+        L.control.locate().addTo(map);
 
         let locations = JSON.parse(document.getElementById('locations_json').textContent)
 
