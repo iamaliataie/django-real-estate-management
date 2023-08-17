@@ -170,7 +170,7 @@ class DealCreateView(AdminStaffAccessMixin, CreateView):
     success_url = reverse_lazy('accounts:deal_list')
     
     def get_initial(self):
-        return { 'agent': self.request.user }
+        return { 'agent': self.request.user}
     
     def get_form_kwargs(self):
         kwargs = super(DealCreateView, self).get_form_kwargs()

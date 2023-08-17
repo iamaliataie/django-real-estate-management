@@ -11,6 +11,11 @@
 
 
 {% block content %}
+
+<div class="mb-2 text-end">
+    <a href="{% url 'accounts:deal_create' %}" class="btn btn-success">New Deal</a>
+</div>
+
 <div class="row">
     
     {% for deal in object_list %}

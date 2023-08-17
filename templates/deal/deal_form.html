@@ -82,5 +82,25 @@
             </form>
         </div>
     </div>
+    <script type="text/javascript">
+        var deal_type = document.querySelector('#id_deal_type');
+        var start_date = document.querySelector('#id_start_date');
+        var end_date = document.querySelector('#id_end_date');
+
+        start_date.disabled = true;
+        end_date.disabled = true;
+
+        deal_type.addEventListener('change', function(){
+            type = deal_type.options[deal_type.selectedIndex].text;
+            if (type == 'Rent'){
+                start_date.disabled = false;
+                end_date.disabled = false;
+            }
+            else{
+                start_date.disabled = true;
+                end_date.disabled = true;
+            }
+        });
+    </script>
 {% endblock content %}
     
