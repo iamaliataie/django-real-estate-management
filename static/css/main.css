@@ -181,6 +181,21 @@ a {
   font-size: 65px;
 }
 
+.leaflet-control-locate a {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.leaflet-control-locate.active a{
+  color: #4723d9 !important;
+}
+
+.leaflet-control-locate a span{
+  font-size: 20px;
+}
+
+
 @media screen and (min-width: 768px) {
   body {
     margin: calc(var(--header-height) + 1rem) 0 0 0;

@@ -25,8 +25,47 @@
         {{ locations|json_script:"locations_json" }}
     </div>
     <div class="h-100">
-        <div class="row h-100">
-            <div class="col-12 col-md-9 map-col-container">
+
+        <div class="row h-100 gy-3">
+            <div class="col-12 col-md-2">
+                <div class="bg-white border rounded p-3 w-100">
+                    <div class="">
+                        <h4>Search Property</h4>
+                    </div>
+                    <form method="post" >
+                        {% csrf_token %}
+                        <div class="row gy-4">
+                            <div class="col-12">
+                                <label for="">Property Type</label>
+                                <input type="text" class="form-control">
+                            </div>
+                            <div class="col-12">
+                                <label for="">Property Location</label>
+                                <input type="text" class="form-control">
+                            </div>
+                            <div class="col-12">
+                                <label for="">Price Range</label>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <input type="text" class="form-control" placeholder="From">
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="text" class="form-control" placeholder="To">
+                                    </div>    
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label for="">Number of bedrooms</label>
+                                <input type="text" class="form-control">
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary w-100">Search</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-12 col-md-7 map-col-container">
                 <div id="map" class="h-100"></div>
             </div>
             <div class="col-12 col-md-3">
@@ -90,7 +129,17 @@
         }).addTo(map);
         L.Control.geocoder().addTo(map);
 
-        L.control.locate().addTo(map);
+        L.control
+            .locate({
+                position: "topleft",
+                strings: {
+                title: "Show me where I am"
+                },
+                icon: 'bx bx-current-location bx-spin',
+                iconSize: '20px',
+                flyTo: true,
+            })
+            .addTo(map);
 
         let locations = JSON.parse(document.getElementById('locations_json').textContent)
 
