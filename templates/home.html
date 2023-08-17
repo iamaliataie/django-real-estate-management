@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load custom_tags %}
 
 
@@ -28,41 +29,64 @@
 
         <div class="row h-100 gy-3">
             <div class="col-12 col-md-2">
-                <div class="bg-white border rounded p-3 w-100">
-                    <div class="">
-                        <h4>Search Property</h4>
+                <div class="w-100 h-100 d-flex flex-column align-items-center justify-content-between gap-3">
+                    <div class="bg-white border rounded p-3 h-100">
+                        <h4>Properties</h4>
+                        <div class="row text-center">
+                            <a href="#" class="col-6 text-black">
+                                <img src="{% static 'images/property_types/house.svg' %}" alt="" class="w-100">
+                                <strong>House</strong>
+                            </a>
+                            <a href="#" class="col-6 text-black">
+                                <img src="{% static 'images/property_types/shop.svg' %}" alt="" class="w-100">
+                                <strong>Shop</strong>
+                            </a>
+                            <a href="#" class="col-6 text-black">
+                                <img src="{% static 'images/property_types/building.svg' %}" alt="" class="w-100">
+                                <strong>Building</strong>
+                            </a>
+                            <a href="#" class="col-6 text-black">
+                                <img src="{% static 'images/property_types/map.svg' %}" alt="" class="w-100">
+                                <strong>Land</strong>
+                            </a>
+                        </div>
                     </div>
-                    <form method="post" >
-                        {% csrf_token %}
-                        <div class="row gy-4">
-                            <div class="col-12">
-                                <label for="">Property Type</label>
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="col-12">
-                                <label for="">Property Location</label>
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="col-12">
-                                <label for="">Price Range</label>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <input type="text" class="form-control" placeholder="From">
+                    <div class="bg-white border rounded p-3 h-100">
+                        <div class="mb-3">
+                            <h4>Search Property</h4>
+                        </div>
+                        <form method="post" >
+                            {% csrf_token %}
+                            <div class="row gy-4">
+                                <div class="col-12">
+                                    <label for="">Property Type</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                                <div class="col-12">
+                                    <label for="">Property Location</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                                <div class="col-12">
+                                    <label for="">Price Range</label>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <input type="text" class="form-control" placeholder="From">
+                                        </div>
+                                        <div class="col-6">
+                                            <input type="text" class="form-control" placeholder="To">
+                                        </div>    
                                     </div>
-                                    <div class="col-6">
-                                        <input type="text" class="form-control" placeholder="To">
-                                    </div>    
+                                </div>
+                                <div class="col-12">
+                                    <label for="">Number of bedrooms</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary w-100">Search</button>
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <label for="">Number of bedrooms</label>
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="col-12">
-                                <button type="submit" class="btn btn-primary w-100">Search</button>
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
             <div class="col-12 col-md-7 map-col-container">
