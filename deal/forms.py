@@ -3,8 +3,14 @@ from .models import Deal
 from property.models import Property
 
 class DealForm(forms.ModelForm):
-    
-    property = forms.ModelChoiceField(queryset = Property.objects.filter(active=True, deal=False) )
+    def __init__(self, *args, **kwargs) -> None:
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+        if user.is_superuser:
+            self.fields['property'] = forms.ModelChoiceField(queryset = Property.objects.filter(active=True, deal=False))
+        else:
+            self.fields['property'] = forms.ModelChoiceField(queryset = Property.objects.filter(agent=user).filter(active=True, deal=False))
+        
     
     class Meta:
         model = Deal

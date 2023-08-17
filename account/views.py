@@ -166,7 +166,13 @@ class DealCreateView(AdminStaffAccessMixin, CreateView):
     def get_initial(self):
         return { 'agent': self.request.user }
     
-    
+    def get_form_kwargs(self):
+        kwargs = super(DealCreateView, self).get_form_kwargs()
+        kwargs = {
+            'user': self.request.user
+        }
+        return kwargs
+
     def form_valid(self, form):
         deal = form.save()
         property = deal.property
