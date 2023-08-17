@@ -65,11 +65,11 @@
           </a>
           <div class="nav_list">
             <a href="{% url 'property:home' %}" class="nav_link {% if url_name == 'home' %}active{% endif %}">
-              <i class="bx bx-grid-alt nav_icon"></i>
-              <span class="nav_name">Dashboard</span>
+              <i class="bx bx-home nav_icon"></i>
+              <span class="nav_name">Home</span>
             </a>
             <a href="{% url 'property:property_list' %}" class="nav_link {% if url_name == 'property_list' %}active{% endif %}">
-              <i class="bx bx-home nav_icon"></i>
+              <i class='bx bx-buildings'></i>
               <span class="nav_name">Properties</span>
             </a>
           </div>
@@ -85,7 +85,7 @@
               <i class='bx bxl-product-hunt'></i>
               <span class="nav_name">My Properties</span>
             </a>
-            <a href="{% url 'accounts:deal_list' %}" class="nav_link {% if url_name == 'agent_property_list' %}active{% endif %}">
+            <a href="{% url 'accounts:deal_list' %}" class="nav_link {% if url_name == 'deal_list' %}active{% endif %}">
               <i class='bx bxs-file-doc'></i>
               <span class="nav_name">Deals</span>
             </a>

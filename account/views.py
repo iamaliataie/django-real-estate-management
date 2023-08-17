@@ -157,6 +157,12 @@ class AgentPropertyListView(AdminStaffAccessMixin, ListView):
         queryset = Property.objects.filter(agent=self.request.user)
         return queryset
 
+    
+    def get_context_data(self, **kwargs):
+        context = super(AgentPropertyListView, self).get_context_data(**kwargs)
+        context['page_title'] = 'My Properties'
+        return context
+    
 
 class DealCreateView(AdminStaffAccessMixin, CreateView):
     model = Deal
