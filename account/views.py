@@ -179,13 +179,30 @@ class DealCreateView(AdminStaffAccessMixin, CreateView):
         }
         return kwargs
 
-    def form_valid(self, form):
-        deal = form.save()
-        property = deal.property
-        property.deal = True
-        property.deal_date = date.today()
-        property.save()
-        return super().form_valid(form)
+    def post(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
+        print(request.POST)
+        if request.method == 'POST':
+            form = DealForm(request.POST)
+            if form.is_valid():
+                deal = form.save()
+                property = deal.property
+                print(property)
+                property.deal = True
+                property.save()
+                return redirect('accounts:deal_list')
+            else:
+                print(form.errors)
+        return super().post(request, *args, **kwargs)
+
+    # def form_valid(self, form):
+    #     print(form.cleaned_data)
+    #     deal = form.save()
+    #     property = deal.property
+    #     property.deal = True
+    #     property.deal_date = date.today()
+    #     property.save()
+        
+    #     return super().form_valid(form)
 
 
 class DealListView(AdminStaffAccessMixin, ListView):

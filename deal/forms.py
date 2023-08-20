@@ -8,10 +8,6 @@ class DealForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['agent'].initial = user
         self.fields['agent'].widget.attrs['readonly'] = 'readonly'
-        if user.is_superuser:
-            self.fields['property'] = forms.ModelChoiceField(queryset = Property.objects.filter(active=True, deal=False))
-        else:
-            self.fields['property'] = forms.ModelChoiceField(queryset = Property.objects.filter(agent=user).filter(active=True, deal=False))
         
         
     class Meta:
