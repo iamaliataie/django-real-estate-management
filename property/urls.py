@@ -15,9 +15,14 @@ urlpatterns = [
         name='property_list'
     ),
     path(
-        'properties/<int:pk>',
+        'properties/<int:pk>/',
         views.PropertyDetailView.as_view(),
         name='property_detail'
+    ),
+    path(
+        'properties/type/<str:slug>/',
+        views.TypePropertyListView.as_view(),
+        name='type_property_list'
     ),
     path(
         'add_to_favorites/',

@@ -40,8 +40,10 @@
             </p>
         </div>
         
-        <div>
-        {% if request.user.is_authenticated and property not in request.user.favorites.all %}
+        <div class="">
+        {% if request.user.is_authenticated %}
+            
+            {% if property not in request.user.favorites.all %}
             <form action="{% url 'property:add_to_favorites' %}" method="post">
                 <input type="hidden" name="property_id" value="{{ property.id }}">
                 <button type="submit" class="btn btn-primary btn-sm">Add to Bookmarks</button>
@@ -51,6 +53,14 @@
             {% else %}
             <a href="{% url 'accounts:login' %}" class="btn btn-primary btn-sm">Login to bookmark</a>
             {% endif %}
+
+            
+            {% if property.agent == request.user %}
+                <a href="{% url 'accounts:property_update' property.id %}" class="btn btn-warning btn-sm mt-2 w-100">Update</a>
+            {% endif %}
+                
+
+        {% endif %}
         </div>
             
     </div>

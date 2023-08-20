@@ -84,7 +84,7 @@ class PropertyInline():
                 formset_save_func(formset)
             else:
                 formset.save()
-        return redirect('property:property_list')
+        return redirect('property:property_detail', self.object.id)
 
     def formset_images_valid(self, formset):
         """

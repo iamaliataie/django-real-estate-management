@@ -56,7 +56,7 @@ class Image(models.Model):
 
 class PropertyType(models.Model):
     title = models.CharField(max_length=50)
-    
+    slug = models.SlugField(max_length=50)
     class Meta:
         verbose_name = 'Property Type'
         verbose_name_plural = 'Property Types'

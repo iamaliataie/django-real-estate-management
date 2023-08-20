@@ -1,3 +1,5 @@
+from typing import Any
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.views.generic import DetailView, ListView
@@ -29,16 +31,14 @@ class PropertyListView(ListView):
     
     def get_context_data(self, **kwargs):
         context = super(PropertyListView, self).get_context_data(**kwargs)
-        global properties, property_types
+        global properties
         properties =  Property.objects.filter(active=True, deal=False)
-        property_types = PropertyType.objects.all()
         context['properties'] = properties
-        context['property_types'] = property_types
         context['page_title'] = 'Properties'
         return context
 
     def post(self, request, *args, **kwargs):
-        global properties, property_types
+        global properties
         form = self.request.POST
         
         if 'search' in form:
@@ -58,7 +58,6 @@ class PropertyListView(ListView):
             
         context = {
             'properties': properties,
-            'property_types': property_types
         }
         return render(request, 'property/property_list.html', context)
     
@@ -79,6 +78,50 @@ class PropertyDetailView(FormMixin, DetailView):
         else: messages.warning(request, 'Your inquiry has not been sent successfully')
         return redirect('property:property_detail', pk=self.get_object().id)
 
+
+class TypePropertyListView(ListView):
+    model = Property
+    template_name = 'property/property_list.html'
+    context_object_name = 'properties'
+    
+    def get_queryset(self):
+        global properties
+        properties = super(TypePropertyListView, self).get_queryset()
+        slug = self.kwargs.get('slug')
+        properties = Property.objects.filter(type__slug=slug, active=True, deal=False)
+        return properties
+
+    
+    def get_context_data(self, **kwargs):
+        context = super(TypePropertyListView, self).get_context_data(**kwargs)
+        slug = self.kwargs.get('slug')
+        context['page_title'] = slug.capitalize()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        global properties
+        form = self.request.POST
+        
+        if 'search' in form:
+            properties = Property.objects.filter(type__title=form['property_type'])
+            
+            if form['city']:
+                properties = properties.filter(city__icontains=form['city'])
+            if form['range_from'] and form['range_to']:
+                properties = properties.filter(price__range=(int(form['range_from']), int(form['range_to'])))
+            if form['bedrooms']:
+                properties = properties.filter(features__icontains=f"{form['bedrooms']} bedrooms")
+
+        elif form['type'] == 'filter':
+            properties = Property.objects.filter(active=True, deal=False).filter(type__title=form['filter'])
+        else:
+            properties = properties.order_by(form['sort'])
+            
+        context = {
+            'properties': properties,
+        }
+        return render(request, 'property/property_list.html', context)
+    
 
 @login_required
 @csrf_exempt
