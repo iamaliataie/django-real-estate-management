@@ -25,6 +25,7 @@ body {
   font-family: var(--body-font);
   font-size: var(--normal-font-size);
   transition: 0.5s;
+  background-color: #e7e7e7;
 }
 
 a {
@@ -84,6 +85,8 @@ a {
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
+  flex-wrap: nowrap;
+  overflow-y: scroll;
 }
 
 .nav_logo,
@@ -161,7 +164,7 @@ a {
 }
 
 .right-sidebar, .login-container{
-  height: calc(100vh - calc(var(--header-height) + 3rem));
+  /* height: calc(100vh - calc(var(--header-height) + 3rem)); */
 }
 
 .bg-light {
@@ -240,8 +243,29 @@ a {
 }
 
 
+.homepage-container{
+  height: 90vh !important;
+}
+
+.first-col, .third-col, .map-col-container{
+  height: 90vh !important;
+}
+
+
 @media screen and (max-width: 767px) {
+  .homepage-container{
+    height: fit-content !important;
+  }
   .map-col-container{
     height: 400px !important;
+  }
+  .homepage-container{
+    height: 90vh !important;
+  }
+  
+  .first-col, .third-col {
+    height: 100% !important;
+    overflow: none;
+
   }
 }

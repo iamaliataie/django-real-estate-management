@@ -25,12 +25,12 @@
     <div class="d-none">
         {{ locations|json_script:"locations_json" }}
     </div>
-    <div class="h-100">
+    <div class="homepage-container">
 
-        <div class="row h-100 gy-3">
-            <div class="col-12 col-md-2">
-                <div class="w-100 h-100 d-flex flex-column align-items-center justify-content-between gap-3">
-                    <div class="bg-white border rounded p-3 h-100">
+        <div class="row gy-3">
+            <div class="col-12 col-md-3 overflow-scroll first-col">
+                <div class="w-100 d-flex flex-column flex-sm-row flex-md-column  align-items-center gap-3">
+                    <div class="bg-white border rounded p-3">
                         <h4>Properties</h4>
                         <div class="row text-center">
                             <a href="#" class="col-6 text-black d-inline-block property-link">
@@ -51,7 +51,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="bg-white border rounded p-3 h-100">
+                    <div class="bg-white border rounded p-3">
                         <div class="mb-3">
                             <h4>Search Property</h4>
                         </div>
@@ -89,35 +89,37 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-7 map-col-container">
-                <div id="map" class="h-100"></div>
+            <div class="col-12 col-md-6 map-col-container">
+                <div id="map" class="h-100" ></div>
             </div>
-            <div class="col-12 col-md-3">
-                <div class="right-sidebar mw-100 overflow-auto">
-                    <div class="row g-2 p-3">
+            <div class="col-12 col-md-3 overflow-scroll third-col">
+                <div class=" mw-100" >
+                    <div class="row g-2">
                         {% for property in object_list|slice:":6" %}
-                            <div class="card w-100 shadow p-0 overflow-hidden">
-                                <div>
-                                    <img src="{{property.images.all.0.image.url}}" class="w-100" alt="...">
-                                </div>
-                                <div class="card-body">
-                                    <small class="badge 
-                                        {% if property.type.title == 'Rental' %}
-                                            bg-warning
-                                            {% elif property.type.title == 'Commercial' %}
-                                            bg-danger
-                                            {% else %}
-                                            bg-success
-                                        {% endif %}
-                                    mb-2">
-                                        {{ property.type.title}}
-                                        
+                            <div class="col-12 col-sm-6 col-md-12">
+                                <div class="card w-100 shadow p-0 overflow-hidden">
+                                    <div>
+                                        <img src="{{property.images.all.0.image.url}}" class="w-100" alt="...">
+                                    </div>
+                                    <div class="card-body">
+                                        <small class="badge 
+                                            {% if property.type.title == 'Rental' %}
+                                                bg-warning
+                                                {% elif property.type.title == 'Commercial' %}
+                                                bg-danger
+                                                {% else %}
+                                                bg-success
+                                            {% endif %}
+                                        mb-2">
+                                            {{ property.type.title}}
                                             
-                                    </small>
-                                    <h4 class="card-title fw-bold">{{ property.title }}</h4>
-                                    <p class="card-text">{{ property.description|truncatewords:"10" }}</p>
-                                    <h5>{{ property.price|format_amount}}</h5>
-                                    <a href="{% url 'property:property_detail' property.id %}" class="btn btn-primary">View Property</a>
+                                                
+                                        </small>
+                                        <h4 class="card-title fw-bold">{{ property.title }}</h4>
+                                        <p class="card-text">{{ property.description|truncatewords:"10" }}</p>
+                                        <h5>{{ property.price|format_amount}}</h5>
+                                        <a href="{% url 'property:property_detail' property.id %}" class="btn btn-primary">View Property</a>
+                                    </div>
                                 </div>
                             </div>
                         {% endfor %}
