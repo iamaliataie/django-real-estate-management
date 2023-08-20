@@ -200,7 +200,7 @@ a {
 }
 
 .property-link:hover strong {
-  background-color: black;
+  background-color: var(--first-color);
   color: white;
   border-radius: 5px;
 }
