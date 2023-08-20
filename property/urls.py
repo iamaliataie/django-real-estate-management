@@ -20,7 +20,7 @@ urlpatterns = [
         name='property_detail'
     ),
     path(
-        'properties/type/<str:slug>/',
+        'properties/<str:slug>/',
         views.TypePropertyListView.as_view(),
         name='type_property_list'
     ),

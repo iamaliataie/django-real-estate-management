@@ -42,15 +42,22 @@ class PropertyListView(ListView):
         form = self.request.POST
         
         if 'search' in form:
-            properties = Property.objects.filter(type__title=form['property_type'])
+            properties = Property.objects.filter(active=True, deal=False)
             
+            if form['property_type']:
+                properties = properties.filter(type__title=form['property_type'])
             if form['city']:
                 properties = properties.filter(city__icontains=form['city'])
             if form['range_from'] and form['range_to']:
                 properties = properties.filter(price__range=(int(form['range_from']), int(form['range_to'])))
             if form['bedrooms']:
                 properties = properties.filter(features__icontains=f"{form['bedrooms']} bedrooms")
-
+                
+            context ={
+                'properties': properties,
+                'page_title': 'Search'
+            }
+            return render(request, 'property/property_list.html', context)
         elif form['type'] == 'filter':
             properties = Property.objects.filter(active=True, deal=False).filter(type__title=form['filter'])
         else:
@@ -94,6 +101,7 @@ class TypePropertyListView(ListView):
     
     def get_context_data(self, **kwargs):
         context = super(TypePropertyListView, self).get_context_data(**kwargs)
+        global slug
         slug = self.kwargs.get('slug')
         context['page_title'] = slug.capitalize()
         return context
@@ -102,23 +110,14 @@ class TypePropertyListView(ListView):
         global properties
         form = self.request.POST
         
-        if 'search' in form:
-            properties = Property.objects.filter(type__title=form['property_type'])
-            
-            if form['city']:
-                properties = properties.filter(city__icontains=form['city'])
-            if form['range_from'] and form['range_to']:
-                properties = properties.filter(price__range=(int(form['range_from']), int(form['range_to'])))
-            if form['bedrooms']:
-                properties = properties.filter(features__icontains=f"{form['bedrooms']} bedrooms")
-
-        elif form['type'] == 'filter':
+        if form['type'] == 'filter':
             properties = Property.objects.filter(active=True, deal=False).filter(type__title=form['filter'])
         else:
             properties = properties.order_by(form['sort'])
             
         context = {
             'properties': properties,
+            'page_title': slug.capitalize(),
         }
         return render(request, 'property/property_list.html', context)
     

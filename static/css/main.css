@@ -249,6 +249,10 @@ a {
   height: 90vh !important;
 }
 
+.search-sidebar {
+  position: sticky;
+  top: 60px;
+}
 
 @media screen and (max-width: 767px) {
   .homepage-container{
@@ -266,4 +270,10 @@ a {
     overflow: none;
 
   }
+  
+  .search-sidebar {
+    position: static;
+  }
 }
+
+
