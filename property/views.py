@@ -38,10 +38,19 @@ class PropertyListView(ListView):
         return context
 
     def post(self, request, *args, **kwargs):
-        global properties
+        global properties, property_types
         form = self.request.POST
-        if form['type'] == 'search':
-            properties = Property.objects.filter(active=True, deal=False).filter(title__icontains=form['title'])
+        
+        if 'search' in form:
+            properties = Property.objects.filter(type__title=form['property_type'])
+            
+            if form['city']:
+                properties = properties.filter(city__icontains=form['city'])
+            if form['range_from'] and form['range_to']:
+                properties = properties.filter(price__range=(int(form['range_from']), int(form['range_to'])))
+            if form['bedrooms']:
+                properties = properties.filter(features__icontains=f"{form['bedrooms']} bedrooms")
+
         elif form['type'] == 'filter':
             properties = Property.objects.filter(active=True, deal=False).filter(type__title=form['filter'])
         else:
@@ -87,3 +96,5 @@ def add_to_favorites(request):
             request.user.save()
     
     return redirect('property:property_detail', pk=form.get('property_id'))
+
+

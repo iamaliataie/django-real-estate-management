@@ -19,6 +19,11 @@ class PropertyForm(forms.ModelForm):
         model = Property
         exclude = ('agent',)
 
+        widgets = {
+            'features': forms.Textarea(attrs={'rows': 2}),
+            'description': forms.Textarea(attrs={'rows': 3, 'resize': 'none'}),
+        }
+        
 class ImageForm(forms.ModelForm):
 
     class Meta:

@@ -86,7 +86,7 @@ a {
   justify-content: space-between;
   overflow: hidden;
   flex-wrap: nowrap;
-  overflow-y: scroll;
+  overflow: auto;
 }
 
 .nav_logo,
@@ -163,8 +163,8 @@ a {
     position: relative;
 }
 
-.right-sidebar, .login-container{
-  /* height: calc(100vh - calc(var(--header-height) + 3rem)); */
+.login-container{
+  height: calc(100vh - calc(var(--header-height) + 3rem));
 }
 
 .bg-light {
@@ -203,9 +203,7 @@ a {
 }
 
 .property-link:hover strong {
-  background-color: var(--first-color);
-  color: white;
-  border-radius: 5px;
+  text-decoration: underline;
 }
 
 @media screen and (min-width: 768px) {

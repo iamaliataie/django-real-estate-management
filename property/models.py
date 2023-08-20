@@ -12,7 +12,8 @@ class Property(models.Model):
     owner = models.CharField(max_length=50)
     agent = models.ForeignKey('account.User', on_delete=models.DO_NOTHING, null=True, related_name='agent_properties')
     title = models.CharField(max_length=100)
-    location = models.CharField(max_length=255)
+    city = models.CharField(max_length=255)
+    address = models.CharField(max_length=255)
     latitude = models.FloatField(null=True, blank=True)
     longitude = models.FloatField(null=True, blank=True)
     price = models.DecimalField(max_digits=20, decimal_places=0)
@@ -21,7 +22,7 @@ class Property(models.Model):
     description = models.TextField()
     phone = models.CharField(max_length=20, default='+93783767956')
     email = models.EmailField(max_length=100, default='netlinks.realestate@gmail.com')
-    features = models.ManyToManyField('Feature')
+    features = models.TextField(null=True, blank=True)
     active = models.BooleanField(default=False)
     deal = models.BooleanField(default=False)
     deal_date = models.DateField(null=True, blank=True)
@@ -34,6 +35,8 @@ class Property(models.Model):
     def __str__(self) -> str:
         return self.title
 
+    def get_features(self):
+        return self.features.strip().split(',')
     
     def get_type_colors(self):
         if self.type == 'Commercial':

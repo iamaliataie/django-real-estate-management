@@ -89,9 +89,8 @@
         </div>
         <div class="bg-white p-4 rounded mb-3">
             <h5 class="fw-bolder">Features</h5>
-            
             <div class="d-flex justify-content-start align-items-center gap-2 flex-wrap">
-                {% for feature in property.features.all %}
+                {% for feature in property.get_features %}
                 <h5><span class="badge bg-primary d-flex justify-content-start align-items-center gap-2"><i class='bx bx-bookmark-minus'></i> {{ feature }} </span></h5>
             {% endfor %}
             </div>
@@ -99,7 +98,7 @@
         </div>
         <div class="bg-white p-4 rounded mb-3">
             <h5 class="fw-bolder">Address</h5>
-            <p>{{ property.location }}</p>
+            <p>{{ property.city }}, {{ property.address }}</p>
         </div>
         <div class="bg-white p-4 rounded mb-3">
             <h5 class="fw-bolder">Contact</h5>

@@ -1,4 +1,5 @@
 {% extends '../base.html' %}
+{% load static %}
 {% load custom_tags %}
 
 {% block title %}
@@ -8,87 +9,134 @@
 {% endblock title %}
     
 {% block content %}
-
-    <div class="row gx-4 mb-4 border-bottom">
-        <div class="col-12 col-md-6">
-            <form method="post" class="d-flex justify-content-between align-items-center">
-                {% csrf_token %}
-                <input type="hidden" name="type" value="filter">
-                <label for="" class="fw-bolder">Filter</label>
-                <select name="filter" id="" class="w-100 form-control m-2">
-                    
-                    {% for type in property_types %}
-                        <option value="{{type.title}}">{{ type.title }}</option>
-                    {% endfor %}
-                        
-                </select>
-                <button class="btn btn-primary rounded" >Filter</button>
-            </form>
-        </div>
-        <div class="col-12 col-md-6">
-            <form method="post" class="d-flex justify-content-between align-items-center">
-                {% csrf_token %}
-                <input type="hidden" name="type" value="sort">
-                <label for="" class="fw-bolder">Sort</label>
-                <select name="sort" id="" class="w-100 form-control m-2">
-                    <option value="id">Latest</option>
-                    <option value="title">Name</option>
-                    <option value="price">Price</option>
-                </select>
-                <button class="btn btn-primary rounded" >Sort</button>
-            </form>
-        </div>
-    </div>
-
-    {% if request.user.is_authenticated and request.user.is_superuser or request.user.is_staff %}
-    <div class="mb-3 text-end">
-        <a href="{% url 'accounts:property_create' %}" class="btn btn-success">Add Property</a>
-    </div>
-    {% endif %}
-        
-    <div class="row g-3">
-        {% for property in properties %}
-            <div class="col-12 col-sm-6 col-md-3">
-                <div class="card w-100 shadow p-0 overflow-hidden">
-                        <img src="{{property.images.all.0.image.url}}" class="w-100" alt="{{ property.title }}">
-                    <div class="card-body">
-                        <small class="badge 
-                            {% if property.type.title == 'Rental' %}
-                                bg-warning
-                                {% elif property.type.title == 'Commercial' %}
-                                bg-danger
-                                {% else %}
-                                bg-success
-                            {% endif %}
-                            mb-2">
-                            {{ property.type.title}} 
-                        </small>
-                        <h4 class="card-title fw-bold">{{ property.title }}</h4>
-                        <p class="card-text">{{ property.description|truncatewords:"10" }}</p>
-                        <h5>{{ property.price|format_amount}}</h5>
-                        <div class="row gap-2">
-                            <div class="col-12">
-                                <a href="{% url 'property:property_detail' property.id %}" class="btn btn-primary w-100">View Property</a>
-                            </div>
-                            
-                            {% if request.user.is_authenticated and request.user.is_superuser or property.agent == request.user %}
-                                <div class="col-12">
-                                    <a href="{% url 'accounts:property_update' property.id %}" class="btn btn-warning w-100">Update Property</a>
-                                </div>
-                            {% endif %}
-
-                            {% if request.resolver_match.url_name == 'bookmarks' %}
-                                <div class="col-12">
-                                    <a href="{% url 'accounts:remove_from_bookmarks' property.id %}" class="btn btn-danger w-100">Remove from bookmarks</a>
-                                </div>
-                            {% endif %}
-                                
-                        </div>
+    <div class="row">
+        <div class="col-12 col-md-3 order-2">
+            <div class="w-100 d-flex flex-column flex-sm-row flex-md-column  align-items-center gap-3">
+                <div class="bg-white border rounded p-3">
+                    <h4>Properties</h4>
+                    <div class="row text-center">
+                        <a href="#" class="col-6 text-black d-inline-block property-link">
+                            <img src="{% static 'icons/house.png' %}" alt="" class="w-75">
+                            <strong class="px-2 py-1 d-inline-block">Residential</strong>
+                        </a>
+                        <a href="#" class="col-6 text-black d-inline-block property-link">
+                            <img src="{% static 'icons/building.png' %}" alt="" class="w-75">
+                            <strong class="px-2 py-1 d-inline-block">Commercial</strong>
+                        </a>
+                        <a href="#" class="col-6 text-black d-inline-block property-link">
+                            <img src="{% static 'icons/real-estate.png' %}" alt="" class="w-75">
+                            <strong class="px-2 py-1 d-inline-block">Rental</strong>
+                        </a>
                     </div>
                 </div>
+                <div class="bg-white border rounded p-3">
+                    <div class="mb-3">
+                        <h4>Search Property</h4>
+                    </div>
+                    <form action="{% url 'property:property_list' %}" method="post">
+                        {% csrf_token %}
+                        <div class="row gy-4">
+                            <div class="col-12">
+                                <label for="">Property Type</label>
+                                <select name="property_type" id="" class="form-control">
+                                    <option value="Rental">Rental</option>
+                                    <option value="Commercial">Commercial</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label for="">Property City</label>
+                                <input type="text" name="city" class="form-control">
+                            </div>
+                            <div class="col-12">
+                                <label for="">Price Range</label>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <input type="number" name="range_from" class="form-control" placeholder="From">
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="number" name="range_to" class="form-control" placeholder="To">
+                                    </div>    
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label for="">Number of bedrooms</label>
+                                <input type="text" name="bedrooms" class="form-control">
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary w-100" name="search">Search</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
-        {% endfor %}
-            
+        </div>
+        <div class="col-12 col-md-9 order-1">
+            <div class="mb-3 d-flex justify-content-between align-items-center gap-3 w-100 flex-wrap">
+                <div class="w-100">
+                    <form method="post" class=" d-flex justify-content-between align-items-center">
+                        {% csrf_token %}
+                        <input type="hidden" name="type" value="sort">
+                        <label for="" class="fw-bolder">Sort</label>
+                        <select name="sort" id="" class="form-control m-2">
+                            <option value="id">Latest</option>
+                            <option value="title">Name</option>
+                            <option value="price">Price</option>
+                        </select>
+                        <button class="btn btn-primary rounded" >Sort</button>
+                    </form>
+                </div>
+                <!-- {% if request.user.is_authenticated and request.user.is_superuser or request.user.is_staff %}
+                <div class="w-25">
+                    <a href="{% url 'accounts:property_create' %}" class="btn btn-success">Add Property</a>
+                </div>
+                {% endif %} -->
+            </div>
+                
+            <div class="row g-3">
+                {% for property in properties %}
+                    <div class="col-12 col-sm-6 col-md-4">
+                        <div class="card w-100 shadow p-0 overflow-hidden">
+                                <img src="{{property.images.all.0.image.url}}" class="w-100" alt="{{ property.title }}">
+                            <div class="card-body">
+                                <small class="badge 
+                                    {% if property.type.title == 'Rental' %}
+                                        bg-warning
+                                        {% elif property.type.title == 'Commercial' %}
+                                        bg-danger
+                                        {% else %}
+                                        bg-success
+                                    {% endif %}
+                                    mb-2">
+                                    {{ property.type.title}} 
+                                </small>
+                                <h4 class="card-title fw-bold">{{ property.title }}</h4>
+                                <p class="card-text">{{ property.description|truncatewords:"10" }}</p>
+                                <h5>{{ property.price|format_amount}}</h5>
+                                <div class="row gap-2">
+                                    <div class="col-12">
+                                        <a href="{% url 'property:property_detail' property.id %}" class="btn btn-primary w-100">View Property</a>
+                                    </div>
+                                    
+                                    {% if request.user.is_authenticated and request.user.is_superuser or property.agent == request.user %}
+                                        <div class="col-12">
+                                            <a href="{% url 'accounts:property_update' property.id %}" class="btn btn-warning w-100">Update Property</a>
+                                        </div>
+                                    {% endif %}
+        
+                                    {% if request.resolver_match.url_name == 'bookmarks' %}
+                                        <div class="col-12">
+                                            <a href="{% url 'accounts:remove_from_bookmarks' property.id %}" class="btn btn-danger w-100">Remove from bookmarks</a>
+                                        </div>
+                                    {% endif %}
+                                        
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                    
+            </div>
+        </div>
     </div>
 {% endblock content %}
     
