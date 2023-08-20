@@ -17,27 +17,33 @@
     <div class="p-3 rounded bg-white">
         <div class="row gy-4">
             
-            {% for inquiry in object_list %}
-                <a href="{% url 'inquiry:inquiry_detail' inquiry.id %}" class="col-12 col-md-6">
-                    <div class="col-12 border rounded p-3">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <h5 class="fw-bold">{{inquiry.title }}</h5>
-                            <p class="badge bg-{{ inquiry.type_color }}">
-                                {{ inquiry.type }}
-                            </p>
+            
+            {% if object_list %}
+                {% for inquiry in object_list %}
+                    <a href="{% url 'inquiry:inquiry_detail' inquiry.id %}" class="col-12 col-md-6">
+                        <div class="col-12 border rounded p-3">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="fw-bold">{{inquiry.title }}</h5>
+                                <p class="badge bg-{{ inquiry.type_color }}">
+                                    {{ inquiry.type }}
+                                </p>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h6>{{inquiry.property }}</h6>
+                                <p class="">
+                                    {{ inquiry.created_at|date:"M d, Y"  }}
+                                </p>
+                            </div>
+                            <div>
+                                <span class="badge bg-secondary">{{ inquiry.status }}</span>
+                            </div>
                         </div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <h6>{{inquiry.property }}</h6>
-                            <p class="">
-                                {{ inquiry.created_at|date:"M d, Y"  }}
-                            </p>
-                        </div>
-                        <div>
-                            <span class="badge bg-secondary">{{ inquiry.status }}</span>
-                        </div>
-                    </div>
-                </a>
-            {% endfor %}
+                    </a>
+                {% endfor %}
+                {% else %}
+                <h1>No Inquiry</h1>
+            {% endif %}
+                
                 
         </div>
     </div>
