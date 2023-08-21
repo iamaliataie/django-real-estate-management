@@ -11,6 +11,8 @@ from .models import Property, PropertyType
 
 from inquiry.forms import InquiryForm
 
+from search.models import SearchCriteria
+
 # Create your views here.
 
 class Home(ListView):
@@ -42,9 +44,10 @@ class PropertyListView(ListView):
         form = self.request.POST
         
         if 'search' in form:
+                
             properties = Property.objects.filter(active=True, deal=False)
             
-            if form['property_type']:
+            if form['property_type'] != '':
                 properties = properties.filter(type__title=form['property_type'])
             if form['city']:
                 properties = properties.filter(city__icontains=form['city'])
@@ -52,7 +55,25 @@ class PropertyListView(ListView):
                 properties = properties.filter(price__range=(int(form['range_from']), int(form['range_to'])))
             if form['bedrooms']:
                 properties = properties.filter(features__icontains=f"{form['bedrooms']} bedroom")
+
+            
+            if request.user.is_authenticated:
+                search = SearchCriteria.objects.filter(user=request.user).first()
+                if not search:
+                    search = SearchCriteria.objects.create(user=request.user)
+            
+                property_type = PropertyType.objects.filter(title=form['property_type']).first()
+                if property_type:
+                    search.type = property_type
+                else:
+                    search.type = None
+                search.city = form['city']
+                search.price_from = form['range_from']
+                search.price_to = form['range_to']
+                search.bedrooms = form['bedrooms']
                 
+                search.save()
+            
             context ={
                 'properties': properties,
                 'page_title': 'Search'

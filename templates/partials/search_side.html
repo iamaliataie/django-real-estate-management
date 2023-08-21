@@ -1,0 +1,66 @@
+{% load custom_tags %}
+
+<div class="w-100 row m-0 gap-3 search-sidebar">
+    <div class="bg-white border rounded p-3 col-12">
+        <h4>Properties</h4>
+        {% property_types %}
+    </div>
+    <div class="bg-white border rounded p-3 col-12">
+        <div class="mb-3">
+            <h4>Search Property</h4>
+            
+            {% if request.user.is_authenticated %}
+                <p>Latest search</p>
+                {% search_criteria %}
+            {% endif %}
+                
+        </div>
+        <form action="{% url 'property:property_list' %}" method="post">
+            {% csrf_token %}
+            <div class="row gy-4">
+                <div class="col-12">
+                    <label for="">Property Type</label>
+                    <select name="property_type" id="property_type" class="form-control">
+                        <option value="">All</option>
+                        <option value="Residential">Residential</option>
+                        <option value="Commercial">Commercial</option>
+                        <option value="Rental">Rental</option>
+                    </select>
+                </div>
+                <div class="col-12">
+                    <label for="">Property City</label>
+                    <input type="text" name="city" id="city" class="form-control">
+                </div>
+                <div class="col-12">
+                    <label for="">Price Range</label>
+                    <div class="row">
+                        <div class="col-6">
+                            <input type="number" name="range_from" id="price_from" class="form-control" placeholder="From">
+                        </div>
+                        <div class="col-6">
+                            <input type="number" name="range_to" id="price_to" class="form-control" placeholder="To">
+                        </div>    
+                    </div>
+                </div>
+                <div class="col-12">
+                    <label for="">Number of bedrooms</label>
+                    <input type="text" name="bedrooms" id="bedrooms" class="form-control">
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary w-100" name="search">Search</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+
+    const setValue = (element_id, value) => {
+        if (element_id == 'property_type' && value == null) {
+            value = ''
+        }
+        document.getElementById(element_id).value = value
+    }
+
+</script>

@@ -29,53 +29,7 @@
 
         <div class="row gy-3">
             <div class="col-12 col-md-3 overflow-auto first-col order-2 order-md-1 justify-content-center align-items-center">
-                <div class="w-100 row m-0 gap-2"> 
-                    <div class="bg-white border rounded p-3 col-12">
-                        <h4>Properties</h4>
-                        {% property_types %}
-                    </div>
-                    <div class="bg-white border rounded p-3 col-12">
-                        <div class="mb-3">
-                            <h4>Search Property</h4>
-                        </div>
-                        <form action="{% url 'property:property_list' %}" method="post">
-                            {% csrf_token %}
-                            <div class="row gy-4">
-                                <div class="col-12">
-                                    <label for="">Property Type</label>
-                                    <select name="property_type" id="" class="form-control">
-                                        <option value="">All</option>
-                                        <option value="Commercial">Residential</option>
-                                        <option value="Commercial">Commercial</option>
-                                        <option value="Rental">Rental</option>
-                                    </select>
-                                </div>
-                                <div class="col-12">
-                                    <label for="">Property City</label>
-                                    <input type="text" name="city" class="form-control">
-                                </div>
-                                <div class="col-12">
-                                    <label for="">Price Range</label>
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <input type="number" name="range_from" class="form-control" placeholder="From">
-                                        </div>
-                                        <div class="col-6">
-                                            <input type="number" name="range_to" class="form-control" placeholder="To">
-                                        </div>    
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <label for="">Number of bedrooms</label>
-                                    <input type="text" name="bedrooms" class="form-control">
-                                </div>
-                                <div class="col-12">
-                                    <button type="submit" class="btn btn-primary w-100" name="search">Search</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+                {% include 'partials/search_side.html' %}
             </div>
             <div class="col-12 col-md-6 map-col-container order-1 order-md-2">
                 <div id="map" class="h-100" ></div>
