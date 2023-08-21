@@ -169,40 +169,40 @@ class DealCreateView(AdminStaffAccessMixin, CreateView):
     form_class = DealForm
     success_url = reverse_lazy('accounts:deal_list')
     
-    def get_initial(self):
-        return { 'agent': self.request.user}
     
-    def get_form_kwargs(self):
-        kwargs = super(DealCreateView, self).get_form_kwargs()
-        kwargs = {
-            'user': self.request.user
-        }
-        return kwargs
+    def get_initial(self):
+        property = Property.objects.get(id=self.kwargs['pk'])
+        return { 'agent': self.request.user, 'property': property }
 
-    def post(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
-        print(request.POST)
-        if request.method == 'POST':
-            form = DealForm(request.POST)
-            if form.is_valid():
-                deal = form.save()
-                property = deal.property
-                print(property)
-                property.deal = True
-                property.save()
-                return redirect('accounts:deal_list')
-            else:
-                print(form.errors)
-        return super().post(request, *args, **kwargs)
+    # def post(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
+    #     print(request.POST)
+    #     if request.method == 'POST':
+    #         form = DealForm(request.POST)
+    #         if form.is_valid():
+    #             print(form.cleaned_data)
+    #         else:
+    #             print(form.errors)
+    #     return super().post(request, *args, **kwargs)
 
-    # def form_valid(self, form):
-    #     print(form.cleaned_data)
-    #     deal = form.save()
-    #     property = deal.property
-    #     property.deal = True
-    #     property.deal_date = date.today()
-    #     property.save()
+    def form_valid(self, form):
+        print(form.cleaned_data)
+        deal = form.save()
+        property = deal.property
+        property.deal = True
+        property.deal_date = date.today()
+        property.save()
         
-    #     return super().form_valid(form)
+        return super().form_valid(form)
+
+
+class DealPropertyChooseView(AdminStaffAccessMixin, ListView):
+    model = Property
+    template_name = 'deal/deal_property_list.html'
+    
+    def get_queryset(self):
+        queryset = super(DealPropertyChooseView, self).get_queryset()
+        queryset = Property.objects.filter(agent=self.request.user, active=True, deal=False)
+        return queryset
 
 
 class DealListView(AdminStaffAccessMixin, ListView):

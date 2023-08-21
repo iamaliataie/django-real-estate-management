@@ -31,7 +31,7 @@ urlpatterns = [
         name='agent_property_list'
     ),
     path(
-        'deals/create',
+        'deals/create/<int:pk>/',
         views.DealCreateView.as_view(),
         name='deal_create'
     ),
@@ -39,6 +39,11 @@ urlpatterns = [
         'deals/',
         views.DealListView.as_view(),
         name='deal_list'
+    ),
+    path(
+        'deals/new/',
+        views.DealPropertyChooseView.as_view(),
+        name='deal_property_list'
     ),
     path(
         'deals/<int:pk>/',

@@ -1,0 +1,34 @@
+{% extends '../base.html' %}
+
+{% block title %}
+    
+    {% block nav_title %}
+        Choose Property
+    {% endblock nav_title %}
+        
+{% endblock title %}
+
+{% block content %}
+    <div class="bg-white p-3 rounded">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th colspan="3">#</th>
+                    <th colspan="4">Property</th>
+                    <th></th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                {% for property in object_list %}
+                    <tr>
+                        <td colspan="3">{{ property.id }}</td>
+                        <td colspan="4">{{ property }}</td>
+                        <td colspan="3"><a href="{% url 'accounts:deal_create' property.id %}" class="btn btn-primary">Select</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock content %}
+    
