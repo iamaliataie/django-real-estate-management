@@ -24,7 +24,15 @@ class PropertyForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'rows': 3, 'resize': 'none'}),
             'deal_date': forms.DateInput(attrs={'type': 'date'}),
         }
-        
+
+
+    def clean_price(self):
+        price = self.cleaned_data.get('price')
+        if price <0:
+            raise forms.ValidationError('Price cannot be negative')
+        return price
+
+
 class ImageForm(forms.ModelForm):
 
     class Meta:
