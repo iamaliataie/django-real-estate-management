@@ -51,7 +51,7 @@ class PropertyListView(ListView):
             if form['range_from'] and form['range_to']:
                 properties = properties.filter(price__range=(int(form['range_from']), int(form['range_to'])))
             if form['bedrooms']:
-                properties = properties.filter(features__icontains=f"{form['bedrooms']} bedrooms")
+                properties = properties.filter(features__icontains=f"{form['bedrooms']} bedroom")
                 
             context ={
                 'properties': properties,
