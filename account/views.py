@@ -206,6 +206,7 @@ class DealListView(AdminStaffAccessMixin, ListView):
 class DealDetailView(AgentMixin, DetailView):
     model = Deal
 
+
 class DealUpdateView(AgentMixin, UpdateView):
     model = Deal
     form_class = DealForm
