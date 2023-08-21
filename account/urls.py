@@ -51,6 +51,11 @@ urlpatterns = [
         name='deal_detail'
     ),
     path(
+        'deals/update/<int:pk>/',
+        views.DealUpdateView.as_view(),
+        name='deal_update'
+    ),
+    path(
         'bookmarks/',
         views.BookmarkView.as_view(),
         name='bookmarks'

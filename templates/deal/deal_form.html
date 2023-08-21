@@ -87,11 +87,24 @@
         var start_date = document.querySelector('#id_start_date');
         var end_date = document.querySelector('#id_end_date');
 
+        type = deal_type.options[deal_type.selectedIndex].text;
+
         start_date.disabled = true;
         end_date.disabled = true;
 
+        if (type == 'Rent'){
+                start_date.disabled = false;
+                end_date.disabled = false;
+            }
+        else{
+            start_date.disabled = true;
+            end_date.disabled = true;
+        }
+
+
         deal_type.addEventListener('change', function(){
-            type = deal_type.options[deal_type.selectedIndex].text;
+        type = deal_type.options[deal_type.selectedIndex].text;
+
             if (type == 'Rent'){
                 start_date.disabled = false;
                 end_date.disabled = false;
