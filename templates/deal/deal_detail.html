@@ -110,7 +110,7 @@
                 {% endif %}
                     
             </div>
-            <a href="" class="btn btn-primary mt-2">Update</a>
+            <a href="{% url 'accounts:deal_update' object.id %}" class="btn btn-primary mt-2">Update</a>
         </div>
     </div>
 {% endblock content %}

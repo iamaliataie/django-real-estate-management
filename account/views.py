@@ -169,20 +169,9 @@ class DealCreateView(AdminStaffAccessMixin, CreateView):
     form_class = DealForm
     success_url = reverse_lazy('accounts:deal_list')
     
-    
     def get_initial(self):
         property = Property.objects.get(id=self.kwargs['pk'])
         return { 'agent': self.request.user, 'property': property }
-
-    # def post(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
-    #     print(request.POST)
-    #     if request.method == 'POST':
-    #         form = DealForm(request.POST)
-    #         if form.is_valid():
-    #             print(form.cleaned_data)
-    #         else:
-    #             print(form.errors)
-    #     return super().post(request, *args, **kwargs)
 
     def form_valid(self, form):
         print(form.cleaned_data)
@@ -216,6 +205,13 @@ class DealListView(AdminStaffAccessMixin, ListView):
 
 class DealDetailView(AgentMixin, DetailView):
     model = Deal
+
+class DealUpdateView(AgentMixin, UpdateView):
+    model = Deal
+    form_class = DealForm
+    
+    def get_success_url(self):
+        return reverse_lazy('accounts:deal_detail', kwargs={'pk': self.object.pk})
     
 
 class BookmarkView(LoginRequiredMixin, ListView):
