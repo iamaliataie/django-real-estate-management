@@ -22,7 +22,7 @@ class Inquiry(models.Model):
     phone = models.CharField(max_length=20, blank=True, null=True)
     email = models.EmailField(max_length=100)
     content = models.TextField()
-    type = models.CharField('Topic', max_length=30, choices=INQUIRIES)
+    type = models.CharField('Topic', max_length=50, choices=INQUIRIES)
     status = models.CharField('Status', max_length=6, choices=STATUS, blank=True, null=True, default='unread')
     created_at = models.DateTimeField(auto_now_add=True)
     

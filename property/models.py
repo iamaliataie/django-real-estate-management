@@ -5,7 +5,7 @@ from django.db import models
 
 def path_generator(instance, filename):
     
-    return f'{instance}/{filename}'
+    return f'properties/{instance}/{filename}'
 
 class Property(models.Model):
     type = models.ForeignKey('PropertyType', on_delete=models.DO_NOTHING, related_name='properties')
@@ -66,12 +66,12 @@ class PropertyType(models.Model):
         return self.title
     
 
-class Feature(models.Model):
-    title = models.CharField(max_length=100)
+# class Feature(models.Model):
+#     title = models.CharField(max_length=100)
     
-    class Meta:
-        verbose_name = 'Feature'
-        verbose_name_plural = 'Features'
+#     class Meta:
+#         verbose_name = 'Feature'
+#         verbose_name_plural = 'Features'
     
-    def __str__(self) -> str:
-        return self.title
+#     def __str__(self) -> str:
+#         return self.title

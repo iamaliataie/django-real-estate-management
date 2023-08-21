@@ -170,7 +170,7 @@
                 color = 'red';
                 
             }
-            else if (element.type_id == 3){
+            else if (element.type_id == 1){
                 type = 'Residential';
                 bg = 'success';
                 color = 'green';
@@ -190,7 +190,7 @@
                         '<div class="col-12"><span class="badge bg-'+ bg +' py-2">' + type + '</span></div>' +
                         '<div class="col-12">' +
                             '<h6 class="fw-bold m-0">' + element.title + '</h6>' +
-                            '<p class="my-2">' + element.location + '</p>' +
+                            '<p class="my-2">' + element.address + '</p>' +
                         '</div>' +
                     '<a href="/properties/'+ element.id + '" class="col-12 d-block bg-primary text-white rounded p-2 text-center">Show Detail</a>' + 
                     '</div>';
