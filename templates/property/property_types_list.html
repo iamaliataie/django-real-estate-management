@@ -1,6 +1,6 @@
 <div class="row text-center w-100">
     {% for type in property_types %}
-    <a href="{% url 'property:type_property_list' slug=type.slug %}" class="col-4 col-md-6 text-black d-inline-block property-link">
+    <a href="{% url 'property:type_property_list' slug=type.slug %}" class="col-6 col-sm-4 col-md-6 text-black d-inline-block property-link">
         <img src="{{ type.image.url }}" alt="" class="w-75">
         <strong class="px-2 py-1 d-inline-block">{{ type.title }}</strong>
     </a>

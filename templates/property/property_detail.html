@@ -100,6 +100,7 @@
         <div class="bg-white p-4 rounded mb-3">
             <h5 class="fw-bolder">Features</h5>
             <div class="d-flex justify-content-start align-items-center gap-2 flex-wrap">
+                <h5><span class="badge bg-primary d-flex justify-content-start align-items-center gap-2"><i class='bx bx-bookmark-minus'></i> {{ property.size }} </span></h5>
                 {% for feature in property.get_features %}
                 <h5><span class="badge bg-primary d-flex justify-content-start align-items-center gap-2"><i class='bx bx-bookmark-minus'></i> {{ feature }} </span></h5>
             {% endfor %}
@@ -196,7 +197,7 @@
                 color = 'red';
                 
             }
-            else if ('{{property.type_id}}' == 3){
+            else if ('{{property.type_id}}' == 1){
                 type = 'Residential';
                 bg = 'success';
                 color = 'green';
