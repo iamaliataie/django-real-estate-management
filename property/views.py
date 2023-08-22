@@ -12,10 +12,8 @@ from .models import Property, PropertyType
 from inquiry.forms import InquiryForm
 
 from search.models import SearchCriteria
+
 from .provinces import provinces
-
-import json
-
 
 # Create your views here.
 
