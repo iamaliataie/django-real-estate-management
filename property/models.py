@@ -22,6 +22,12 @@ class Property(models.Model):
     phone = models.CharField(max_length=20)
     email = models.EmailField(max_length=100)
     features = models.TextField(null=True, blank=True)
+    floor = models.IntegerField(null=True, blank=True)
+    hall = models.IntegerField(null=True, blank=True)
+    bathroom = models.IntegerField(null=True, blank=True)
+    bedroom = models.IntegerField(null=True, blank=True)
+    parking = models.IntegerField(null=True, blank=True)
+    basement = models.BooleanField(default=False)
     active = models.BooleanField(default=False)
     deal = models.BooleanField(default=False)
     deal_date = models.DateField(null=True, blank=True)
@@ -64,14 +70,5 @@ class PropertyType(models.Model):
     
     def __str__(self) -> str:
         return self.title
-    
 
-# class Feature(models.Model):
-#     title = models.CharField(max_length=100)
-    
-#     class Meta:
-#         verbose_name = 'Feature'
-#         verbose_name_plural = 'Features'
-    
-#     def __str__(self) -> str:
-#         return self.title
+
