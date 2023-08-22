@@ -35,16 +35,16 @@
                     <label for="">Price Range</label>
                     <div class="row">
                         <div class="col-6">
-                            <input type="number" name="range_from" id="price_from" class="form-control" placeholder="From">
+                            <input type="number" name="range_from" id="numberInput" class="form-control" placeholder="From">
                         </div>
                         <div class="col-6">
-                            <input type="number" name="range_to" id="price_to" class="form-control" placeholder="To">
+                            <input type="number" name="range_to" id="numberInput" class="form-control" placeholder="To">
                         </div>    
                     </div>
                 </div>
                 <div class="col-12">
                     <label for="">Number of bedrooms</label>
-                    <input type="text" name="bedrooms" id="bedrooms" class="form-control">
+                    <input type="number" name="bedrooms" id="numberInput" class="form-control">
                 </div>
                 <div class="col-12">
                     <button type="submit" class="btn btn-primary w-100" name="search">Search</button>
@@ -56,11 +56,11 @@
 
 <script>
 
-    const setValue = (element_id, value) => {
-        if (element_id == 'property_type' && value == null) {
+    const setValue = (element_name, value) => {
+        if (element_name == 'property_type' && value == null) {
             value = ''
         }
-        document.getElementById(element_id).value = value
+        document.getElementById(element_name).value = value
     }
 
 </script>

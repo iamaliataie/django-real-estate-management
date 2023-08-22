@@ -3,8 +3,8 @@
 <div class="d-flex align-items-center flex-wrap gap-2">
     <button class="badge bg-secondary border-0" onclick="setValue('property_type' , '{{search.type.title}}')">type: {% if search.type %}{{search.type.title}}{% else %}All{%endif%}</button>
     <button class="badge bg-secondary border-0" onclick="setValue('city', '{{search.city}}')">city: {% if search.city %}{{search.city}}{% else %}All{%endif%}</button>
-    <button class="badge bg-secondary border-0" onclick="setValue('price_from', '{{search.price_from}}')">price from: {% if search.price_from %}{{search.price_from}}{% else %}All{%endif%}</button>
-    <button class="badge bg-secondary border-0" onclick="setValue('price_to', '{{search.price_to}}')">price to: {% if search.price_to %}{{search.price_to}}{% else %}All{%endif%}</button>
+    <button class="badge bg-secondary border-0" onclick="setValue('range_from', '{{search.price_from}}')">price from: {% if search.price_from %}{{search.price_from}}{% else %}All{%endif%}</button>
+    <button class="badge bg-secondary border-0" onclick="setValue('range_to', '{{search.price_to}}')">price to: {% if search.price_to %}{{search.price_to}}{% else %}All{%endif%}</button>
     <button class="badge bg-secondary border-0" onclick="setValue('bedrooms', '{{search.bedrooms}}')">bedrooms: {% if search.bedrooms %}{{search.bedrooms}}{% else %}All{%endif%}</button>
 </div>
 

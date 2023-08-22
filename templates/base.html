@@ -140,12 +140,15 @@
     <script type="text/javascript">
       document.addEventListener("DOMContentLoaded", function (event) {
 
-        let numberInput = document.getElementById('numberInput');
-        numberInput.addEventListener('input', function() {
-            if (numberInput.value < 1) {
-                console.log('less than 0');
-                numberInput.value = Math.abs(numberInput.value);
+        let numberInput = document.querySelectorAll('#numberInput');
+        numberInput.forEach((input) => {
+          input.addEventListener('input', function() {
+            if (input.value < 1) {
+                let num = Math.abs(input.value);
+                if (num == 0){ input.value = '' }
+                else { input.value = num }
             }
+        });
         });
 
         const showNavbar = (toggleId, navId, bodyId, headerId) => {
