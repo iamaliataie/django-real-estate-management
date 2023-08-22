@@ -79,7 +79,9 @@ class PropertyListView(ListView):
                 'properties': properties,
                 'page_title': 'Search'
             }
+            
             return render(request, 'property/property_list.html', context)
+        
         elif form['type'] == 'filter':
             properties = Property.objects.filter(active=True, deal=False).filter(type__title=form['filter'])
         else:
@@ -88,6 +90,7 @@ class PropertyListView(ListView):
         context = {
             'properties': properties,
         }
+        
         return render(request, 'property/property_list.html', context)
     
 
