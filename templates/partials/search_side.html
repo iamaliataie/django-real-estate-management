@@ -20,7 +20,7 @@
             <div class="row gy-4">
                 <div class="col-12">
                     <label for="">Property Type</label>
-                    <select name="property_type" id="property_type" class="form-control">
+                    <select name="type" id="property_type" class="form-control">
                         <option value="">All</option>
                         <option value="Residential">Residential</option>
                         <option value="Commercial">Commercial</option>
@@ -35,10 +35,10 @@
                     <label for="">Price Range</label>
                     <div class="row">
                         <div class="col-6">
-                            <input type="number" name="range_from" id="numberInput" class="form-control" placeholder="From">
+                            <input type="number" name="price_from" id="numberInput" class="form-control" placeholder="From">
                         </div>
                         <div class="col-6">
-                            <input type="number" name="range_to" id="numberInput" class="form-control" placeholder="To">
+                            <input type="number" name="price_to" id="numberInput" class="form-control" placeholder="To">
                         </div>    
                     </div>
                 </div>
@@ -77,10 +77,11 @@
 <script>
 
     const setValue = (element_name, value) => {
-        if (element_name == 'property_type' && value == null) {
+        if (element_name == 'type' && value == null) {
             value = ''
         }
-        document.getElementById(element_name).value = value
+        // document.getElementByName(element_name).value = value
+        document.getElementsByName(element_name)[0].value = value
     }
 
 </script>

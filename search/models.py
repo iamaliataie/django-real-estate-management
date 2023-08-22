@@ -1,6 +1,5 @@
 from django.db import models
 from account.models import User
-
 from property.models import Property, PropertyType
 
 # Create your models here.
@@ -8,13 +7,13 @@ from property.models import Property, PropertyType
 class SearchCriteria(models.Model):
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING, default=None)
     type = models.ForeignKey(PropertyType, on_delete=models.DO_NOTHING, null=True, blank=True)
-    city = models.CharField(max_length=50, default='', null=True, blank=True)
-    price_from = models.CharField(max_length=20, null=True, blank=True)
-    price_to = models.CharField(max_length=20, null=True, blank=True)
-    floors = models.CharField(max_length=20, null=True, blank=True)
-    bedrooms = models.CharField(max_length=20, null=True, blank=True)
-    bathrooms = models.CharField(max_length=20, null=True, blank=True)
-    parking = models.CharField(max_length=20, null=True, blank=True)
+    city = models.CharField(max_length=50, null=True, blank=True, default='')
+    price_from = models.CharField(max_length=20, null=True, blank=True, default='')
+    price_to = models.CharField(max_length=20, null=True, blank=True, default='')
+    floors = models.CharField(max_length=20, null=True, blank=True, default='')
+    bedrooms = models.CharField(max_length=20, null=True, blank=True, default='')
+    bathrooms = models.CharField(max_length=20, null=True, blank=True, default='')
+    parking = models.CharField(max_length=20, null=True, blank=True, default='')
     basement = models.BooleanField(default=False)
     
     class Meta:
@@ -23,3 +22,25 @@ class SearchCriteria(models.Model):
     
     def __str__(self):
         return self.user.get_full_name()
+    
+    
+    def get_search_criteria(self):
+        criteria = list()
+        for key, value in self.__dict__.items():
+            if key == 'user_id' or key == 'id' or key == '_state':
+                # print(value)
+                print('-----------------------------------------------------')
+                continue
+            
+            if key == 'type_id':
+                type = PropertyType.objects.filter(pk=value).first()
+                key = 'type'
+                if type:
+                    value = type.title
+            
+            if value is None:
+                value = ''
+            
+            criteria.append((key, value))
+            print(key, value)
+        return criteria

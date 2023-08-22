@@ -21,7 +21,7 @@ def property_types():
 def search_criteria(context):
     user = context.get('user')
     if user.is_authenticated:
-        search = SearchCriteria.objects.filter(user=user).first()
+        search = SearchCriteria.objects.filter(user=user).last()
     else:
         search = None
-    return {'search': search}
+    return {'search': search.get_search_criteria()}
