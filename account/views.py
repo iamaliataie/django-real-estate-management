@@ -44,6 +44,19 @@ class PropertyInline():
             return self.render_to_response(self.get_context_data(form=form))
 
         self.object = form.save()
+        
+        if self.object.type.title == 'Residential':
+            self.object.marker_color = 'green'
+            self.type_color = 'success'
+        elif self.object.type.title == 'Commercial':
+            self.object.marker_color = 'red'
+            self.object.type_color = 'danger'
+        elif self.object.type.title == 'Rental':
+            self.object.marker_color = 'yellow'
+            self.object.type_color = 'warning'
+        
+        self.object.save()
+        
         if not self.object.agent:
             self.object.agent = self.request.user
             self.object.save()
