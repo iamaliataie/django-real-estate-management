@@ -139,6 +139,15 @@
 
     <script type="text/javascript">
       document.addEventListener("DOMContentLoaded", function (event) {
+
+        let numberInput = document.getElementById('numberInput');
+        numberInput.addEventListener('input', function() {
+            if (numberInput.value < 1) {
+                console.log('less than 0');
+                numberInput.value = Math.abs(numberInput.value);
+            }
+        });
+
         const showNavbar = (toggleId, navId, bodyId, headerId) => {
           const toggle = document.getElementById(toggleId),
             nav = document.getElementById(navId),

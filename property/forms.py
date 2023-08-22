@@ -20,7 +20,7 @@ class PropertyForm(forms.ModelForm):
         exclude = ('agent',)
 
         widgets = {
-            'features': forms.Textarea(attrs={'rows': 2, 'placeholder': 'eg: 1 floor, 2 bedrooms, 1 bathroom, 1 balcony, 1 parking, 2 parkings, basement'}),
+            'price': forms.TextInput(attrs={'type': 'number', 'min': 2000, 'id':'numberInput'}),
             'description': forms.Textarea(attrs={'rows': 3, 'resize': 'none'}),
             'deal_date': forms.DateInput(attrs={'type': 'date'}),
         }
