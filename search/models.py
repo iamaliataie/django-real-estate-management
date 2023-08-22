@@ -11,7 +11,11 @@ class SearchCriteria(models.Model):
     city = models.CharField(max_length=50, default='', null=True, blank=True)
     price_from = models.CharField(max_length=20, null=True, blank=True)
     price_to = models.CharField(max_length=20, null=True, blank=True)
+    floors = models.CharField(max_length=20, null=True, blank=True)
     bedrooms = models.CharField(max_length=20, null=True, blank=True)
+    bathrooms = models.CharField(max_length=20, null=True, blank=True)
+    parking = models.CharField(max_length=20, null=True, blank=True)
+    basement = models.BooleanField(default=False)
     
     class Meta:
         verbose_name = 'Search'
