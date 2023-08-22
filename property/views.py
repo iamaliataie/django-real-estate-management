@@ -67,6 +67,7 @@ class PropertyListView(ListView):
                     search.type = property_type
                 else:
                     search.type = None
+                    
                 search.city = form['city']
                 search.price_from = form['range_from']
                 search.price_to = form['range_to']
