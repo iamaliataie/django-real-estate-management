@@ -34,6 +34,7 @@ class Property(models.Model):
     
     marker_color = models.CharField(max_length=20, null=True, blank=True)
     type_color = models.CharField(max_length=20, null=True, blank=True)
+    type_title = models.CharField(max_length=50, null=True, blank=True)
     
     created_at = models.DateTimeField(auto_now_add=True)
     
@@ -45,12 +46,15 @@ class Property(models.Model):
         if self.type.title == 'Residential':
             self.marker_color = 'green'
             self.type_color = 'success'
+            self.type_title = 'Residential'
         elif self.type.title == 'Commercial':
             self.marker_color = 'red'
             self.type_color = 'danger'
+            self.type_title = 'Commercial'
         elif self.type.title == 'Rental':
             self.marker_color = 'yellow'
             self.type_color = 'warning'
+            self.type_title = 'Rental'
         
         self.save()
         return self.title

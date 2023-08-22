@@ -191,23 +191,6 @@
                 maxZoom: 22,
                 attribution: '© OpenStreetMap'
             }).addTo(map);
-        
-            let type = 'Rental';
-            let bg = 'warning';
-            let color = 'yellow';
-
-            if ('{{property.type_id}}' == 2){
-                type = 'Commercial';
-                bg = 'danger';
-                color = 'red';
-                
-            }
-            else if ('{{property.type_id}}' == 1){
-                type = 'Residential';
-                bg = 'success';
-                color = 'green';
-                
-            }
 
             var Icon = new L.Icon({
                 iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-{{property.marker_color}}.png`,
@@ -219,7 +202,7 @@
             });
 
             let popup = '<div class="row g-2">' + 
-                        '<div class="col-12"><span class="badge bg-{{property.type_color}} py-2">' + type + '</span></div>' +
+                        '<div class="col-12"><span class="badge bg-{{property.type_color}} py-2">' + '{{property.type_title}}' + '</span></div>' +
                         '<div class="col-12">' +
                             '<h6 class="fw-bold m-0">' + '{{property.title}}' + '</h6>' +
                             '<p class="my-2">' + '{{property.location}}' + '</p>' +

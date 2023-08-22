@@ -114,25 +114,6 @@
 
         locations.forEach(element => {
 
-            console.log(element.s);
-
-            let type = 'Rental';
-            let bg = 'warning';
-            let color = 'yellow';
-
-            if (element.type_id == 2){
-                type = 'Commercial';
-                bg = 'danger';
-                color = 'red';
-                
-            }
-            else if (element.type_id == 1){
-                type = 'Residential';
-                bg = 'success';
-                color = 'green';
-                
-            }
-
             var Icon = new L.Icon({
                 iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${element.marker_color}.png`,
                 shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
@@ -143,7 +124,7 @@
             });
 
             let popup = '<div class="row g-2">' + 
-                        '<div class="col-12"><span class="badge bg-'+ element.type_color +' py-2">' + type + '</span></div>' +
+                        '<div class="col-12"><span class="badge bg-'+ element.type_color +' py-2">' + element.type_title + '</span></div>' +
                         '<div class="col-12">' +
                             '<h6 class="fw-bold m-0">' + element.title + '</h6>' +
                             '<p class="my-2">' + element.address + '</p>' +

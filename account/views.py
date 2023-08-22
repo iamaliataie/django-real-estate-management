@@ -48,12 +48,15 @@ class PropertyInline():
         if self.object.type.title == 'Residential':
             self.object.marker_color = 'green'
             self.object.type_color = 'success'
+            self.object.type_title = 'Residential'
         elif self.object.type.title == 'Commercial':
             self.object.marker_color = 'red'
             self.object.type_color = 'danger'
+            self.object.type_title = 'Commercial'
         elif self.object.type.title == 'Rental':
             self.object.marker_color = 'yellow'
             self.object.type_color = 'warning'
+            self.object.type_title = 'Rental'
         
         self.object.save()
         
