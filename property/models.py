@@ -25,12 +25,16 @@ class Property(models.Model):
     floor = models.IntegerField(null=True, blank=True)
     hall = models.IntegerField(null=True, blank=True)
     bathroom = models.IntegerField(null=True, blank=True)
-    bedroom = models.IntegerField(null=True, blank=True)
+    bedroom = models.PositiveIntegerField(null=True, blank=True)
     parking = models.IntegerField(null=True, blank=True)
     basement = models.BooleanField(default=False)
     active = models.BooleanField(default=False)
     deal = models.BooleanField(default=False)
     deal_date = models.DateField(null=True, blank=True)
+    
+    marker_color = models.CharField(max_length=20, null=True, blank=True)
+    type_color = models.CharField(max_length=20, null=True, blank=True)
+    
     created_at = models.DateTimeField(auto_now_add=True)
     
     class Meta:
@@ -38,6 +42,17 @@ class Property(models.Model):
         verbose_name_plural = 'Properties'
     
     def __str__(self) -> str:
+        if self.type.title == 'Residential':
+            self.marker_color = 'green'
+            self.type_color = 'success'
+        elif self.type.title == 'Commercial':
+            self.marker_color = 'red'
+            self.type_color = 'danger'
+        elif self.type.title == 'Rental':
+            self.marker_color = 'yellow'
+            self.type_color = 'warning'
+        
+        self.save()
         return self.title
 
     def get_features(self):
@@ -47,6 +62,22 @@ class Property(models.Model):
         if self.type == 'Commercial':
             return 'red', 'danger'
         return 'yellow', 'warning'
+    
+    def get_features(self):
+        features = list()
+        if self.floor:
+            features.append('Floor: ' + str(self.floor))
+        if self.hall:
+            features.append('Hall: ' + str(self.hall))
+        if self.bathroom:
+            features.append('Bathroom: ' + str(self.bathroom))
+        if self.bedroom:
+            features.append('Bedroom: ' + str(self.bedroom))
+        if self.parking:
+            features.append('Parking: ' + str(self.parking))
+        if self.basement:
+            features.append('Basement')
+        return features
     
     
 class Image(models.Model):

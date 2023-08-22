@@ -62,7 +62,16 @@
                             {{form.email|as_crispy_field}}
                         </div>
                         <div class="col-12">
-                            {{form.features|as_crispy_field}}
+                            <hr>
+                            <h4>Features</h4>
+                            <div class="row">
+                                <div class="col-12 col-sm-6">{{form.floor|as_crispy_field}}</div>
+                                <div class="col-12 col-sm-6">{{form.hall|as_crispy_field}}</div>
+                                <div class="col-12 col-sm-6">{{form.bedroom|as_crispy_field}}</div>
+                                <div class="col-12 col-sm-6">{{form.bathroom|as_crispy_field}}</div>
+                                <div class="col-12 col-sm-6">{{form.parking|as_crispy_field}}</div>
+                                <div class="col-12 col-sm-6">{{form.basement|as_crispy_field}}</div>
+                            </div>
                         </div>
                         <div class="col-12">
                             {{form.active|as_crispy_field}}
