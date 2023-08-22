@@ -28,8 +28,6 @@ class SearchCriteria(models.Model):
         criteria = list()
         for key, value in self.__dict__.items():
             if key == 'user_id' or key == 'id' or key == '_state':
-                # print(value)
-                print('-----------------------------------------------------')
                 continue
             
             if key == 'type_id':
@@ -41,6 +39,8 @@ class SearchCriteria(models.Model):
             if value is None:
                 value = ''
             
+            if key == 'basement':
+                value = 'Yes' if value else 'No'
+            
             criteria.append((key, value))
-            print(key, value)
         return criteria

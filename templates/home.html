@@ -1,140 +1,160 @@
-{% extends 'base.html' %}
-{% load static %}
-{% load custom_tags %}
+{% extends 'base.html' %} {% load static %} {% load custom_tags %} {% block
+title %} {% block nav_title %} Main Page {% endblock nav_title %} {% endblock
+title %} {% block extra_css %}
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+  crossorigin=""
+/>
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"
+/>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.79.0/dist/L.Control.Locate.min.css"
+/>
 
-
-{% block title %}
-    
-    {% block nav_title %}
-    Main Page
-    {% endblock nav_title %}
-        
-{% endblock title %}
-    
-
-{% block extra_css %}
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-    crossorigin=""/>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.79.0/dist/L.Control.Locate.min.css">
-{% endblock extra_css %}
-
-
-{% block content %}
-    <div class="d-none">
-        {{ locations|json_script:"locations_json" }}
+{% endblock extra_css %} {% block content %}
+<div class="d-none">{{ locations|json_script:"locations_json" }}</div>
+<div class="homepage-container">
+  <div class="row gy-3">
+    <div
+      class="col-12 col-md-3 overflow-auto first-col order-2 order-md-1 justify-content-center align-items-center"
+    >
+      {% include 'partials/search_side.html' %}
     </div>
-    <div class="homepage-container">
-
-        <div class="row gy-3">
-            <div class="col-12 col-md-3 overflow-auto first-col order-2 order-md-1 justify-content-center align-items-center">
-                {% include 'partials/search_side.html' %}
+    <div class="col-12 col-md-6 map-col-container order-1 order-md-2">
+      <div id="map" class="h-100"></div>
+    </div>
+    <div class="col-12 col-md-3 overflow-auto third-col order-3">
+      <div class="mw-100">
+        <div class="row g-2">
+          {% for property in object_list|slice:":6" %}
+          <div class="col-12 col-sm-6 col-md-12">
+            <div class="card w-100 shadow p-0 overflow-hidden">
+              <div>
+                <img
+                  src="{{property.images.all.0.image.url}}"
+                  class="w-100"
+                  alt="..."
+                />
+              </div>
+              <div class="card-body">
+                <small
+                  class="badge {% if property.type.title == 'Rental' %} bg-warning {% elif property.type.title == 'Commercial' %} bg-danger {% else %} bg-success {% endif %} mb-2"
+                >
+                  {{ property.type.title}}
+                </small>
+                <h4 class="card-title fw-bold">{{ property.title }}</h4>
+                <p class="card-text">
+                  {{ property.description|truncatewords:"10" }}
+                </p>
+                <h5>{{ property.price|format_amount}}</h5>
+                <a
+                  href="{% url 'property:property_detail' property.id %}"
+                  class="btn btn-primary"
+                  >View Property</a
+                >
+              </div>
             </div>
-            <div class="col-12 col-md-6 map-col-container order-1 order-md-2">
-                <div id="map" class="h-100" ></div>
-            </div>
-            <div class="col-12 col-md-3 overflow-auto third-col order-3">
-                <div class=" mw-100" >
-                    <div class="row g-2">
-                        {% for property in object_list|slice:":6" %}
-                            <div class="col-12 col-sm-6 col-md-12">
-                                <div class="card w-100 shadow p-0 overflow-hidden">
-                                    <div>
-                                        <img src="{{property.images.all.0.image.url}}" class="w-100" alt="...">
-                                    </div>
-                                    <div class="card-body">
-                                        <small class="badge 
-                                            {% if property.type.title == 'Rental' %}
-                                                bg-warning
-                                                {% elif property.type.title == 'Commercial' %}
-                                                bg-danger
-                                                {% else %}
-                                                bg-success
-                                            {% endif %}
-                                        mb-2">
-                                            {{ property.type.title}}
-                                            
-                                                
-                                        </small>
-                                        <h4 class="card-title fw-bold">{{ property.title }}</h4>
-                                        <p class="card-text">{{ property.description|truncatewords:"10" }}</p>
-                                        <h5>{{ property.price|format_amount}}</h5>
-                                        <a href="{% url 'property:property_detail' property.id %}" class="btn btn-primary">View Property</a>
-                                    </div>
-                                </div>
-                            </div>
-                        {% endfor %}
-                        
-                        {% if locations|length > 6 %}
-                        <div class="card w-100 d-flex justify-content-center align-items-center bg-light" style="height: 300px;">
-                            <a href="{% url 'property:property_list' %}" class="fw-bolder">View More</a>
-                        </div>
-                        {% endif %}
-                            
-                    </div>
-                </div>
-            </div>
+          </div>
+          {% endfor %} {% if locations|length > 6 %}
+          <div
+            class="card w-100 d-flex justify-content-center align-items-center bg-light"
+            style="height: 300px"
+          >
+            <a href="{% url 'property:property_list' %}" class="fw-bolder"
+              >View More</a
+            >
+          </div>
+          {% endif %}
         </div>
+      </div>
     </div>
-    
+  </div>
+</div>
 
-{% endblock content %}
+{% endblock content %} {% block extra_js %}
 
-{% block extra_js %}
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-    crossorigin="">
-    </script>
-    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.79.0/dist/L.Control.Locate.min.js" charset="utf-8"></script>
-    
-    <script>
-        var map = L.map('map').setView([34.54062271336702, 69.17108384905345], 18);
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 22,
-            attribution: '© OpenStreetMap'
-        }).addTo(map);
-        L.Control.geocoder().addTo(map);
+<script
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+  crossorigin=""
+></script>
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+<script
+  src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.79.0/dist/L.Control.Locate.min.js"
+  charset="utf-8"
+></script>
 
-        L.control
-            .locate({
-                position: "topleft",
-                strings: {
-                title: "Show me where I am"
-                },
-                icon: 'bx bx-current-location bx-spin',
-                iconSize: '20px',
-                flyTo: true,
-                drawMarker: true,
-            })
-            .addTo(map);
 
-        let locations = JSON.parse(document.getElementById('locations_json').textContent)
+<script>
 
-        locations.forEach(element => {
+  var map = L.map("map").setView([34.54062271336702, 69.17108384905345], 18);
+  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 22,
+    attribution: "© OpenStreetMap",
+  }).addTo(map);
+  L.Control.geocoder().addTo(map);
 
-            var Icon = new L.Icon({
-                iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${element.marker_color}.png`,
-                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-                iconSize: [25, 41],
-                iconAnchor: [12, 41],
-                popupAnchor: [1, -34],
-                shadowSize: [41, 41]
-            });
+  L.control
+    .locate({
+      position: "topleft",
+      strings: {
+        title: "Show me where I am",
+      },
+      icon: "bx bx-current-location bx-spin",
+      iconSize: "20px",
+      flyTo: true,
+      drawMarker: true,
+    })
+    .addTo(map);
 
-            let popup = '<div class="row g-2">' + 
-                        '<div class="col-12"><span class="badge bg-'+ element.type_color +' py-2">' + element.type_title + '</span></div>' +
-                        '<div class="col-12">' +
-                            '<h6 class="fw-bold m-0">' + element.title + '</h6>' +
-                            '<p class="my-2">' + element.address + '</p>' +
-                        '</div>' +
-                    '<a href="/properties/'+ element.id + '" class="col-12 d-block bg-primary text-white rounded p-2 text-center">Show Detail</a>' + 
-                    '</div>';
+  let locations = JSON.parse(
+    document.getElementById("locations_json").textContent
+  );
 
-            L.marker([element.latitude, element.longitude], {'icon': Icon}, {'draggable': true}).addTo(map)
-            .bindPopup(popup).openPopup();
-        });
-    </script>
+  locations.forEach((element) => {
+    var Icon = new L.Icon({
+      iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${element.marker_color}.png`,
+      shadowUrl:
+        "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41],
+    });
+
+    let popup =
+      '<div class="row g-2">' +
+      '<div class="col-12"><span class="badge bg-' +
+      element.type_color +
+      ' py-2">' +
+      element.type_title +
+      "</span></div>" +
+      '<div class="col-12">' +
+      '<h6 class="fw-bold m-0">' +
+      element.title +
+      "</h6>" +
+      '<p class="my-2">' +
+      element.address +
+      "</p>" +
+      "</div>" +
+      '<a href="/properties/' +
+      element.id +
+      '" class="col-12 d-block bg-primary text-white rounded p-2 text-center">Show Detail</a>' +
+      "</div>";
+
+    L.marker(
+      [element.latitude, element.longitude],
+      { icon: Icon },
+      { draggable: true }
+    )
+      .addTo(map)
+      .bindPopup(popup)
+      .openPopup();
+  });
+</script>
 {% endblock extra_js %}
-    

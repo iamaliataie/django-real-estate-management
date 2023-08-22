@@ -10,6 +10,11 @@ urlpatterns = [
         name='home'
     ),
     path(
+        'search/',
+        views.search,
+        name='search'
+    ),
+    path(
         'properties/',
         views.PropertyListView.as_view(),
         name='property_list'

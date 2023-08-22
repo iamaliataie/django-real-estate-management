@@ -1,5 +1,5 @@
-from typing import Any
-from django.http import HttpRequest, HttpResponse
+import requests
+from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.views.generic import DetailView, ListView
@@ -12,6 +12,10 @@ from .models import Property, PropertyType
 from inquiry.forms import InquiryForm
 
 from search.models import SearchCriteria
+from .provinces import provinces
+
+import json
+
 
 # Create your views here.
 
@@ -24,7 +28,21 @@ class Home(ListView):
         context = super(Home, self).get_context_data(**kwargs)
         locations = list(Property.objects.filter(active=True, deal=False).values())
         context['locations'] = locations
+        
         return context
+
+def search(request):
+    if 'term' in request.GET:
+        q = request.GET.get('term', '').capitalize()
+        
+        ps = list()
+        
+        for p in provinces:
+            if q in p:
+                ps.append(p)
+    
+    return JsonResponse(ps, safe=False)
+
 
 
 class PropertyListView(ListView):
@@ -47,14 +65,24 @@ class PropertyListView(ListView):
                 
             properties = Property.objects.filter(active=True, deal=False)
             
-            if form['property_type'] != '':
-                properties = properties.filter(type__title=form['property_type'])
+            if form['type'] != '':
+                properties = properties.filter(type__title=form['type'])
             if form['city']:
                 properties = properties.filter(city__icontains=form['city'])
-            if form['range_from'] and form['range_to']:
-                properties = properties.filter(price__range=(int(form['range_from']), int(form['range_to'])))
+            if form['price_from'] and form['price_to']:
+                properties = properties.filter(price__range=(int(form['price_from']), int(form['price_to'])))
+            if form['floors']:
+                properties = properties.filter(floor=form['floors'])
             if form['bedrooms']:
                 properties = properties.filter(bedroom=form['bedrooms'])
+            if form['bathrooms']:
+                properties = properties.filter(bathroom=form['bathrooms'])
+            if form['parking']:
+                properties = properties.filter(parking=form['parking'])
+                
+            
+            if form.get('basement'):
+                properties = properties.filter(basement=True)
 
             
             if request.user.is_authenticated:
@@ -62,16 +90,20 @@ class PropertyListView(ListView):
                 if not search:
                     search = SearchCriteria.objects.create(user=request.user)
             
-                property_type = PropertyType.objects.filter(title=form['property_type']).first()
+                property_type = PropertyType.objects.filter(title=form['type']).first()
                 if property_type:
                     search.type = property_type
                 else:
                     search.type = None
                     
                 search.city = form['city']
-                search.price_from = form['range_from']
-                search.price_to = form['range_to']
+                search.price_from = form['price_from']
+                search.price_to = form['price_to']
+                search.floors = form['floors']
                 search.bedrooms = form['bedrooms']
+                search.bathrooms = form['bathrooms']
+                search.parking = form['parking']
+                search.basement = True if form.get('basement') == 'on' else False
                 
                 search.save()
             
