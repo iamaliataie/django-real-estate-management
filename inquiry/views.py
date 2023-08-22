@@ -69,7 +69,6 @@ class InquiryDetailView(InquiryPropertyAgentMixin, FormMixin, DetailView):
                 phone: {request.user.phone}
             """
 
-
             # Create the EmailMultiAlternatives object
             email = EmailMultiAlternatives(
                 mail_subject, text_message, from_email, recipient_list
