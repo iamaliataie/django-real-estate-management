@@ -40,7 +40,6 @@ class ImageForm(forms.ModelForm):
         fields = ['image']
 
 
-
 ImageFormSet = inlineformset_factory(
     Property, Image, form=ImageForm,
     extra=1,

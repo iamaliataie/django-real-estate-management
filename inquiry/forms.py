@@ -11,6 +11,7 @@ class Lowercase(forms.CharField):
     def to_python(self, value):
         return value.lower()
 
+
 class InquiryForm(forms.ModelForm):
     
     title = forms.CharField(

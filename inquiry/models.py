@@ -15,6 +15,7 @@ STATUS = (
     ('unread', 'unread'),
 )
 
+
 class Inquiry(models.Model):
     property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name='inquiries')
     title = models.CharField(max_length=100)
