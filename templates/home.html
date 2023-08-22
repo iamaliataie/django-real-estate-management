@@ -114,6 +114,25 @@
 
         locations.forEach(element => {
 
+            console.log(element.s);
+
+            let type = 'Rental';
+            let bg = 'warning';
+            let color = 'yellow';
+
+            if (element.type_id == 2){
+                type = 'Commercial';
+                bg = 'danger';
+                color = 'red';
+                
+            }
+            else if (element.type_id == 1){
+                type = 'Residential';
+                bg = 'success';
+                color = 'green';
+                
+            }
+
             var Icon = new L.Icon({
                 iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${element.marker_color}.png`,
                 shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',

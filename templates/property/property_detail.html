@@ -210,7 +210,7 @@
             }
 
             var Icon = new L.Icon({
-                iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${color}.png`,
+                iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-{{property.marker_color}}.png`,
                 shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
                 iconSize: [25, 41],
                 iconAnchor: [12, 41],
@@ -219,7 +219,7 @@
             });
 
             let popup = '<div class="row g-2">' + 
-                        '<div class="col-12"><span class="badge bg-'+ bg +' py-2">' + type + '</span></div>' +
+                        '<div class="col-12"><span class="badge bg-{{property.type_color}} py-2">' + type + '</span></div>' +
                         '<div class="col-12">' +
                             '<h6 class="fw-bold m-0">' + '{{property.title}}' + '</h6>' +
                             '<p class="my-2">' + '{{property.location}}' + '</p>' +
