@@ -24,4 +24,4 @@ def search_criteria(context):
         search = SearchCriteria.objects.filter(user=user).last()
     else:
         search = None
-    return {'search': search.get_search_criteria()} if search else False
+    return {'search': search.get_search_criteria() if search else False } 
