@@ -88,7 +88,6 @@ class PropertyInline():
                 mail_subject, text_message, from_email, recipient_list
             )
             email.attach_alternative(html_message, "text/html")
-
             email.send()
             
             
