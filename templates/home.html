@@ -1,6 +1,14 @@
-{% extends 'base.html' %} {% load static %} {% load custom_tags %} {% block
-title %} {% block nav_title %} Main Page {% endblock nav_title %} {% endblock
-title %} {% block extra_css %}
+{% extends 'base.html' %} 
+{% load static %} 
+{% load custom_tags %} 
+
+{% block title %} 
+  {% block nav_title %} 
+    Main Page 
+  {% endblock nav_title %} 
+{% endblock title %} 
+
+{% block extra_css %}
 <link
   rel="stylesheet"
   href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -16,7 +24,9 @@ title %} {% block extra_css %}
   href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.79.0/dist/L.Control.Locate.min.css"
 />
 
-{% endblock extra_css %} {% block content %}
+{% endblock extra_css %} 
+
+{% block content %}
 <div class="d-none">{{ locations|json_script:"locations_json" }}</div>
 <div class="homepage-container">
   <div class="row gy-3">
