@@ -9,75 +9,77 @@
 {% endblock title %}
     
 {% block content %}
-    <div class="row gy-3">
-        <div class="col-12 col-md-3 order-2">
-            {% include 'partials/search_side.html' %}
-        </div>
-        <div class="col-12 col-md-9 order-1">
-            <div class="mb-3 row gy-3 align-items-center">
-                <div class="col-12 col-md-10">
-                    <form method="post" class=" d-flex justify-content-between align-items-center">
-                        {% csrf_token %}
-                        <input type="hidden" name="type" value="sort">
-                        <label for="" class="fw-bolder">Sort</label>
-                        <select name="sort" id="" class="form-control m-2">
-                            <option value="id">Latest</option>
-                            <option value="title">Name</option>
-                            <option value="price">Price</option>
-                        </select>
-                        <button class="btn btn-primary rounded" >Sort</button>
-                    </form>
-                </div>
-                {% if request.user.is_authenticated and request.user.is_superuser or request.user.is_staff %}
-                <div class="col-12 col-md-2">
-                    <a href="{% url 'accounts:property_create' %}" class="btn btn-success 100">Add Property</a>
-                </div>
-                {% endif %}
+    <div class="p-3">
+        <div class="row gy-3">
+            <div class="col-12 col-md-3 order-2">
+                {% include 'partials/search_side.html' %}
             </div>
-                
-            <div class="row g-3">
-                {% for property in properties %}
-                    <div class="col-12 col-sm-6 col-md-4">
-                        <div class="card w-100 shadow p-0 overflow-hidden">
-                                <img src="{{property.images.all.0.image.url}}" class="w-100" alt="{{ property.title }}">
-                            <div class="card-body">
-                                <small class="badge 
-                                    {% if property.type.title == 'Rental' %}
-                                        bg-warning
-                                        {% elif property.type.title == 'Commercial' %}
-                                        bg-danger
-                                        {% else %}
-                                        bg-success
-                                    {% endif %}
-                                    mb-2">
-                                    {{ property.type.title}} 
-                                </small>
-                                <h4 class="card-title fw-bold">{{ property.title }}</h4>
-                                <p class="card-text">{{ property.description|truncatewords:"10" }}</p>
-                                <h5>{{ property.price|format_amount}}</h5>
-                                <div class="row gap-2">
-                                    <div class="col-12">
-                                        <a href="{% url 'property:property_detail' property.id %}" class="btn btn-primary w-100">View Property</a>
-                                    </div>
-                                    
-                                    {% if request.user.is_authenticated and property.agent == request.user %}
+            <div class="col-12 col-md-9 order-1">
+                <div class="mb-3 row gy-3 align-items-center">
+                    <div class="col-12 col-md-10">
+                        <form method="post" class=" d-flex justify-content-between align-items-center">
+                            {% csrf_token %}
+                            <input type="hidden" name="type" value="sort">
+                            <label for="" class="fw-bolder">Sort</label>
+                            <select name="sort" id="" class="form-control m-2">
+                                <option value="id">Latest</option>
+                                <option value="title">Name</option>
+                                <option value="price">Price</option>
+                            </select>
+                            <button class="btn btn-primary rounded" >Sort</button>
+                        </form>
+                    </div>
+                    {% if request.user.is_authenticated and request.user.is_superuser or request.user.is_staff %}
+                    <div class="col-12 col-md-2">
+                        <a href="{% url 'accounts:property_create' %}" class="btn btn-success 100">Add Property</a>
+                    </div>
+                    {% endif %}
+                </div>
+                    
+                <div class="row g-3">
+                    {% for property in properties %}
+                        <div class="col-12 col-sm-6 col-md-4">
+                            <div class="card w-100 shadow p-0 overflow-hidden">
+                                    <img src="{{property.images.all.0.image.url}}" class="w-100" alt="{{ property.title }}">
+                                <div class="card-body">
+                                    <small class="badge 
+                                        {% if property.type.title == 'Rental' %}
+                                            bg-warning
+                                            {% elif property.type.title == 'Commercial' %}
+                                            bg-danger
+                                            {% else %}
+                                            bg-success
+                                        {% endif %}
+                                        mb-2">
+                                        {{ property.type.title}} 
+                                    </small>
+                                    <h4 class="card-title fw-bold">{{ property.title }}</h4>
+                                    <p class="card-text">{{ property.description|truncatewords:"10" }}</p>
+                                    <h5>{{ property.price|format_amount}}</h5>
+                                    <div class="row gap-2">
                                         <div class="col-12">
-                                            <a href="{% url 'accounts:property_update' property.id %}" class="btn btn-warning w-100">Update Property</a>
+                                            <a href="{% url 'property:property_detail' property.id %}" class="btn btn-primary w-100">View Property</a>
                                         </div>
-                                    {% endif %}
-        
-                                    {% if request.resolver_match.url_name == 'bookmarks' %}
-                                        <div class="col-12">
-                                            <a href="{% url 'accounts:remove_from_bookmarks' property.id %}" class="btn btn-danger w-100">Remove from bookmarks</a>
-                                        </div>
-                                    {% endif %}
                                         
+                                        {% if request.user.is_authenticated and property.agent == request.user %}
+                                            <div class="col-12">
+                                                <a href="{% url 'accounts:property_update' property.id %}" class="btn btn-warning w-100">Update Property</a>
+                                            </div>
+                                        {% endif %}
+            
+                                        {% if request.resolver_match.url_name == 'bookmarks' %}
+                                            <div class="col-12">
+                                                <a href="{% url 'accounts:remove_from_bookmarks' property.id %}" class="btn btn-danger w-100">Remove from bookmarks</a>
+                                            </div>
+                                        {% endif %}
+                                            
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                {% endfor %}
-                    
+                    {% endfor %}
+                        
+                </div>
             </div>
         </div>
     </div>

@@ -24,175 +24,177 @@
 {% block content %}
 
 
-<div class="row g-2">
-    <div class="col-12 col-md-6">
-        <form enctype="multipart/form-data" class="container" method="post" id="product_form">
-            {% csrf_token %}
-            <div class="card">
-                <div class="card-header card-header-secondary">
-                    <h4 class="card-title">Add Property</h4>
-                </div>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12 col-md-6">
-                            {{form.title|as_crispy_field}}
-                        </div>
-                        <div class="col-12 col-md-6">
-                            {{form.city|as_crispy_field}}
-                        </div>
-                        <div class="col-12">
-                            {{form.address|as_crispy_field}}
-                        </div>
-                        <div class="col-12 col-md-6">
-                            {{form.price|as_crispy_field}}
-                        </div>
-                        <div class="col-12 col-md-6">
-                            {{form.size|as_crispy_field}}
-                        </div>
-                        <div class="col-12 col-md-6">
-                            {{form.owner|as_crispy_field}}
-                        </div>
-                        <div class="col-12 col-md-6">
-                            {{form.type|as_crispy_field}}
-                        </div>
-                        <div class="col-12 col-md-6">
-                            {{form.phone|as_crispy_field}}
-                        </div>
-                        <div class="col-12 col-md-6">
-                            {{form.email|as_crispy_field}}
-                        </div>
-                        <div class="col-12">
-                            <hr>
-                            <h4>Features</h4>
-                            <div class="row">
-                                <div class="col-12 col-sm-6">{{form.floor|as_crispy_field}}</div>
-                                <div class="col-12 col-sm-6">{{form.hall|as_crispy_field}}</div>
-                                <div class="col-12 col-sm-6">{{form.bedroom|as_crispy_field}}</div>
-                                <div class="col-12 col-sm-6">{{form.bathroom|as_crispy_field}}</div>
-                                <div class="col-12 col-sm-6">{{form.parking|as_crispy_field}}</div>
-                                <div class="col-12 col-sm-6">{{form.basement|as_crispy_field}}</div>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            {{form.active|as_crispy_field}}
-                        </div>
+<div class="p-5">
+    <div class="row g-2">
+        <div class="col-12 col-md-6">
+            <form enctype="multipart/form-data" class="container" method="post" id="product_form">
+                {% csrf_token %}
+                <div class="card">
+                    <div class="card-header card-header-secondary">
+                        <h4 class="card-title">Add Property</h4>
                     </div>
-                    <hr>
+                    <div class="container">
                         <div class="row">
                             <div class="col-12 col-md-6">
-                                {{form.deal|as_crispy_field}}
-                                {{form.deal_date|as_crispy_field}}
+                                {{form.title|as_crispy_field}}
+                            </div>
+                            <div class="col-12 col-md-6">
+                                {{form.city|as_crispy_field}}
+                            </div>
+                            <div class="col-12">
+                                {{form.address|as_crispy_field}}
+                            </div>
+                            <div class="col-12 col-md-6">
+                                {{form.price|as_crispy_field}}
+                            </div>
+                            <div class="col-12 col-md-6">
+                                {{form.size|as_crispy_field}}
+                            </div>
+                            <div class="col-12 col-md-6">
+                                {{form.owner|as_crispy_field}}
+                            </div>
+                            <div class="col-12 col-md-6">
+                                {{form.type|as_crispy_field}}
+                            </div>
+                            <div class="col-12 col-md-6">
+                                {{form.phone|as_crispy_field}}
+                            </div>
+                            <div class="col-12 col-md-6">
+                                {{form.email|as_crispy_field}}
+                            </div>
+                            <div class="col-12">
+                                <hr>
+                                <h4>Features</h4>
+                                <div class="row">
+                                    <div class="col-12 col-sm-6">{{form.floor|as_crispy_field}}</div>
+                                    <div class="col-12 col-sm-6">{{form.hall|as_crispy_field}}</div>
+                                    <div class="col-12 col-sm-6">{{form.bedroom|as_crispy_field}}</div>
+                                    <div class="col-12 col-sm-6">{{form.bathroom|as_crispy_field}}</div>
+                                    <div class="col-12 col-sm-6">{{form.parking|as_crispy_field}}</div>
+                                    <div class="col-12 col-sm-6">{{form.basement|as_crispy_field}}</div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                {{form.active|as_crispy_field}}
                             </div>
                         </div>
-                    <hr>
-                    <h3>Location on map</h3>
-                    <div class="row">
-                        <div class="col-12 col-md-6">
-                            {{form.latitude|as_crispy_field}}
+                        <hr>
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    {{form.deal|as_crispy_field}}
+                                    {{form.deal_date|as_crispy_field}}
+                                </div>
+                            </div>
+                        <hr>
+                        <h3>Location on map</h3>
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                {{form.latitude|as_crispy_field}}
+                            </div>
+                            <div class="col-12 col-md-6">
+                                {{form.longitude|as_crispy_field}}
+                            </div>
                         </div>
-                        <div class="col-12 col-md-6">
-                            {{form.longitude|as_crispy_field}}
+                        <div class="col-12">
+                            {{form.description|as_crispy_field}}
                         </div>
-                    </div>
-                    <div class="col-12">
-                        {{form.description|as_crispy_field}}
                     </div>
                 </div>
-            </div>
-
-            
-            {% if object %}
-            
-            <div class="p-3 bg-white rounded mt-3">
+    
                 
-                {% if object.images.all|length > 0 %}
-                    <div class="row">
-                        
-                        {% for image in object.images.all %}
-                            <div class="col-6 col-md-3 position-relative p-1" >
-                                <img src="{{ image.image.url }}" alt="" class="img-fluid">
-                                <a href="{% url 'accounts:remove_property_image' pk=image.id %}" class="badge bg-danger position-absolute top-0 end-0">X</i></a>
-                            </div>
-                        {% endfor %}
+                {% if object %}
+                
+                <div class="p-3 bg-white rounded mt-3">
+                    
+                    {% if object.images.all|length > 0 %}
+                        <div class="row">
                             
-                    </div>
-                {% else %}
-                    <h6 class="fw-bolder">No images</h6>
-                {% endif %}
-                    
-            </div>
-
-            {% endif %}
-
-            {% with named_formsets.images as formset %}  
-                {{ formset.management_form }}
-                <script type="text/html" id="images-template">   // id="inlineformsetname-template"
-                    <tr id="images-__prefix__" class=hide_all>  // id="inlineformsetname-__prefix__"
-                        {% for fields in formset.empty_form.hidden_fields %}
-                            {{ fields }}
-                        {% endfor %}
-                    
-                        {% for field in formset.empty_form.visible_fields %}
-                                
-                            <td>
-                                
-                                {% if field.name != 'DELETE' %}
-                                    {{ field|as_crispy_field }}
-                                {% endif %}
-                                    
-                            </td>
-                        {% endfor %}
-                    </tr>
-                </script>
-        
-                <div class="table-responsive card mt-4">
-                    <div class="card-header card-header-secondary">
-                        <h4 class="card-title">Add Images</h4>
-                    </div>
-                    <table class="table card-body">
-                        <thead class="text-secondary">
-                            <th>Image <span style="color: red;" class="required">*</span></th>
-                        </thead>
-                        <tbody id="item-images">  <!-- id="item-inlineformsetname" -->
-                            <!-- formset non forms errors -->
-                            {% for error in formset.non_form_errors %}
-                                <span style="color: red">{{ error }}</span>
+                            {% for image in object.images.all %}
+                                <div class="col-6 col-md-3 position-relative p-1" >
+                                    <img src="{{ image.image.url }}" alt="" class="img-fluid">
+                                    <a href="{% url 'accounts:remove_property_image' pk=image.id %}" class="badge bg-danger position-absolute top-0 end-0">X</i></a>
+                                </div>
                             {% endfor %}
-                            {% for forms in formset %}
-                                {{ forms.management_form }}
-                                <tr id="images-{{ forloop.counter0 }}" class=hide_all>  <!-- id="inlineformsetname-counter" -->
-                                    {{ forms.id }}
-                                    {% for field in forms.visible_fields %}
-                                        {% if field.name != 'DELETE' %}
-                                            <td>
-                                                {{ field|as_crispy_field }}
-                                                {% for error in field.errors %}
-                                                    <span style="color: red">{{ error }}</span>
-                                                {% endfor %}
-                                            </td>
-                                        {% endif %}
-                                    {% endfor %}
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                    <a href="#" id="add-image-button" class="btn btn-secondary add-images">Add More</a> <!-- id="add-inlineformsetname-button" -->
-                </div>
-            {% endwith %}
-            <!-- inline form for Images end -->
-        
-                <div class="form-group">
-                    <button type="submit" class="btn btn-secondary btn-block">Submit</button>
-                    
-                    {% if object.agent == request.user %}
-                    <a href="{% url 'accounts:property_delete' object.id %}" class="btn btn-danger">Delete</a>
+                                
+                        </div>
+                    {% else %}
+                        <h6 class="fw-bolder">No images</h6>
                     {% endif %}
                         
                 </div>
-        </form>
-    </div>
-    <div class="col-12 col-md-6 map-col-container">
-        <div id="map"></div>
+    
+                {% endif %}
+    
+                {% with named_formsets.images as formset %}  
+                    {{ formset.management_form }}
+                    <script type="text/html" id="images-template">   // id="inlineformsetname-template"
+                        <tr id="images-__prefix__" class=hide_all>  // id="inlineformsetname-__prefix__"
+                            {% for fields in formset.empty_form.hidden_fields %}
+                                {{ fields }}
+                            {% endfor %}
+                        
+                            {% for field in formset.empty_form.visible_fields %}
+                                    
+                                <td>
+                                    
+                                    {% if field.name != 'DELETE' %}
+                                        {{ field|as_crispy_field }}
+                                    {% endif %}
+                                        
+                                </td>
+                            {% endfor %}
+                        </tr>
+                    </script>
+            
+                    <div class="table-responsive card mt-4">
+                        <div class="card-header card-header-secondary">
+                            <h4 class="card-title">Add Images</h4>
+                        </div>
+                        <table class="table card-body">
+                            <thead class="text-secondary">
+                                <th>Image <span style="color: red;" class="required">*</span></th>
+                            </thead>
+                            <tbody id="item-images">  <!-- id="item-inlineformsetname" -->
+                                <!-- formset non forms errors -->
+                                {% for error in formset.non_form_errors %}
+                                    <span style="color: red">{{ error }}</span>
+                                {% endfor %}
+                                {% for forms in formset %}
+                                    {{ forms.management_form }}
+                                    <tr id="images-{{ forloop.counter0 }}" class=hide_all>  <!-- id="inlineformsetname-counter" -->
+                                        {{ forms.id }}
+                                        {% for field in forms.visible_fields %}
+                                            {% if field.name != 'DELETE' %}
+                                                <td>
+                                                    {{ field|as_crispy_field }}
+                                                    {% for error in field.errors %}
+                                                        <span style="color: red">{{ error }}</span>
+                                                    {% endfor %}
+                                                </td>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <a href="#" id="add-image-button" class="btn btn-secondary add-images">Add More</a> <!-- id="add-inlineformsetname-button" -->
+                    </div>
+                {% endwith %}
+                <!-- inline form for Images end -->
+            
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-secondary btn-block">Submit</button>
+                        
+                        {% if object.agent == request.user %}
+                        <a href="{% url 'accounts:property_delete' object.id %}" class="btn btn-danger">Delete</a>
+                        {% endif %}
+                            
+                    </div>
+            </form>
+        </div>
+        <div class="col-12 col-md-6 map-col-container">
+            <div id="map"></div>
+        </div>
     </div>
 </div>
 

@@ -82,6 +82,13 @@
               <i class="bx bx-buildings"></i>
               <span class="nav_name">Properties</span>
             </a>
+            <a
+              href="{% url 'property:about' %}"
+              class="nav_link {% if url_name == 'about' %}active{% endif %}"
+            >
+              <i class='bx bx-info-square'></i>
+              <span class="nav_name">About</span>
+            </a>
           </div>
         </div>
         <div>
@@ -149,7 +156,7 @@
       </nav>
     </div>
 
-    <div class="main-content p-3">
+    <div class="main-content">
       {% block content %} {% endblock content %}
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>

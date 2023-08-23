@@ -86,7 +86,6 @@ a {
   justify-content: space-between;
   overflow: hidden;
   flex-wrap: nowrap;
-  overflow: auto;
 }
 
 .nav_logo,
@@ -282,4 +281,8 @@ a {
 
 .clear-link:hover{
   text-decoration: underline;
+}
+
+body {
+  padding-right: 0 ;
 }
