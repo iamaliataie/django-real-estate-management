@@ -79,12 +79,9 @@ class PropertyInline():
                 'domain': current_site.domain,
             })
             to_email = settings.EMAIL_HOST_USER
-
             from_email = self.request.user.email
             recipient_list = [to_email]
-
             text_message = f"New property add by {data['user'].get_full_name()}, review property by going to this link http://127.0.0.1:8000/properties/{self.object.id}"
-
 
             # Create the EmailMultiAlternatives object
             email = EmailMultiAlternatives(
