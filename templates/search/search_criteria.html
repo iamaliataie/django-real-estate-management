@@ -5,7 +5,7 @@
     
     {% for criteria in search %}
         
-    <button class="badge bg-secondary border-0" 
+    <button class="badge {% if criteria.1 %}bg-primary{% else %}bg-secondary{% endif %} border-0" 
     onclick="setValue(
         '{{criteria.0}}' , 
         '{{criteria.1}}'
