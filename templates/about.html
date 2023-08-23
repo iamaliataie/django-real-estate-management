@@ -21,11 +21,11 @@
                 </p>
             </div>
     
-            <div class="row gy-2 col-12">
-                <div class="col-md-6 d-flex justify-content-center align-items-center">
-                    <img src="{% static 'images/about-map.svg' %}" alt="map" class="w-75">
+            <div class="row gy-5 col-12">
+                <div class="col-md-6 order-2 order-md-1 d-flex justify-content-center align-items-center p-md-5">
+                    <img src="{% static 'images/about-map.svg' %}" alt="map" class="w-100">
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 order-1 order-md-2">
                 <h1 class="border-bottom border-primary border-5 fw-bold">Map View</h1>
                 <p class="fs-5">
                     Maps can be a useful tool for viewing properties location & filter them by types. this also help us to know distances so that we know how far away one thing is from another.
@@ -33,17 +33,23 @@
                 </p>
                 </div>
             </div>
-    
-            <div class="col-12">
+            
+            <div class="about-banner my-5">
+                <div class="h-100 d-flex justify-content-center align-items-center">
+                    <a href="{% url 'accounts:register' %}" class="btn btn-primary fs-5 px-3 py-2 rounded">Try Our Services Now</a>
+                </div>
+            </div>
+
+            <div class="col-12 mt-5">
                 <h1 class="border-bottom border-primary border-5 fw-bold">Properties</h1>
                 <div class="mt-4">
-                    <h3 >Do you spend way too much time looking for a Real Estate Property to buy?</h3>
+                    <h3 class="fw-bold">Do you spend way too much time looking for a Real Estate Property to buy?</h3>
                     <p class="fs-5 mt-2">
                         don't worry we have you covered, We have hundreds of high quality properties ready to sell. you can use the search field to find properties and to see basic information(price, address, types, etc...) about the desired property.
                     </p>
                 </div>
                 <div class="mt-4">
-                    <h3 >Do you own a property you wanted to sell?</h3>
+                    <h3 class="fw-bold">Do you own a property you wanted to sell?</h3>
                     <p class="fs-5 mt-2">
                         Our application will help advertise your property to potential buyers.
                     </p>

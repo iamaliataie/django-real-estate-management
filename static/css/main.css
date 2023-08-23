@@ -286,3 +286,11 @@ a {
 body {
   padding-right: 0 ;
 }
+
+.about-banner {
+  height: 400px;
+  background-image: url('../images/bg.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
