@@ -70,7 +70,6 @@ class PropertyInline():
                 'user': self.request.user,
                 'property': self.object
             }
-            
             current_site = get_current_site(self.request)
             mail_subject = 'New property added.'
             html_message = render_to_string('property/new_property_email.html', {
@@ -91,7 +90,7 @@ class PropertyInline():
             email.send()
             
             
-            # email new property to customers matched search criteria
+            ## email new property to customers matched search criteria
             property_type = self.object.type
             search = SearchCriteria.objects.filter(type=property_type)
             recipient_list = []
@@ -104,16 +103,12 @@ class PropertyInline():
                 'property': self.object,
                 'domain': current_site.domain,
             })
-            
-            
             text_message = f"New {self.object.type.title} property added. View property by going to this link http://127.0.0.1:8000/properties/{self.object.id}"
-            
             # Create the EmailMultiAlternatives object
             email = EmailMultiAlternatives(
                 mail_subject, text_message, from_email, recipient_list
             )
             email.attach_alternative(html_message, "text/html")
-
             email.send()
             
 
