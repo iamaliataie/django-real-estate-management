@@ -78,11 +78,9 @@ class PropertyListView(ListView):
             if form['parking']:
                 properties = properties.filter(parking=form['parking'])
                 
-            
             if form.get('basement'):
                 properties = properties.filter(basement=True)
 
-            
             if request.user.is_authenticated:
                 search = SearchCriteria.objects.filter(user=request.user).first()
                 if not search:
