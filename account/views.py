@@ -30,6 +30,8 @@ from inquiry.models import Inquiry
 
 from deal.models import Deal
 from deal.forms import DealForm
+
+from search.models import SearchCriteria
 # Create your views here.
 
 
@@ -91,6 +93,33 @@ class PropertyInline():
             email.attach_alternative(html_message, "text/html")
 
             email.send()
+            
+            
+            # email new property to customers matched search criteria
+            property_type = self.object.type
+            search = SearchCriteria.objects.filter(type=property_type)
+            recipient_list = []
+            for sc in search:
+                recipient_list.append(sc.user.email)
+                
+            current_site = get_current_site(self.request)
+            mail_subject = 'New property added.'
+            html_message = render_to_string('property/customer_new_property_email.html', {
+                'property': self.object,
+                'domain': current_site.domain,
+            })
+            
+            
+            text_message = f"New {self.object.type.title} property added. View property by going to this link http://127.0.0.1:8000/properties/{self.object.id}"
+            
+            # Create the EmailMultiAlternatives object
+            email = EmailMultiAlternatives(
+                mail_subject, text_message, from_email, recipient_list
+            )
+            email.attach_alternative(html_message, "text/html")
+
+            email.send()
+            
 
         # for every formset, attempt to find a specific formset save function
         # otherwise, just save.
