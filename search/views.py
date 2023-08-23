@@ -8,4 +8,4 @@ from .models import SearchCriteria
 @login_required
 def clear_user_search(request):
     SearchCriteria.objects.filter(user=request.user).delete()
-    return redirect('property:home')
+    return redirect(request.META.get('HTTP_REFERER'))
