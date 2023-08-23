@@ -2,7 +2,7 @@ import requests
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.edit import FormMixin
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
@@ -30,7 +30,11 @@ class Home(ListView):
         return context
     
 
-def search(request):
+class About(TemplateView):
+    template_name = 'about.html'
+
+
+def search_ajax(request):
     if 'term' in request.GET:
         q = request.GET.get('term', '').capitalize()
         

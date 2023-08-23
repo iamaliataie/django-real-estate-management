@@ -10,8 +10,13 @@ urlpatterns = [
         name='home'
     ),
     path(
+        'about',
+        views.About.as_view(),
+        name='about'
+    ),
+    path(
         'search/',
-        views.search,
+        views.search_ajax,
         name='search'
     ),
     path(

@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    
+    {% block nav_title %}
+        About
+    {% endblock nav_title %}
+        
+{% endblock title %}
+
+{% block content %}
+    <div class="row gap-5 p-2">
+
+        <div class="col-12">
+            <h1 class="border-bottom border-primary border-5 fw-bold">Application</h1>
+            <p class="fs-5">
+                A online property management solution for real estate and physical property management. This can include residential, commercial, and land real estate. a software developed to connect property managers and potential buyers.
+                Whether you operate 1 to 100 properties this app will help you advertise, manage and sell your properties to potential buyers.
+            </p>
+        </div>
+
+        <div class="row gy-2 col-12">
+            <div class="col-md-6 d-flex justify-content-center align-items-center">
+                <img src="{% static 'images/about-map.svg' %}" alt="map" class="w-75">
+            </div>
+            <div class="col-md-6">
+            <h1 class="border-bottom border-primary border-5 fw-bold">Map View</h1>
+            <p class="fs-5">
+                Maps can be a useful tool for viewing properties location & filter them by types. this also help us to know distances so that we know how far away one thing is from another.
+                You might not necessarily want to find the fastest route from property A to property B, you might want to take the scenic route. Knowing how to spot mountains, lakes, coastline and historic sites on a map helps you to plan which property to visit.
+            </p>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <h1 class="border-bottom border-primary border-5 fw-bold">Properties</h1>
+            <div class="mt-4">
+                <h3 >Do you spend way too much time looking for a Real Estate Property to buy?</h3>
+                <p class="fs-5 mt-2">
+                    don't worry we have you covered, We have hundreds of high quality properties ready to sell. you can use the search field to find properties and to see basic information(price, address, types, etc...) about the desired property.
+                </p>
+            </div>
+            <div class="mt-4">
+                <h3 >Do you own a property you wanted to sell?</h3>
+                <p class="fs-5 mt-2">
+                    Our application will help advertise your property to potential buyers.
+                </p>
+            </div>
+            <div class="row gy-3">
+                <div class="col-sm-6 col-md-4">
+                    <div class="bg-white col-12 p-4 rounded h-100">
+                        <p><span class="fw-bold text-primary fs-3 p-2">Connect</span> with people</p>
+                        <div style="height: 150px;">
+                            <img src="{% static 'images/about-connect.svg' %}" alt="connect" class="w-100">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 h-100">
+                    <div class="bg-white col-12 p-5 rounded h-100">
+                        <p><span class="fw-bold text-primary fs-3 p-2">Sell</span> your properties</p>
+                        <img src="{% static 'images/about-sell.svg' %}" alt="connect" class="w-100">
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <div class="bg-white col-12 p-5 rounded">
+                        <p><span class="fw-bold text-primary fs-3 p-2">Buy</span> new properties</p>
+                        <img src="{% static 'images/about-buy.svg' %}" alt="connect" class="w-75">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock content %}
+    
