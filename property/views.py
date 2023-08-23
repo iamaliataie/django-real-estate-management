@@ -28,6 +28,7 @@ class Home(ListView):
         context['locations'] = locations
         
         return context
+    
 
 def search(request):
     if 'term' in request.GET:
@@ -40,7 +41,6 @@ def search(request):
                 ps.append(p)
     
     return JsonResponse(ps, safe=False)
-
 
 
 class PropertyListView(ListView):
