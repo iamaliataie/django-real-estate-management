@@ -279,3 +279,7 @@ a {
 .logo-image{
   width: 40px !important;
 }
+
+.clear-link:hover{
+  text-decoration: underline;
+}

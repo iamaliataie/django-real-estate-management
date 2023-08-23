@@ -32,6 +32,11 @@ urlpatterns = [
         name='inquiry'
     ),
     path(
+        'search/',
+        include('search.urls'),
+        name='search_app'
+    ),
+    path(
         'accounts/',
         include('account.urls'),
         name='account'
