@@ -35,7 +35,9 @@
                     </div>
                     {% endif %}
                 </div>
-                    
+                
+                
+                {% if properties %}
                 <div class="row g-3">
                     {% for property in properties %}
                         <div class="col-12 col-sm-6 col-md-4">
@@ -80,6 +82,13 @@
                     {% endfor %}
                         
                 </div>
+                {% else %}
+                    <div class="p-3 rounded text-center bg-white">
+                        <p class="fs-4 fw-bold">{{ message }}</p>
+                    </div>
+                {% endif %}
+                    
+
             </div>
         </div>
     </div>

@@ -57,6 +57,7 @@ class PropertyListView(ListView):
         properties =  Property.objects.filter(active=True, deal=False)
         context['properties'] = properties
         context['page_title'] = 'Properties'
+        context['message'] = 'Nothing to show'
         return context
 
     def post(self, request, *args, **kwargs):
@@ -109,7 +110,8 @@ class PropertyListView(ListView):
             
             context ={
                 'properties': properties,
-                'page_title': 'Search'
+                'page_title': 'Search',
+                'message': 'Nothing found'
             }
             
             return render(request, 'property/property_list.html', context)
