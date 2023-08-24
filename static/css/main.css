@@ -253,6 +253,26 @@ a {
   top: 60px;
 }
 
+
+.marker-info-container {
+  z-index: 3; 
+  width: 168px; 
+  bottom: 17px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.marker-info-item {
+  font-size: 16px;
+  margin: 0 !important;
+}
+
+.marker-info-icon{
+  width: 15px;
+}
+
 @media screen and (max-width: 767px) {
   .homepage-container{
     height: fit-content !important;
@@ -273,6 +293,26 @@ a {
   .search-sidebar {
     position: static;
   }
+
+  .marker-info-container {
+    z-index: 3; 
+    width: 120px; 
+    bottom: 17px;
+    padding: 3px;
+    gap: 5px;
+  }
+  
+
+  .marker-info-item {
+    font-size: 12px;
+    padding: 2px 4px;
+    margin: 5px;
+  }
+
+  .marker-info-icon{
+    width: 10px;
+  }
+
 }
 
 .logo-image{

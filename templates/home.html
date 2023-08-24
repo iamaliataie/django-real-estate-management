@@ -36,18 +36,18 @@
       {% include 'partials/search_side.html' %}
     </div>
     <div class="col-12 col-md-6 map-col-container order-1 order-md-2 position-relative p-0">
-      <div class="position-absolute bg-primary bottom-0 end-0 marker-info-container p-3 rounded" style="z-index: 3;">
-        <p class="d-flex justify-content-between align-items-center gap-2 badge bg-light text-dark">
+      <div class="position-absolute bg-primary end-0 marker-info-container">
+        <p class="d-flex justify-content-between align-items-center gap-2 badge bg-light text-dark marker-info-item">
           <span>Residential</span>
-          <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png" alt="Residential" width="15px">
+          <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png" class="marker-info-icon" alt="Residential">
         </p>
-        <p class="d-flex justify-content-between align-items-center gap-2  badge bg-light text-dark">
+        <p class="d-flex justify-content-between align-items-center gap-2  badge bg-light text-dark marker-info-item">
           <span>Commercial</span>
-          <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png" alt="Residential" width="15px">
+          <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png" class="marker-info-icon" alt="Residential">
         </p>
-        <p class="d-flex justify-content-between align-items-center gap-2  badge bg-light text-dark">
+        <p class="d-flex justify-content-between align-items-center gap-2 badge bg-light text-dark marker-info-item">
           <span>Rental</span>
-          <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-yellow.png" alt="Residential" width="15px">
+          <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-yellow.png" class="marker-info-icon" alt="Residential">
         </p>
       </div>
       <div id="map" class="h-100" style="z-index: 2;"></div>
