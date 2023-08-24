@@ -83,12 +83,10 @@ class PropertyListView(ListView):
                 
             if form.get('basement'):
                 properties = properties.filter(basement=True)
-
             if request.user.is_authenticated:
                 search = SearchCriteria.objects.filter(user=request.user).first()
                 if not search:
                     search = SearchCriteria.objects.create(user=request.user)
-            
                 property_type = PropertyType.objects.filter(title=form['type']).first()
                 if property_type:
                     search.type = property_type
