@@ -113,7 +113,6 @@ class PropertyListView(ListView):
                 'page_title': 'Search',
                 'message': 'Nothing found'
             }
-            
             return render(request, 'property/property_list.html', context)
         
         elif form['type'] == 'filter':
