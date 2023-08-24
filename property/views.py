@@ -92,7 +92,6 @@ class PropertyListView(ListView):
                     search.type = property_type
                 else:
                     search.type = None
-                    
                 search.city = form['city']
                 search.price_from = form['price_from']
                 search.price_to = form['price_to']
@@ -102,7 +101,6 @@ class PropertyListView(ListView):
                 search.parking = form['parking']
                 search.basement = True if form.get('basement') == 'on' else False
                 search.save()
-            
             context ={
                 'properties': properties,
                 'page_title': 'Search',
