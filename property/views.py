@@ -65,9 +65,7 @@ class PropertyListView(ListView):
         form = self.request.POST
         
         if 'search' in form:
-                
             properties = Property.objects.filter(active=True, deal=False)
-            
             if form['type'] != '':
                 properties = properties.filter(type__title=form['type'])
             if form['city']:
