@@ -105,7 +105,6 @@ class PropertyListView(ListView):
                 search.bathrooms = form['bathrooms']
                 search.parking = form['parking']
                 search.basement = True if form.get('basement') == 'on' else False
-                
                 search.save()
             
             context ={
