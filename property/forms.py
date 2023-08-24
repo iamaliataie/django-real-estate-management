@@ -22,6 +22,11 @@ class PropertyForm(forms.ModelForm):
         widgets = {
             'city': forms.TextInput(attrs={'id': 'city'}),
             'price': forms.TextInput(attrs={'type': 'number', 'min': 2000, 'id':'numberInput'}),
+            'floor': forms.TextInput(attrs={'type': 'number', 'id':'numberInput'}),
+            'hall': forms.TextInput(attrs={'type': 'number','id':'numberInput'}),
+            'bedroom': forms.TextInput(attrs={'type': 'number', 'min': 1, 'id':'numberInput'}),
+            'bathroom': forms.TextInput(attrs={'type': 'number', 'min': 1, 'id':'numberInput'}),
+            'parking': forms.TextInput(attrs={'type': 'number','id':'numberInput'}),
             'description': forms.Textarea(attrs={'rows': 3, 'resize': 'none'}),
             'deal_date': forms.DateInput(attrs={'type': 'date'}),
         }
