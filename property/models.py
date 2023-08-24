@@ -31,11 +31,9 @@ class Property(models.Model):
     active = models.BooleanField(default=False)
     deal = models.BooleanField(default=False)
     deal_date = models.DateField(null=True, blank=True)
-    
     marker_color = models.CharField(max_length=20, null=True, blank=True)
     type_color = models.CharField(max_length=20, null=True, blank=True)
     type_title = models.CharField(max_length=50, null=True, blank=True)
-    
     created_at = models.DateTimeField(auto_now_add=True)
     
     class Meta:
