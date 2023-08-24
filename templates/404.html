@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page not found</title>
+    <style>
+        body, *{
+            margin: 0;
+            padding: 0;
+        }
+        .container{
+            height: 100vh;
+            background-color: antiquewhite;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        h1 {
+            font-size: 400px;
+        }
+        h2 {
+            font-size: 90px;
+        }
+        a {
+            text-decoration: none;
+            display: inline-block;
+            border: 1px solid black;
+            color: black;
+            padding: 5px 10px;
+            font-size: 20px;
+            margin-top: 40px;
+            border-radius: 10px;
+            transition: all .4s ease;
+        }
+        a:hover{
+            background-color: black;
+            color: antiquewhite;
+        }
+
+        @media screen and (max-width:767px) {
+            h1 {
+            font-size: 150px;
+        }
+        h2 {
+            font-size: 30px;
+        }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div>
+            <h1>404</h1>
+            <h2>Page not found</h2>
+            <a href="/">back to home</a>
+        </div>
+    </div>
+</body>
+</html>

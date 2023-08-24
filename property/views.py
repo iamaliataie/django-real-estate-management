@@ -189,5 +189,3 @@ def add_to_favorites(request):
             request.user.save()
     
     return redirect('property:property_detail', pk=form.get('property_id'))
-
-
