@@ -4,9 +4,9 @@ from property.models import Property
 # Create your models here.
 
 class Deal(models.Model):
-    deal_type = models.ForeignKey('DealType', on_delete=models.DO_NOTHING, related_name='deals', null=True)
-    agent = models.ForeignKey('account.User', on_delete=models.DO_NOTHING, null=True, related_name='agent_deals')
-    property = models.ForeignKey(Property, on_delete=models.DO_NOTHING, related_name='property_deals')
+    deal_type = models.ForeignKey('DealType', on_delete=models.CASCADE, related_name='deals', null=True)
+    agent = models.ForeignKey('account.User', on_delete=models.CASCADE, null=True, related_name='agent_deals')
+    property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name='property_deals')
     owner = models.CharField(max_length=50)
     tazkira = models.CharField(max_length=50)
     address = models.TextField()

@@ -9,7 +9,7 @@ def path_generator(instance, filename):
 class Property(models.Model):
     type = models.ForeignKey('PropertyType', on_delete=models.DO_NOTHING, related_name='properties')
     owner = models.CharField(max_length=50)
-    agent = models.ForeignKey('account.User', on_delete=models.DO_NOTHING, null=True, related_name='agent_properties')
+    agent = models.ForeignKey('account.User', on_delete=models.CASCADE, null=True, related_name='agent_properties')
     title = models.CharField(max_length=100)
     city = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
