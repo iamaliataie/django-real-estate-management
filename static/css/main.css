@@ -164,6 +164,7 @@ a {
 
 .login-container{
   height: calc(100vh - calc(var(--header-height) + 1rem));
+  padding: 0 1rem;
 }
 
 .bg-light {
@@ -291,7 +292,7 @@ a {
   .first-col, .third-col {
     height: 100% !important;
     overflow: none;
-
+    padding: 1rem 0;
   }
   
   .search-sidebar {
