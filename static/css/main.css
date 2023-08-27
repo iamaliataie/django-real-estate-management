@@ -163,7 +163,7 @@ a {
 }
 
 .login-container{
-  height: calc(100vh - calc(var(--header-height) + 3rem));
+  height: calc(100vh - calc(var(--header-height) + 1rem));
 }
 
 .bg-light {
