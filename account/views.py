@@ -383,21 +383,21 @@ class ProfileView(LoginRequiredMixin, PasswordChangeView):
         return super().post(request, *args, **kwargs)
 
 
-class DashboardView(AdminAccessMixin, TemplateView):
-    template_name = 'account/dashboard.html'
+# class DashboardView(AdminAccessMixin, TemplateView):
+#     template_name = 'account/dashboard.html'
 
-    def get_context_data(self, **kwargs):
-        context = super(DashboardView, self).get_context_data(**kwargs)
-        users = User.objects.all()
-        agents = users.filter(is_staff=True, is_superuser=False)
-        properties = Property.objects.all()
-        inquiries = Inquiry.objects.all()
-        context = {
-            'users': users,
-            'agents': agents,
-            'properties': properties,
-            'inquiries': inquiries,
-        }
-        return context
+#     def get_context_data(self, **kwargs):
+#         context = super(DashboardView, self).get_context_data(**kwargs)
+#         users = User.objects.all()
+#         agents = users.filter(is_staff=True, is_superuser=False)
+#         properties = Property.objects.all()
+#         inquiries = Inquiry.objects.all()
+#         context = {
+#             'users': users,
+#             'agents': agents,
+#             'properties': properties,
+#             'inquiries': inquiries,
+#         }
+#         return context
     
     

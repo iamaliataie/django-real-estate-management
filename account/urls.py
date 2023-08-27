@@ -117,9 +117,4 @@ urlpatterns = [
         views.ProfileView.as_view(),
         name='profile'
     ),
-    path(
-        'dashboard/',
-        views.DashboardView.as_view(),
-        name='dashboard'
-    ),
 ]
