@@ -207,7 +207,7 @@ a {
 }
 
 .page-container {
-  padding: 1rem;
+  padding: 1rem !important;
 }
 
 @media screen and (min-width: 768px) {
