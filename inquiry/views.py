@@ -58,7 +58,6 @@ class InquiryDetailView(InquiryPropertyAgentMixin, FormMixin, DetailView):
 
             from_email = settings.EMAIL_HOST_USER
             recipient_list = [to_email]
-
             text_message = f"""
                 title: {reply.subject}
                 property: {reply.inquiry.property.title}
@@ -68,15 +67,12 @@ class InquiryDetailView(InquiryPropertyAgentMixin, FormMixin, DetailView):
                 {request.user.get_full_name()}
                 phone: {request.user.phone}
             """
-
             # Create the EmailMultiAlternatives object
             email = EmailMultiAlternatives(
                 mail_subject, text_message, from_email, recipient_list
             )
             email.attach_alternative(html_message, "text/html")
-
             email.send()
-                
             messages.success(request, 'Reply has been sent successfully')
         else: messages.warning(request, 'Reply has not been sent successfully')
         return redirect('inquiry:inquiry_detail', pk=self.get_object().id)
