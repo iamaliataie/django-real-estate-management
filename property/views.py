@@ -186,5 +186,4 @@ def add_to_favorites(request):
         else:
             request.user.favorites.add(property)
             request.user.save()
-    
     return redirect('property:property_detail', pk=form.get('property_id'))
