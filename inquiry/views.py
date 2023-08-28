@@ -12,7 +12,7 @@ from .forms import InquiryReplyForm
 
 from account.mixins import AdminStaffAccessMixin, InquiryPropertyAgentMixin
 
-from property.models import Property
+# from property.models import Property
 # Create your views here.
 
 class InquiryListView(AdminStaffAccessMixin, ListView):
@@ -55,7 +55,6 @@ class InquiryDetailView(InquiryPropertyAgentMixin, FormMixin, DetailView):
                 
             })
             to_email = reply.inquiry.email
-
             from_email = settings.EMAIL_HOST_USER
             recipient_list = [to_email]
             text_message = f"""
