@@ -9,7 +9,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import CreateView, UpdateView, ListView, TemplateView, DeleteView, DetailView
+from django.views.generic import CreateView, UpdateView, ListView, DeleteView, DetailView
 
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_str
@@ -19,7 +19,7 @@ from .tokens import account_activation_token
 from django.core.mail import EmailMultiAlternatives
 
 
-from .mixins import AdminStaffAccessMixin, AdminAgentMixin, AdminAccessMixin, AgentMixin
+from .mixins import AdminStaffAccessMixin, AdminAgentMixin, AgentMixin
 from .forms import SignUpForm, CustomUserChangeForm
 from .models import User
 
