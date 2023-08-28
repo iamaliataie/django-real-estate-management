@@ -164,7 +164,6 @@ class TypePropertyListView(ListView):
             properties = Property.objects.filter(active=True, deal=False).filter(type__title=form['filter'])
         else:
             properties = properties.order_by(form['sort'])
-            
         context = {
             'properties': properties,
             'page_title': slug.capitalize(),
