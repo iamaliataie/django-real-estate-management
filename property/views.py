@@ -37,9 +37,7 @@ class About(TemplateView):
 def search_ajax(request):
     if 'term' in request.GET:
         q = request.GET.get('term', '').capitalize()
-        
         ps = list()
-        
         for p in provinces:
             if q in p:
                 ps.append(p)
