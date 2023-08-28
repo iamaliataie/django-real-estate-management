@@ -160,7 +160,6 @@ class TypePropertyListView(ListView):
     def post(self, request, *args, **kwargs):
         global properties
         form = self.request.POST
-        
         if form['type'] == 'filter':
             properties = Property.objects.filter(active=True, deal=False).filter(type__title=form['filter'])
         else:
