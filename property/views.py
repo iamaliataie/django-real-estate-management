@@ -176,7 +176,6 @@ class TypePropertyListView(ListView):
 @login_required
 @csrf_exempt
 def add_to_favorites(request):
-    
     form = request.POST
     if not form.get('property_id'):
         print('something is not a valid form')
