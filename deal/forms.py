@@ -6,11 +6,9 @@ class DealForm(forms.ModelForm):
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         
-        
     class Meta:
         model = Deal
         exclude = ('created_at',)
-        
         widgets = {
             'agent': forms.HiddenInput(),
             'address': forms.Textarea(attrs={'rows': 3, 'style': 'resize:none; white-space: pre-line'}),
@@ -18,7 +16,6 @@ class DealForm(forms.ModelForm):
             'start_date': forms.DateInput(attrs={'type': 'date'}),
             'end_date': forms.DateInput(attrs={'type': 'date'}),
         }
-    
     
     def clean_end_date(self):
         start_date = self.cleaned_data.get('start_date')
