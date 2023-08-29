@@ -186,7 +186,6 @@ class AgentPropertyListView(AdminStaffAccessMixin, ListView):
         queryset = super(AgentPropertyListView, self).get_queryset()
         queryset = Property.objects.filter(agent=self.request.user)
         return queryset
-
     
     def get_context_data(self, **kwargs):
         context = super(AgentPropertyListView, self).get_context_data(**kwargs)
@@ -210,7 +209,6 @@ class DealCreateView(AdminStaffAccessMixin, CreateView):
         property.deal = True
         property.deal_date = date.today()
         property.save()
-        
         return super().form_valid(form)
 
 
@@ -226,7 +224,6 @@ class DealPropertyChooseView(AdminStaffAccessMixin, ListView):
 
 class DealListView(AdminStaffAccessMixin, ListView):
     model = Deal
-    
     def get_queryset(self):
         queryset = super(DealListView, self).get_queryset()
         queryset = Deal.objects.filter(agent=self.request.user)
@@ -268,8 +265,7 @@ class BookmarkView(LoginRequiredMixin, ListView):
         elif form['type'] == 'filter':
             properties = request.user.favorites.all().filter(type__title=form['filter'])
         else:
-            properties = properties.order_by(form['sort'])
-            
+            properties = properties.order_by(form['sort'])    
         context = {
             'properties': properties,
             'property_types': property_types
