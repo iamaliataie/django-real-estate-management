@@ -1,10 +1,9 @@
 from datetime import date
-from typing import Any
 from django.conf import settings
 from django.contrib import messages
 from django.forms.models import BaseModelForm
 from django.urls import reverse_lazy
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, PasswordChangeView
