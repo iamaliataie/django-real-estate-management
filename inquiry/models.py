@@ -31,7 +31,6 @@ class Inquiry(models.Model):
         verbose_name = 'Inquiry'
         verbose_name_plural = 'Inquiries'
         
-    
     def __str__(self) -> str:
         return self.title
     

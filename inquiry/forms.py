@@ -53,7 +53,7 @@ class InquiryForm(forms.ModelForm):
         "phone": forms.TextInput(
             attrs={
                 'placeholder': 'e.g +93 XXXXXXXXX',
-                'data-mask': '(+00) 000-000-0000'
+                'data-mask': '(+00) 000-000-0000',
                 }
             ),
         }

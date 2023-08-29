@@ -52,7 +52,6 @@ class InquiryDetailView(InquiryPropertyAgentMixin, FormMixin, DetailView):
                 'reply_user': request.user,
                 'reply_title': reply.subject,
                 'reply_content': reply.content,
-                
             })
             to_email = reply.inquiry.email
             from_email = settings.EMAIL_HOST_USER
