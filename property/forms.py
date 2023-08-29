@@ -18,7 +18,6 @@ class PropertyForm(forms.ModelForm):
     class Meta:
         model = Property
         exclude = ('agent',)
-
         widgets = {
             'city': forms.TextInput(attrs={'id': 'city'}),
             'price': forms.TextInput(attrs={'type': 'number', 'min': 2000, 'id':'numberInput'}),
@@ -31,7 +30,6 @@ class PropertyForm(forms.ModelForm):
             'deal_date': forms.DateInput(attrs={'type': 'date'}),
         }
 
-
     def clean_price(self):
         price = self.cleaned_data.get('price')
         if price <0:
@@ -40,7 +38,6 @@ class PropertyForm(forms.ModelForm):
 
 
 class ImageForm(forms.ModelForm):
-
     class Meta:
         model = Image
         fields = ['image']
