@@ -146,13 +146,9 @@ class PropertyCreate(AdminStaffAccessMixin, PropertyInline, CreateView):
 
     def get_named_formsets(self):
         if self.request.method == "GET":
-            return {
-                'images': ImageFormSet(prefix='images'),
-            }
+            return {'images': ImageFormSet(prefix='images'),}
         else:
-            return {
-                'images': ImageFormSet(self.request.POST or None, self.request.FILES or None, prefix='images'),
-            }
+            return {'images': ImageFormSet(self.request.POST or None, self.request.FILES or None, prefix='images'),}
     
             
 class PropertyUpdate(AdminAgentMixin, PropertyInline, UpdateView):
@@ -164,9 +160,7 @@ class PropertyUpdate(AdminAgentMixin, PropertyInline, UpdateView):
         return ctx
 
     def get_named_formsets(self):
-        return {
-            'images': ImageFormSet(self.request.POST or None, self.request.FILES or None, prefix='images'),
-        }
+        return {'images': ImageFormSet(self.request.POST or None, self.request.FILES or None, prefix='images'),}
 
 
 @login_required
