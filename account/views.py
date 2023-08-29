@@ -309,23 +309,16 @@ class Register(CreateView):
             'token':data.get('token'),
         })
         to_email = form.cleaned_data.get('email')
-
         from_email = settings.EMAIL_HOST_USER
         recipient_list = [to_email]
-
         text_message = f"Please verify your email address by going to this link http://127.0.0.1:8000/accounts/activate/{data['uid']}/{data['token']}"
-
-
         # Create the EmailMultiAlternatives object
         email = EmailMultiAlternatives(
             mail_subject, text_message, from_email, recipient_list
         )
         email.attach_alternative(html_message, "text/html")
-
         email.send()
-
         messages.success(self.request, 'Please confirm your email address to complete the registration')
-        
         return super().form_valid(form)
     
     
