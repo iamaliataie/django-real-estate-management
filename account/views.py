@@ -346,11 +346,11 @@ class ProfileView(LoginRequiredMixin, PasswordChangeView):
         context['user_form'] = CustomUserChangeForm(instance=self.request.user)
         return context
     
-    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+    def form_valid(self, form: BaseModelForm):
         messages.success(self.request, 'Your password has been updated successfully.')
         return super().form_valid(form)
     
-    def post(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
+    def post(self, request, *args, **kwargs):
         if 'profile' in request.POST:
             form = CustomUserChangeForm(request.POST, instance=request.user)
             for field in form.fields:
