@@ -1,7 +1,7 @@
 from django.db import models
 from property.models import Property
 
-# Create your models here.
+
 
 class Deal(models.Model):
     deal_type = models.ForeignKey('DealType', on_delete=models.CASCADE, related_name='deals', null=True)
