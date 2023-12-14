@@ -2,7 +2,6 @@ from django.db import models
 from property.models import Property
 
 
-
 class Deal(models.Model):
     deal_type = models.ForeignKey('DealType', on_delete=models.CASCADE, related_name='deals', null=True)
     agent = models.ForeignKey('account.User', on_delete=models.CASCADE, null=True, related_name='agent_deals')
