@@ -36,7 +36,6 @@ def search_ajax(request):
         for p in provinces:
             if q in p:
                 ps.append(p)
-    
     return JsonResponse(ps, safe=False)
 
 
