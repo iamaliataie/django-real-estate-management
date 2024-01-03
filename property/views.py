@@ -9,7 +9,6 @@ from django.views.decorators.csrf import csrf_exempt
 
 from .models import Property, PropertyType
 from inquiry.forms import InquiryForm
-
 from search.models import SearchCriteria
 
 from .provinces import provinces
