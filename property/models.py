@@ -97,7 +97,6 @@ class PropertyType(models.Model):
         verbose_name = 'Property Type'
         verbose_name_plural = 'Property Types'
     
-    
     def __str__(self) -> str:
         return self.title
 
