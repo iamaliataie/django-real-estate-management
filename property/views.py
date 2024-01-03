@@ -107,7 +107,6 @@ class PropertyListView(ListView):
         context = {
             'properties': properties,
         }
-        
         return render(request, 'property/property_list.html', context)
     
 
