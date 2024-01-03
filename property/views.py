@@ -72,7 +72,6 @@ class PropertyListView(ListView):
                 properties = properties.filter(bathroom=form['bathrooms'])
             if form['parking']:
                 properties = properties.filter(parking=form['parking'])
-                
             if form.get('basement'):
                 properties = properties.filter(basement=True)
             if request.user.is_authenticated:
