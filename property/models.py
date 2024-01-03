@@ -3,7 +3,6 @@ from django.db import models
 
 
 def path_generator(instance, filename):
-    
     return f'properties/{instance}/{filename}'
 
 class Property(models.Model):
