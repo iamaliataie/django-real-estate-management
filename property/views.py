@@ -22,7 +22,6 @@ class Home(ListView):
         context = super(Home, self).get_context_data(**kwargs)
         locations = list(Property.objects.filter(active=True, deal=False).values())
         context['locations'] = locations
-        
         return context
     
 
