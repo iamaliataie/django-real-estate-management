@@ -51,7 +51,6 @@ class Property(models.Model):
             self.marker_color = 'yellow'
             self.type_color = 'warning'
             self.type_title = 'Rental'
-        
         self.save()
         return self.title
 
